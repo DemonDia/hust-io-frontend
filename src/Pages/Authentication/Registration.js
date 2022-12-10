@@ -1,9 +1,11 @@
-import React from 'react';
-
+import React, { useState, useEffect } from "react";
+import Banner from "../../Components/Authentication/Banner";
+import RegistrationForm from "../../Components/Authentication/RegistrationForm";
 function Registration(props) {
     return (
-        <div>
-            <h1>Registration Page</h1>
+        <div className="columns">
+            <Banner />
+            <RegistrationForm/>
         </div>
     );
 }

@@ -1,9 +1,11 @@
 import React from 'react';
-
+import Banner from "../../Components/Authentication/Banner"
+import LoginForm from '../../Components/Authentication/LoginForm';
 function LoginPage(props) {
     return (
-        <div>
-            <h1>Login page</h1>
+        <div className='columns'>
+            <Banner/>
+            <LoginForm/>
         </div>
     );
 }
