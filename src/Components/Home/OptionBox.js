@@ -1,9 +1,13 @@
-import React from 'react';
-
+import React from "react";
+import { Link } from "react-router-dom";
 function OptionBox(props) {
     return (
-        <div>
-            <h1>Option box</h1>
+        <div className="contaner is-two-quarter-desktop column">
+            <Link to={props.option.link}>
+                <div className="box optionBox">
+                    <h1 className="subtitle">{props.option.name}</h1>
+                </div>
+            </Link>
         </div>
     );
 }
