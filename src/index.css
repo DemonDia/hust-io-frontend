@@ -58,12 +58,69 @@ code {
 }
 
 /* option box */
-.optionBox{
-  height:10vh;
-  background:#0014C5;
+.optionBox {
+  height: 10vh;
+  background: #0014C5;
   align-items: center;
 }
-.optionBox h1{
+
+.optionBox h1 {
   text-align: center;
-  color:white;
+  color: white;
+}
+
+/* calendar */
+.calendar {
+  width: 100%;
+  /* border: 2px white solid; */
+  table-layout: fixed;
+  border-radius: 20px;
+
+}
+
+.calendarContainer {
+  /* width: 100%; */
+  text-align: center;
+}
+
+.calendarRow {}
+
+.calendarHeaderCell {
+  padding: 10px;
+  background: #010E81;
+  color: white;
+}
+
+.calendarCell,
+.calendarCellDisabled {
+  height: 10vh;
+  margin: 2px;
+}
+
+.calendarCell {
+  background: white;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.calendarCellDisabled {
+  background: #F2F4F7
+}
+
+#yearField {
+  justify-content: center;
+  display: flex;
+  align-self: center;
+}
+
+.yearChangeBtn {
+
+  background-color: blue;
+  color: white;
+}
+
+.yearChangeBtnContainer {
+  align-self: center;
 }
