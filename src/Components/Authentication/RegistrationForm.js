@@ -5,16 +5,19 @@ function RegistrationForm(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const register = async () => {
+        await props.registerMethod(name, email, password, confirmPassword);
+    };
     return (
         <div className="container is-two-fifths-desktop column">
             <div className="container authFormContainer">
-                <h2 class="title is-2">Sign Up</h2>
+                <h2 className="title is-2">Sign Up</h2>
                 <div className="container authForm">
-                    <div class="field">
-                        <p class="control">
-                            <label class="label">Name:</label>
+                    <div className="field">
+                        <p className="control">
+                            <label className="label">Name:</label>
                             <input
-                                class="input"
+                                className="input"
                                 type="text"
                                 placeholder="Enter your name"
                                 value={name}
@@ -22,9 +25,9 @@ function RegistrationForm(props) {
                                     setName(e.target.value);
                                 }}
                             />
-                            <label class="label">Email:</label>
+                            <label className="label">Email:</label>
                             <input
-                                class="input"
+                                className="input"
                                 type="email"
                                 placeholder="Enter email"
                                 value={email}
@@ -32,9 +35,9 @@ function RegistrationForm(props) {
                                     setEmail(e.target.value);
                                 }}
                             />
-                            <label class="label">Password:</label>
+                            <label className="label">Password:</label>
                             <input
-                                class="input"
+                                className="input"
                                 type="password"
                                 placeholder="Enter password"
                                 value={password}
@@ -42,12 +45,12 @@ function RegistrationForm(props) {
                                     setPassword(e.target.value);
                                 }}
                             />
-                            <label class="label">Confirm Password:</label>
+                            <label className="label">Confirm Password:</label>
                             <input
-                                class="input"
+                                className="input"
                                 type="password"
                                 placeholder="Re-enter password"
-                                value={password}
+                                value={confirmPassword}
                                 onChange={(e) => {
                                     setConfirmPassword(e.target.value);
                                 }}
@@ -55,7 +58,14 @@ function RegistrationForm(props) {
                         </p>
                     </div>
 
-                    <button class="button authBtn">Register</button>
+                    <button
+                        className="button authBtn"
+                        onClick={() => {
+                            register();
+                        }}
+                    >
+                        Register
+                    </button>
                     <p>
                         Already joined us? Login <Link to="/login">here</Link>.
                     </p>
