@@ -16,6 +16,7 @@ import CurrentDatePage from "./Pages/Organiser/CurrentDatePage";
 // ================================event================================
 import EventListPage from "./Pages/Events/EventListPage";
 import AddEventPage from "./Pages/Events/AddEventPage";
+import EditEventPage from "./Pages/Events/EditEventPage";
 
 // ================================tasks================================
 import TaskListPage from "./Pages/Tasks/TaskListPage";
@@ -79,7 +80,11 @@ function App() {
                             path="/events/add"
                             element={<AddEventPage />}
                         />
-
+                        <Route
+                            exact
+                            path="/events/:eventId"
+                            element={<EditEventPage />}
+                        />
                         {/* ================================tasks================================  */}
                         <Route exact path="/tasks" element={<TaskListPage />} />
 

@@ -1,13 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 function EventList({ Contents }) {    
-    // ============edit event============
-    const editEvent = async (updatedEvent) => {};
     // ============delete event============
     const deleteEvent = async (eventId) => {};
     return (
         <div className="listComponent">
+            <div className="container">
             <h1 className="title">Event List</h1>
+            <Link className="button button-link" to="/events/add">Add</Link>
+            
+            </div>
+            
             {Contents.map((content) => {
                 const { date, eventName, _id } = content;
                 const { year, month, day, hour, minute } = date;
@@ -22,7 +25,7 @@ function EventList({ Contents }) {
                             </h5>
                         </div>
                         <div className="listItem-buttons">
-                            <Link>Edit</Link>
+                            <Link to = {`/events/${_id}`}>Edit</Link>
                             <Link>Delete</Link>
                         </div>
                     </div>
