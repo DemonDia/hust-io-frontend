@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 function MainCalendar(props) {
+    const currentToken = localStorage.getItem("loginToken");
     const [loading, setLoading] = useState(true);
     // year and month in numbers
     const [year, setYear] = useState(null);
     const [month, setMonth] = useState(null);
     const [days, setDays] = useState(0);
     const [calendarDays, setCalendarDays] = useState([]);
+    const [calendarEvents, setCalendarEvents] = useState({});
+    // calendarEvents format be:
+    // { day: [events]}
     const monthArr = [
         "Select A Month",
         "January",
@@ -23,13 +28,36 @@ function MainCalendar(props) {
         "December",
     ];
     const dayArr = ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat"];
-    const loadCalendar = (year, month) => {
+    const generateEventJson = (content) =>{
+        var results = {}
+        content.map(item=>{
+            const currDay = item.date.day
+            if(currDay in results){
+                results[currDay] = [...results[currDay],item]
+            }
+            else{
+                results[currDay] = [item]
+            }
+        })
+        return results
+    }
+    const loadCalendar = async (year, month) => {
+        // get the calendar stuff
         setLoading(true);
+        const calendarContent = await axios.get(
+            process.env.REACT_APP_BACKEND_API +
+                `/events/${year}/${month-1}/${props.userId}`,
+            {
+                headers: { Authorization: `Bearer ${currentToken}` },
+            }
+        );
+        setCalendarEvents(generateEventJson(calendarContent.data.data))
+
         const currDate = new Date(year, month, 0);
         var noOfDays = currDate.getDate();
         setDays(noOfDays);
         // days --> first of each month
-        var firstDayOfMonth = new Date(year, month-1, 1);
+        var firstDayOfMonth = new Date(year, month - 1, 1);
         var weekRows = [];
         var dayCounts = 0;
         var weekCounts = 0;
@@ -76,18 +104,16 @@ function MainCalendar(props) {
     useEffect(() => {
         const currentDate = new Date();
         const currentYear = currentDate.getFullYear();
-        const currentMonth = currentDate.getMonth()+1;
+        const currentMonth = currentDate.getMonth() + 1;
         setYear(currentYear);
         setMonth(currentMonth);
         loadCalendar(currentYear, currentMonth);
     }, []);
     return (
         <div>
-            <h1>Calendar</h1>
             <h2 className="title">
                 {monthArr[month]} {year}
             </h2>
-            Year:{year} Month:{month} Days:{days}
             <div className="container calendarContainer">
                 <div className="columns">
                     <div className="column is-half">
@@ -174,9 +200,13 @@ function MainCalendar(props) {
                                             </td>
                                         ) : (
                                             <td key={index}>
-                                                <Link>
+                                                <Link to={`/organiser/${year}-${month}-${calendarDay}`}>
                                                     <div className="calendarCell">
-                                                        {calendarDay}
+                                                        {/* check if there are events */}
+                                                        {calendarDay in calendarEvents?<span class="tag is-danger">({calendarEvents[calendarDay].length}) </span>:<>
+                                                        </>}
+                                                        <br></br>
+                                                        <label>{calendarDay}</label>
                                                     </div>
                                                 </Link>
                                             </td>

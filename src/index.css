@@ -100,9 +100,9 @@ code {
 .calendarCell {
   background: white;
   padding: 10px;
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: flex-end; */
 }
 
 .calendarCellDisabled {

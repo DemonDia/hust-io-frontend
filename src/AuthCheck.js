@@ -16,6 +16,7 @@ const checkAuthStatus = async (successRoute, failRoute, navigate, axiosMgr) => {
     } else if (failRoute !== "" && !authStatus.data.success) {
         navigate(failRoute);
     }
+    console.log(authStatus)
     return authStatus;
 };
 
