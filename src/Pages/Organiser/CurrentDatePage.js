@@ -3,11 +3,8 @@ import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-import ListTemplate from "../../Components/General/ListTemplate";
-
 // =============events=============
 import EventList from "../../Components/Events/EventList";
-import EventForm from "../../Components/Events/EventForm";
 // =============journal=============
 
 // =============tasks=============
@@ -40,7 +37,7 @@ function CurrentDatePage(props) {
     }, []);
     // ===================================CRUD for events, journal, tasks===================================
     // =======================CRUD=======================
-    // add,edit,delete --> return success/failure?
+    // add,delete --> return success/failure?
 
     // =====================events=====================
     const [events, setEvents] = useState([]);
@@ -57,21 +54,42 @@ function CurrentDatePage(props) {
         );
         console.log(getEventResults.data);
         if (getEventResults.data.success) {
-            console.log(getEventResults.data.data);
             setEvents(getEventResults.data.data);
         }
+    };
+    // ============delete events============
+    const deleteEvent = async (eventId) => {
+        await axios
+            .delete(process.env.REACT_APP_BACKEND_API + `/events/${eventId}`, {
+                headers: { Authorization: `Bearer ${currentToken}` },
+                data: {
+                    userId,
+                },
+            })
+            .then(async (res) => {
+                if (res.data.success) {
+                    if (currDate) {
+                        const [year, month, day] = currDate.split("-");
+                        await loadDayEvents(year, month, day, userId);
+                        alert("Successfully deleted");
+                    }
+                } else {
+                    alert("Failed to delete");
+                }
+            })
+            .catch((err) => {
+                alert("Failed to delete");
+            });
     };
 
     // =====================journal=====================
     // ============load journal============
     // ============add journal============
-    // ============edit journal============
     // ============delete journal============
 
     // =====================tasks=====================
     // ============load tasks============
     // ============add tasks============
-    // ============edit tasks============
     // ============delete tasks============
 
     return (
@@ -104,11 +122,10 @@ function CurrentDatePage(props) {
                     <>
                         {currTab == 0 ? (
                             <>
-                                {/* <ListTemplate
-                                    ListComponent={<EventList Contents={events}/>}
-                                    FormComponent={<EventForm />}
-                                /> */}
-                                <EventList Contents={events} RefreshContents={loadDayEvents}/>
+                                <EventList
+                                    Contents={events}
+                                    DeleteContent={deleteEvent}
+                                />
                             </>
                         ) : (
                             <>
