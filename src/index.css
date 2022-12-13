@@ -124,3 +124,32 @@ code {
 .yearChangeBtnContainer {
   align-self: center;
 }
+
+/* content container */
+
+/* list container */
+.listComponent{
+  padding:10px;
+}
+/* list item */
+.listItem{
+  padding:15px;
+  background:#010E81;
+  color:white;
+  margin:10px;
+  border-radius: 5px;
+  display: flex;
+}
+.listItem h5, .listItem{
+  color:white;
+
+}
+.listItem-contents{
+  width:60%;
+}
+.listItem-buttons{
+  width:40%;
+  display: flex;
+  justify-content: space-evenly;
+}
+/* form container */

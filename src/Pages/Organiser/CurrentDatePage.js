@@ -2,6 +2,16 @@ import React, { useEffect, useState } from "react";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+
+import ListTemplate from "../../Components/General/ListTemplate";
+
+// =============events=============
+import EventList from "../../Components/Events/EventList";
+import EventForm from "../../Components/Events/EventForm";
+// =============journal=============
+
+// =============tasks=============
+
 function CurrentDatePage(props) {
     const currentToken = localStorage.getItem("loginToken");
     // const { setLoggedIn,loggedIn } = useContext(NavbarContext);
@@ -9,7 +19,6 @@ function CurrentDatePage(props) {
     const [currTab, setCurrTab] = useState(0);
     const [loading, setLoading] = useState(true);
     const [userId, setUserId] = useState(null);
-    const [events, setEvents] = useState([]);
     const navigate = useNavigate();
     const tabs = ["Events", "Journal", "Tasks"];
     const loadPage = async () => {
@@ -32,8 +41,9 @@ function CurrentDatePage(props) {
     // ===================================CRUD for events, journal, tasks===================================
     // =======================CRUD=======================
     // add,edit,delete --> return success/failure?
-    
+
     // =====================events=====================
+    const [events, setEvents] = useState([]);
     // ============load event============
     const loadDayEvents = async (year, month, day, userId) => {
         const getEventResults = await axios.get(
@@ -51,9 +61,6 @@ function CurrentDatePage(props) {
             setEvents(getEventResults.data.data);
         }
     };
-    // ============add event============
-    // ============edit event============
-    // ============delete event============
 
     // =====================journal=====================
     // ============load journal============
@@ -91,7 +98,29 @@ function CurrentDatePage(props) {
                 </ul>
             </div>
             <div className="tabContents">
-                {loading ? <>Loading</> : <>Loaded</>}
+                {loading ? (
+                    <>Loading</>
+                ) : (
+                    <>
+                        {currTab == 0 ? (
+                            <>
+                                {/* <ListTemplate
+                                    ListComponent={<EventList Contents={events}/>}
+                                    FormComponent={<EventForm />}
+                                /> */}
+                                <EventList Contents={events} RefreshContents={loadDayEvents}/>
+                            </>
+                        ) : (
+                            <>
+                                {currTab == 1 ? (
+                                    <>Journal Content</>
+                                ) : (
+                                    <>Task Content</>
+                                )}
+                            </>
+                        )}
+                    </>
+                )}
             </div>
         </div>
     );
