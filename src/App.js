@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+// ================================navbar================================
+import Navbar from "./Components/General/Navbar";
 // ================================authentication================================
 import EmailVerificationPage from "./Pages/Authentication/EmailVerificationPage";
 import ForgotPasswordFormPage from "./Pages/Authentication/ForgotPasswordFormPage";
@@ -33,6 +35,7 @@ function App() {
     return (
         <BrowserRouter>
             <div className="App">
+                <Navbar/>
                 <div className="pageContainer">
                     <Routes>
                         {/* ================================authentication================================  */}

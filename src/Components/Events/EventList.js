@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 function EventList({ Contents, DeleteContent }) {
     // ============search as you type============
     const [search, setSearch] = useState("");
