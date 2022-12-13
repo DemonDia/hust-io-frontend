@@ -57,7 +57,6 @@ function EditEventPage(props) {
                     alert("Successfully updated");
                     navigate("/events");
                 } else {
-                    console.log(res.data.message);
                     alert("Failed to add");
                 }
             })

@@ -52,7 +52,6 @@ function CurrentDatePage(props) {
                 },
             }
         );
-        console.log(getEventResults.data);
         if (getEventResults.data.success) {
             setEvents(getEventResults.data.data);
         }

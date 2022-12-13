@@ -22,9 +22,7 @@ function EventListPage(props) {
                 },
             }
         );
-        console.log(getEventResults.data);
         if (getEventResults.data.success) {
-            console.log(getEventResults.data.data);
             setEvents(getEventResults.data.data);
         }
     };
