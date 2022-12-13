@@ -153,6 +153,9 @@ code {
   display: flex;
   justify-content: space-evenly;
 }
+.listItem-buttons a{
+  color: white;
+}
 
 /* form container */
 .formContainer{

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import {DeleteIcon} from "../../Components/General/Icons"
 function EventList({ Contents, DeleteContent }) {
     // ============search as you type============
     const [search, setSearch] = useState("");
@@ -102,6 +103,7 @@ function EventList({ Contents, DeleteContent }) {
                                     <Link to={`/events/${_id}`}>Edit</Link>
                                     <Link onClick={() => deleteEvent(_id)}>
                                         Delete
+                                       {/* <DeleteIcon/> */}
                                     </Link>
                                 </div>
                             </div>
