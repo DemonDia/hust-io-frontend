@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-function EventList({ Contents }) {
-    // ============add event============
-    const addNewEvent = async (newEvent) => {};
+function EventList({ Contents }) {    
     // ============edit event============
     const editEvent = async (updatedEvent) => {};
     // ============delete event============

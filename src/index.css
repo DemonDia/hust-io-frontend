@@ -54,7 +54,6 @@ code {
 .authBtn {
   background: #0014C5;
   color: white;
-  width: 100%;
 }
 
 /* option box */
@@ -152,4 +151,17 @@ code {
   display: flex;
   justify-content: space-evenly;
 }
+
 /* form container */
+.formContainer{
+
+}
+
+/* cancel btn */
+.cancelBtn{
+  background:#000552;
+  color:white;
+}
+.authBtn,.cancelBtn{
+  width: 100%;
+}
