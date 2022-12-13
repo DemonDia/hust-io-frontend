@@ -58,7 +58,8 @@ code {
 
 /* option box */
 .optionBox {
-  height: 10vh;
+  height: 20vh;
+  display: flex;
   background: #0014C5;
   align-items: center;
 }
@@ -66,6 +67,7 @@ code {
 .optionBox h1 {
   text-align: center;
   color: white;
+  margin: auto;
 }
 
 /* calendar */
