@@ -23,7 +23,6 @@ function EventForm({ proceedFunction, currentEvent }) {
                 minute,
             };
             const currEvent = { eventName, date, tags };
-            console.log(date)
             await proceedFunction(currEvent);
         }
     };
@@ -34,7 +33,6 @@ function EventForm({ proceedFunction, currentEvent }) {
             const dateTime = `${year}-${month+1}-${day}T${
                 hour == 0 ? "00" : hour
             }:${minute}`;
-            console.log(dateTime);
             setEventName(eventName);
             setTags(tags);
             setDateTime(dateTime);

@@ -41,8 +41,6 @@ function EditEventPage(props) {
             .catch((err) => {});
     };
     const editEvent = async (updatedEvent) => {
-        // console.log(updatedEvent.date)
-        // updatedEvent["date"]["month"] = updatedEvent.date.month += 1;
         await axios
             .put(
                 process.env.REACT_APP_BACKEND_API + `/events/${eventId}`,

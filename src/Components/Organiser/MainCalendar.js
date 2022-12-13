@@ -203,7 +203,7 @@ function MainCalendar(props) {
                                                 <Link to={`/organiser/${year}-${month}-${calendarDay}`}>
                                                     <div className="calendarCell">
                                                         {/* check if there are events */}
-                                                        {calendarDay in calendarEvents?<span class="tag is-danger">({calendarEvents[calendarDay].length}) </span>:<>
+                                                        {calendarDay in calendarEvents?<span className="tag is-danger">({calendarEvents[calendarDay].length}) </span>:<>
                                                         </>}
                                                         <br></br>
                                                         <label>{calendarDay}</label>

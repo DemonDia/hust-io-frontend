@@ -109,7 +109,7 @@ function EventList({ Contents, DeleteContent }) {
                     })}
                 </>
             ) : (
-                <h2 class="title">Nothing here</h2>
+                <h2 className="title">Nothing here</h2>
             )}
         </div>
     );
