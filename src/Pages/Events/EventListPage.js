@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { defaultAuthCheck } from "../../AuthCheck";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import EventList from "../../Components/Events/EventList";
 
@@ -8,11 +8,9 @@ function EventListPage(props) {
     const currentToken = localStorage.getItem("loginToken");
     // const { setLoggedIn,loggedIn } = useContext(NavbarContext);
     const [loading, setLoading] = useState(true);
-    const { currDate } = useParams();
     const [userId, setUserId] = useState(null);
     const [events, setEvents] = useState([]);
     const navigate = useNavigate();
-    const tabs = ["Events", "Journal", "Tasks"];
     const loadUserEvents = async (userId) => {
         const getEventResults = await axios.get(
             process.env.REACT_APP_BACKEND_API + `/events/${userId}`,
