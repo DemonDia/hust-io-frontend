@@ -35,11 +35,12 @@ function TaskRow({
     // deleteTask --> deletes task --> calls deleteMethod
     // cancelEdit --> editing to be false + back to original values
     const saveChangedName = async () => {
-        await editTaskMethod();
+        await editTaskMethod(taskName, task._id);
+        setIsEditing(false);
     };
     const saveChangedStatus = async (newStatus) => {
         setCompleted(newStatus);
-        await editCompletionMethod(newStatus,task._id);
+        await editCompletionMethod(newStatus, task._id);
     };
     const deleteTask = async () => {
         await deleteMethod(task._id);
@@ -53,7 +54,15 @@ function TaskRow({
         <div className="listItem columns">
             <div className="listItem-contents column is-three-quarters">
                 {isEditing ? (
-                    <h5 className="subtitle">editing</h5>
+                    <input
+                        value={taskName}
+                        className="input"
+                        type="text"
+                        placeholder="Change task name"
+                        onChange={(e) => {
+                            setTaskName(e.target.value);
+                        }}
+                    />
                 ) : (
                     <h5 className="subtitle">
                         {" "}
@@ -99,8 +108,6 @@ function TaskRow({
                         <Link onClick={() => deleteTask()}>Delete</Link>
                     </>
                 )}
-
-               
             </div>
         </div>
     );

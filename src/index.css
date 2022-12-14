@@ -152,6 +152,7 @@ code {
   width:40%;
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
 }
 .listItem-buttons a{
   color: white;
