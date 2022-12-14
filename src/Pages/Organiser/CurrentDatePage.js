@@ -27,7 +27,7 @@ function CurrentDatePage(props) {
                 if (currDate) {
                     const [year, month, day] = currDate.split("-");
                     await loadDayEvents(year, month, day, result.data.id);
-                    await loadDayTasks(year, month, day, result.data.id)
+                    await loadDayTasks(year, month, day, result.data.id);
                 }
                 setLoading(false);
             }
@@ -104,6 +104,9 @@ function CurrentDatePage(props) {
             setTasks(getEventResults.data.data);
         }
     };
+    // ============add task============
+    const addNewTask = async () => {};
+
     // ============delete tasks============
     const deleteTask = async (eventId) => {
         await axios
@@ -170,11 +173,11 @@ function CurrentDatePage(props) {
                                     <>Journal Content</>
                                 ) : (
                                     <>
-                                    <TaskList
-                                        Contents={tasks}
-                                        DeleteContent={deleteTask}
-                                    />
-                                </>
+                                        <TaskList
+                                            Contents={tasks}
+                                            DeleteContent={deleteTask}
+                                        />
+                                    </>
                                 )}
                             </>
                         )}
