@@ -18,7 +18,6 @@ function EventList({ Contents, DeleteContent }) {
             <div className="columns">
                 <div className="column is-half-tablet">
                     <label>Search:</label>
-                    {search}
                     <div>
                         <div className="control">
                             <input

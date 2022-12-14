@@ -139,6 +139,56 @@ function CurrentDatePage(props) {
                 alert("Failed to add");
             });
     };
+    // ============edit task name============
+    const editTaskName = async (taskName, taskId) => {
+        await axios
+            .put(
+                process.env.REACT_APP_BACKEND_API + `/tasks/${taskId}`,
+                {
+                    taskName,
+                    userId,
+                },
+                { headers: { Authorization: `Bearer ${currentToken}` } }
+            )
+            .then(async (res) => {
+                if (res.data.success) {
+                    const [year, month, day] = currDate.split("-");
+                    await loadDayTasks(year, month, day,userId);
+                    alert("Successfully updated");
+                } else {
+                    alert("Failed to update");
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                alert("Failed to update");
+            });
+    };
+    // ============edit task status============
+    const editTaskStatus = async (completed, taskId) => {
+        await axios
+            .put(
+                process.env.REACT_APP_BACKEND_API + `/tasks/completion/${taskId}`,
+                {
+                    completed,
+                    userId,
+                },
+                { headers: { Authorization: `Bearer ${currentToken}` } }
+            )
+            .then(async (res) => {
+                if (res.data.success) {
+                    const [year, month, day] = currDate.split("-");
+                    await loadDayTasks(year, month, day,userId);
+                    alert("Successfully updated");
+                } else {
+                    alert("Failed to update");
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                alert("Failed to update");
+            });
+    };
 
     // ============delete tasks============
     const deleteTask = async (eventId) => {
@@ -209,6 +259,8 @@ function CurrentDatePage(props) {
                                         <TaskForm addTaskMethod={addNewTask} />
                                         <TaskList
                                             Contents={tasks}
+                                            EditName={editTaskName}
+                                            EditStatus={editTaskStatus}
                                             DeleteContent={deleteTask}
                                         />
                                     </>
