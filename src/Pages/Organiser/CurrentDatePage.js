@@ -6,8 +6,10 @@ import axios from "axios";
 // =============events=============
 import EventList from "../../Components/Events/EventList";
 // =============journal=============
-import TaskList from "../../Components/Tasks/TaskList";
+
 // =============tasks=============
+import TaskList from "../../Components/Tasks/TaskList";
+import TaskForm from "../../Components/Tasks/TaskForm";
 
 function CurrentDatePage(props) {
     const currentToken = localStorage.getItem("loginToken");
@@ -105,7 +107,38 @@ function CurrentDatePage(props) {
         }
     };
     // ============add task============
-    const addNewTask = async () => {};
+    const addNewTask = async (taskName) => {
+        const [year, month, day] = currDate.split("-");
+        await axios
+            .post(
+                process.env.REACT_APP_BACKEND_API + "/tasks/",
+                {
+                    taskName,
+                    tags: [],
+                    completed: false,
+                    addedDate: {
+                        year,
+                        month: month - 1,
+                        day,
+                    },
+                    userId,
+                },
+                { headers: { Authorization: `Bearer ${currentToken}` } }
+            )
+            .then(async (res) => {
+                if (res.data.success) {
+                    await loadDayTasks(year, month, day,userId);
+                    alert("Successfully added");
+                } else {
+                    console.log(res.data.message);
+                    alert("Failed to add");
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                alert("Failed to add");
+            });
+    };
 
     // ============delete tasks============
     const deleteTask = async (eventId) => {
@@ -173,6 +206,7 @@ function CurrentDatePage(props) {
                                     <>Journal Content</>
                                 ) : (
                                     <>
+                                        <TaskForm addTaskMethod={addNewTask} />
                                         <TaskList
                                             Contents={tasks}
                                             DeleteContent={deleteTask}

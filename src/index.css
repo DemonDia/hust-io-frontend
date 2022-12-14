@@ -170,3 +170,10 @@ code {
 .authBtn,.cancelBtn{
   width: 100%;
 }
+
+
+/* taskForm */
+.taskFormContainer{
+  margin: auto;
+  justify-content: center;
+}

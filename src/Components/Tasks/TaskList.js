@@ -4,7 +4,7 @@ function TaskList({ Contents, DeleteContent }) {
     // ============search as you type============
     const [search, setSearch] = useState("");
     // ============filter in asc and desc============
-    const [filter, setFilter] = useState();
+    const [filter, setFilter] = useState(0);
     const filterOptions = ["A-Z", "Z-A"];
     // ============delete event============
     const deleteTask = async (eventId) => {
@@ -70,7 +70,7 @@ function TaskList({ Contents, DeleteContent }) {
                             .toLowerCase()
                             .includes(search.toLowerCase());
                     }) .sort((a, b) =>
-                    filter == 1
+                    filter == 0
                         ? a.taskName > b.taskName
                             ? 1
                             : -1
