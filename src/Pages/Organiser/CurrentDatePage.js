@@ -6,7 +6,7 @@ import axios from "axios";
 // =============events=============
 import EventList from "../../Components/Events/EventList";
 // =============journal=============
-
+import TaskList from "../../Components/Tasks/TaskList";
 // =============tasks=============
 
 function CurrentDatePage(props) {
@@ -27,6 +27,7 @@ function CurrentDatePage(props) {
                 if (currDate) {
                     const [year, month, day] = currDate.split("-");
                     await loadDayEvents(year, month, day, result.data.id);
+                    await loadDayTasks(year, month, day, result.data.id)
                 }
                 setLoading(false);
             }
@@ -87,9 +88,46 @@ function CurrentDatePage(props) {
     // ============delete journal============
 
     // =====================tasks=====================
+    const [tasks, setTasks] = useState([]);
     // ============load tasks============
-    // ============add tasks============
+    const loadDayTasks = async (year, month, day, userId) => {
+        const getEventResults = await axios.get(
+            process.env.REACT_APP_BACKEND_API +
+                `/tasks/${year}/${month - 1}/${day}/${userId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${currentToken}`,
+                },
+            }
+        );
+        if (getEventResults.data.success) {
+            setTasks(getEventResults.data.data);
+        }
+    };
     // ============delete tasks============
+    const deleteTask = async (eventId) => {
+        await axios
+            .delete(process.env.REACT_APP_BACKEND_API + `/tasks/${eventId}`, {
+                headers: { Authorization: `Bearer ${currentToken}` },
+                data: {
+                    userId,
+                },
+            })
+            .then(async (res) => {
+                if (res.data.success) {
+                    if (currDate) {
+                        const [year, month, day] = currDate.split("-");
+                        await loadDayTasks(year, month, day, userId);
+                        alert("Successfully deleted");
+                    }
+                } else {
+                    alert("Failed to delete");
+                }
+            })
+            .catch((err) => {
+                alert("Failed to delete");
+            });
+    };
 
     return (
         <div>
@@ -131,7 +169,12 @@ function CurrentDatePage(props) {
                                 {currTab == 1 ? (
                                     <>Journal Content</>
                                 ) : (
-                                    <>Task Content</>
+                                    <>
+                                    <TaskList
+                                        Contents={tasks}
+                                        DeleteContent={deleteTask}
+                                    />
+                                </>
                                 )}
                             </>
                         )}

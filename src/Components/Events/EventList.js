@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {DeleteIcon} from "../../Components/General/Icons"
 function EventList({ Contents, DeleteContent }) {
     // ============search as you type============
     const [search, setSearch] = useState("");
