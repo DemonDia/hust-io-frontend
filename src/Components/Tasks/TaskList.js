@@ -73,10 +73,10 @@ function TaskList({ Contents, DeleteContent,EditStatus,EditName }) {
                     })
                         .sort((a, b) =>
                             filter == 0
-                                ? a.taskName > b.taskName
+                                ? a.taskName.toLowerCase() > b.taskName.toLowerCase()
                                     ? 1
                                     : -1
-                                : b.taskName > a.taskName
+                                : b.taskName.toLowerCase() > a.taskName.toLowerCase()
                                 ? 1
                                 : -1
                         )
@@ -89,20 +89,6 @@ function TaskList({ Contents, DeleteContent,EditStatus,EditName }) {
                                     editTaskMethod={editTaskName}
                                     editCompletionMethod={editTaskCompletion}
                                 />
-                                // <div key={_id} className="listItem">
-                                //     <div className="listItem-contents">
-                                //         <h5 className="subtitle">
-                                //             {taskName} -{" "}
-                                //             {`${year}/${month + 1}/${day}`}
-                                //         </h5>
-                                //     </div>
-                                //     <div className="listItem-buttons">
-                                //         <Link to={`/tasks/${_id}`}>Edit</Link>
-                                //         <Link onClick={() => deleteTask(_id)}>
-                                //             Delete
-                                //         </Link>
-                                //     </div>
-                                // </div>
                             );
                         })}
                 </>

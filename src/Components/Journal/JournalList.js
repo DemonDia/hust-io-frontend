@@ -80,10 +80,10 @@ function JournalList({ Contents, DeleteContent }) {
                                         ? 1
                                         : -1
                                     : filter == 2
-                                    ? a.journalTitle > b.journalTitle
+                                    ? a.journalTitle.toLowerCase() > b.journalTitle.toLowerCase()
                                         ? 1
                                         : -1
-                                    : b.journalTitle > a.journalTitle
+                                    : b.journalTitle.toLowerCase() > a.journalTitle.toLowerCase()
                                     ? 1
                                     : -1
                             )

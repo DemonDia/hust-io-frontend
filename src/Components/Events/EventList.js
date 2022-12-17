@@ -78,10 +78,10 @@ function EventList({ Contents, DeleteContent }) {
                             ? 1
                             : -1
                         : filter == 2
-                        ? a.eventName > b.eventName
+                        ? a.eventName.toLowerCase() > b.eventName.toLowerCase()
                             ? 1
                             : -1
-                        : b.eventName > a.eventName
+                        : b.eventName.toLowerCase() > a.eventName.toLowerCase()
                         ? 1
                         : -1
                 ).map((content) => {
