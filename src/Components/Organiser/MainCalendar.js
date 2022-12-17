@@ -7,6 +7,11 @@ function MainCalendar(props) {
     // year and month in numbers
     const [year, setYear] = useState(null);
     const [month, setMonth] = useState(null);
+
+    const [currentYear, setCurrentYear] = useState(null);
+    const [currentMonth, setCurrentMonth] = useState(null);
+    const [currentDay, setCurrentDay] = useState(null);
+
     const [days, setDays] = useState(0);
     const [calendarDays, setCalendarDays] = useState([]);
     const [calendarEvents, setCalendarEvents] = useState({});
@@ -28,30 +33,29 @@ function MainCalendar(props) {
         "December",
     ];
     const dayArr = ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat"];
-    const generateEventJson = (content) =>{
-        var results = {}
-        content.map(item=>{
-            const currDay = item.date.day
-            if(currDay in results){
-                results[currDay] = [...results[currDay],item]
+    const generateEventJson = (content) => {
+        var results = {};
+        content.map((item) => {
+            const currDay = item.date.day;
+            if (currDay in results) {
+                results[currDay] = [...results[currDay], item];
+            } else {
+                results[currDay] = [item];
             }
-            else{
-                results[currDay] = [item]
-            }
-        })
-        return results
-    }
+        });
+        return results;
+    };
     const loadCalendar = async (year, month) => {
         // get the calendar stuff
         setLoading(true);
         const calendarContent = await axios.get(
             process.env.REACT_APP_BACKEND_API +
-                `/events/${year}/${month-1}/${props.userId}`,
+                `/events/${year}/${month - 1}/${props.userId}`,
             {
                 headers: { Authorization: `Bearer ${currentToken}` },
             }
         );
-        setCalendarEvents(generateEventJson(calendarContent.data.data))
+        setCalendarEvents(generateEventJson(calendarContent.data.data));
 
         const currDate = new Date(year, month, 0);
         var noOfDays = currDate.getDate();
@@ -105,8 +109,14 @@ function MainCalendar(props) {
         const currentDate = new Date();
         const currentYear = currentDate.getFullYear();
         const currentMonth = currentDate.getMonth() + 1;
+        const currentDay = currentDate.getDate();
         setYear(currentYear);
         setMonth(currentMonth);
+
+        setCurrentYear(currentYear);
+        setCurrentMonth(currentMonth);
+        setCurrentDay(currentDay);
+
         loadCalendar(currentYear, currentMonth);
     }, []);
     return (
@@ -200,13 +210,54 @@ function MainCalendar(props) {
                                             </td>
                                         ) : (
                                             <td key={index}>
-                                                <Link to={`/organiser/${year}-${month}-${calendarDay}`}>
-                                                    <div className="calendarCell">
+                                                <Link
+                                                    to={`/organiser/${year}-${month}-${calendarDay}`}
+                                                >
+                                                    <div
+                                                        className={
+                                                            month ==
+                                                                currentMonth &&
+                                                            year ==
+                                                                currentYear &&
+                                                            calendarDay ==
+                                                                currentDay
+                                                                ? "todayCalendarCell"
+                                                                : "calendarCell"
+                                                        }
+                                                    >
                                                         {/* check if there are events */}
-                                                        {calendarDay in calendarEvents?<span className="tag is-danger">({calendarEvents[calendarDay].length}) </span>:<>
-                                                        </>}
+                                                        {calendarDay in
+                                                        calendarEvents ? (
+                                                            <span className="tag is-danger">
+                                                                (
+                                                                {
+                                                                    calendarEvents[
+                                                                        calendarDay
+                                                                    ].length
+                                                                }
+                                                                ){" "}
+                                                            </span>
+                                                        ) : (
+                                                            <></>
+                                                        )}
                                                         <br></br>
-                                                        <label>{calendarDay}</label>
+                                                        <label>
+                                                            {calendarDay}
+                                                        </label>
+
+                                                        {/* {month ==
+                                                            currentMonth &&
+                                                        year == currentYear &&
+                                                        calendarDay ==
+                                                            currentDay ? (
+                                                            <span class="tag is-link">
+                                                                {calendarDay}
+                                                            </span>
+                                                        ) : (
+                                                            <label>
+                                                                {calendarDay}
+                                                            </label>
+                                                        )} */}
                                                     </div>
                                                 </Link>
                                             </td>

@@ -44,9 +44,10 @@ function JournalForm({ proceedFunction, currentJournalEntry }) {
             const { journalTitle, journalContent, moodRating, date, tags } =
                 currentJournalEntry;
             const { year, month, day, hour, minute } = date;
-            const dateTime = `${year}-${month + 1}-${day}T${
+            const dateTime = `${day}-${month + 1}-${year}, ${
                 hour == 0 ? "00" : hour
             }:${minute}`;
+            setDateTime(dateTime)
             setJournalTitle(journalTitle);
             setJournalContent(journalContent);
             setMoodRating(moodRating);
@@ -56,6 +57,12 @@ function JournalForm({ proceedFunction, currentJournalEntry }) {
     return (
         <div className="formContainer container">
             <div className="container">
+                {
+                    currentJournalEntry?<> <label className="label">Published at: {dateTime}</label></>:<></>
+                }
+                <>
+
+                </>
                 <div className="field">
                     <div className="control">
                         <label className="label">Journal Title:</label>

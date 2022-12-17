@@ -93,17 +93,28 @@ code {
 }
 
 .calendarCell,
+.todayCalendarCell,
 .calendarCellDisabled {
   height: 10vh;
   margin: 2px;
 }
 
+.todayCalendarCell,
+.calendarCell {
+  padding: 10px;
+}
+
 .calendarCell {
   background: white;
-  padding: 10px;
+
   /* display: flex;
   justify-content: center;
   align-items: flex-end; */
+}
+
+.todayCalendarCell {
+  background: #4050e3;
+  color: white;
 }
 
 .calendarCellDisabled {
@@ -113,71 +124,83 @@ code {
 #yearField {
   justify-content: center;
 }
-#yearField,#ratingField{
+
+#yearField,
+#ratingField {
   display: flex;
   align-self: center;
 }
 
-.yearChangeBtn,.ratingChangeBtn,.yearChangeBtn:disabled,.ratingChangeBtn:disabled {
+.yearChangeBtn,
+.ratingChangeBtn,
+.yearChangeBtn:disabled,
+.ratingChangeBtn:disabled {
 
   background-color: blue;
   color: white;
 }
 
 
-.yearChangeBtnContainer,.ratingChangeBtnContainer {
+.yearChangeBtnContainer,
+.ratingChangeBtnContainer {
   align-self: center;
 }
 
 /* content container */
 
 /* list container */
-.listComponent{
-  padding:10px;
+.listComponent {
+  padding: 10px;
 }
+
 /* list item */
-.listItem{
-  padding:15px;
-  background:#010E81;
-  color:white;
-  margin:10px;
+.listItem {
+  padding: 15px;
+  background: #010E81;
+  color: white;
+  margin: 10px;
   border-radius: 5px;
   display: flex;
 }
-.listItem h5, .listItem{
-  color:white;
+
+.listItem h5,
+.listItem {
+  color: white;
 
 }
-.listItem-contents{
-  width:60%;
+
+.listItem-contents {
+  width: 60%;
 }
-.listItem-buttons{
-  width:40%;
+
+.listItem-buttons {
+  width: 40%;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
-.listItem-buttons a{
+
+.listItem-buttons a {
   color: white;
 }
 
 /* form container */
-.formContainer{
-
-}
+.formContainer {}
 
 /* cancel btn */
-.cancelBtn{
-  background:#000552;
-  color:white;
+.cancelBtn {
+  background: #000552;
+  color: white;
 }
-.authBtn,.cancelBtn{
+
+.authBtn,
+.cancelBtn {
   width: 100%;
 }
 
 
 /* taskForm */
-.taskFormContainer{
+.taskFormContainer {
   margin: auto;
   justify-content: center;
 }
