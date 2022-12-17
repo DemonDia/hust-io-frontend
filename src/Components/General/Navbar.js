@@ -7,7 +7,8 @@ function Navbar(props) {
         {linkName:"Organiser",link:"/organiser"},
         {linkName:"Events",link:"/events"},
         {linkName:"Journal",link:"/journals"},
-        {linkName:"Tasks",link:"/tasks"}
+        {linkName:"Tasks",link:"/tasks"},
+        {linkName:"Logout",link:"/logout"}
     ]
     return (
         <nav className="navbar" role="navigation" aria-label="main navigation">
