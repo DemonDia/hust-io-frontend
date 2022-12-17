@@ -25,6 +25,8 @@ import TaskListPage from "./Pages/Tasks/TaskListPage";
 
 // ================================journal================================
 import JournalListPage from "./Pages/Journal/JournalListPage";
+import AddJournalPage from "./Pages/Journal/AddJournalPage";
+import ViewJournalEntryPage from "./Pages/Journal/ViewJournalEntryPage";
 
 // ================================redirects================================
 import ErrorPage from "./Pages/Redirects/ErrorPage";
@@ -35,7 +37,7 @@ function App() {
     return (
         <BrowserRouter>
             <div className="App">
-                <Navbar/>
+                <Navbar />
                 <div className="pageContainer">
                     <Routes>
                         {/* ================================authentication================================  */}
@@ -96,6 +98,16 @@ function App() {
                             exact
                             path="/journals"
                             element={<JournalListPage />}
+                        />
+                        <Route
+                            exact
+                            path="/journals/add"
+                            element={<AddJournalPage />}
+                        />
+                        <Route
+                            exact
+                            path="/journals/:journalId"
+                            element={<ViewJournalEntryPage />}
                         />
 
                         {/* ================================redirects================================  */}
