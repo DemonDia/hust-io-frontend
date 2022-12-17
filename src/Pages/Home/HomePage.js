@@ -1,23 +1,33 @@
-import React,{useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import OptionBox from "../../Components/Home/OptionBox";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
 
 function HomePage(props) {
-    const options = [
-        { name: "Organiser", link: "/organiser" },
-        { name: "Events", link: "/events" },
-        { name: "Journal", link: "/journals" },
-        { name: "Tasks", link: "/tasks" },
-        { name: "Logout", link: "/logout" },
-    ];
+    const [loading, setLoading] = useState(true);
+    const [options, setOptions] = useState([]);
     // const { setLoggedIn,loggedIn } = useContext(NavbarContext);
     const navigate = useNavigate();
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then((result) => {
             if (result.data.success) {
                 // setLoggedIn(true);
-                console.log("Logged in")
+                console.log("Logged in");
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = today.getMonth();
+                const day = today.getDate();
+                const dateString = `${year}-${month + 1}-${day}`;
+                const options = [
+                    { name: "Today", link: `/organiser/${dateString}` },
+                    { name: "Organiser", link: "/organiser" },
+                    { name: "Events", link: "/events" },
+                    { name: "Journal", link: "/journals" },
+                    { name: "Tasks", link: "/tasks" },
+                    { name: "Logout", link: "/logout" },
+                ];
+                setOptions(options);
+                setLoading(false);
             }
         });
     };
@@ -26,12 +36,19 @@ function HomePage(props) {
     }, []);
     return (
         <div>
-            <h1>Home Page</h1>
-            <div className="columns">
-                {options.map((option, index) => {
-                    return <OptionBox key={index} option={option} />;
-                })}
-            </div>
+            <h1 className="title">Home Page</h1>
+            {loading ? (
+                <h1>Loading...</h1>
+            ) : (
+                <>
+                    {" "}
+                    <div className="columns">
+                        {options.map((option, index) => {
+                            return <OptionBox key={index} option={option} />;
+                        })}
+                    </div>
+                </>
+            )}
         </div>
     );
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 // =============events=============
@@ -16,6 +17,10 @@ function CurrentDatePage(props) {
     const currentToken = localStorage.getItem("loginToken");
     // const { setLoggedIn,loggedIn } = useContext(NavbarContext);
     const { currDate } = useParams();
+    const [year,setYear] = useState(null)
+    const [month,setMonth] = useState(null)
+    const [day,setDay] = useState(null)
+
     const [currTab, setCurrTab] = useState(0);
     const [loading, setLoading] = useState(true);
     const [userId, setUserId] = useState(null);
@@ -29,6 +34,9 @@ function CurrentDatePage(props) {
                 // get events
                 if (currDate) {
                     const [year, month, day] = currDate.split("-");
+                    setYear(year)
+                    setMonth(month)
+                    setDay(day)
                     await loadDayEvents(year, month, day, result.data.id);
                     await loadDayJournalEntries(
                         year,
@@ -262,7 +270,8 @@ function CurrentDatePage(props) {
 
     return (
         <div>
-            <h1 className="title"> As of {currDate}</h1>
+            <Link to="/organiser">Back</Link>
+            <h1 className="title"> As of {day}-{month}-{year}:</h1>
             <div className="tabs">
                 <ul>
                     {tabs.map((tab, index) => {

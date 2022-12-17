@@ -121,9 +121,6 @@ function MainCalendar(props) {
     }, []);
     return (
         <div>
-            <h2 className="title">
-                {monthArr[month]} {year}
-            </h2>
             <div className="container calendarContainer">
                 <div className="columns">
                     <div className="column is-half">
@@ -183,91 +180,94 @@ function MainCalendar(props) {
                         </div>
                     </div>
                 </div>
-                {!loading ? <></> : <></>}
-
-                <table className="calendar">
-                    <thead>
-                        <tr>
-                            {dayArr.map((day, index) => {
-                                return (
-                                    <th key={index}>
-                                        <div className="calendarHeaderCell">
-                                            {day}
-                                        </div>
-                                    </th>
-                                );
-                            })}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {calendarDays.map((calendarWeek, index) => {
-                            return (
-                                <tr className="row calendarRow" key={index}>
-                                    {calendarWeek.map((calendarDay, index) => {
-                                        return calendarDay == " " ? (
-                                            <td key={index}>
-                                                <div className="calendarCellDisabled"></div>
-                                            </td>
-                                        ) : (
-                                            <td key={index}>
-                                                <Link
-                                                    to={`/organiser/${year}-${month}-${calendarDay}`}
-                                                >
-                                                    <div
-                                                        className={
-                                                            month ==
-                                                                currentMonth &&
-                                                            year ==
-                                                                currentYear &&
-                                                            calendarDay ==
-                                                                currentDay
-                                                                ? "todayCalendarCell"
-                                                                : "calendarCell"
-                                                        }
-                                                    >
-                                                        {/* check if there are events */}
-                                                        {calendarDay in
-                                                        calendarEvents ? (
-                                                            <span className="tag is-danger">
-                                                                (
-                                                                {
-                                                                    calendarEvents[
-                                                                        calendarDay
-                                                                    ].length
-                                                                }
-                                                                ){" "}
-                                                            </span>
-                                                        ) : (
-                                                            <></>
-                                                        )}
-                                                        <br></br>
-                                                        <label>
-                                                            {calendarDay}
-                                                        </label>
-
-                                                        {/* {month ==
-                                                            currentMonth &&
-                                                        year == currentYear &&
-                                                        calendarDay ==
-                                                            currentDay ? (
-                                                            <span class="tag is-link">
-                                                                {calendarDay}
-                                                            </span>
-                                                        ) : (
-                                                            <label>
-                                                                {calendarDay}
-                                                            </label>
-                                                        )} */}
-                                                    </div>
-                                                </Link>
-                                            </td>
+                <h2 className="title">
+                    {monthArr[month]} {year}
+                </h2>
+                {loading ? (
+                    <>Loading ...</>
+                ) : (
+                    <>
+                        {" "}
+                        <table className="calendar">
+                            <thead>
+                                <tr>
+                                    {dayArr.map((day, index) => {
+                                        return (
+                                            <th key={index}>
+                                                <div className="calendarHeaderCell">
+                                                    {day}
+                                                </div>
+                                            </th>
                                         );
                                     })}
                                 </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
+                            </thead>
+                            <tbody>
+                                {calendarDays.map((calendarWeek, index) => {
+                                    return (
+                                        <tr
+                                            className="row calendarRow"
+                                            key={index}
+                                        >
+                                            {calendarWeek.map(
+                                                (calendarDay, index) => {
+                                                    return calendarDay ==
+                                                        " " ? (
+                                                        <td key={index}>
+                                                            <div className="calendarCellDisabled"></div>
+                                                        </td>
+                                                    ) : (
+                                                        <td key={index}>
+                                                            <Link
+                                                                to={`/organiser/${year}-${month}-${calendarDay}`}
+                                                            >
+                                                                <div
+                                                                    className={
+                                                                        month ==
+                                                                            currentMonth &&
+                                                                        year ==
+                                                                            currentYear &&
+                                                                        calendarDay ==
+                                                                            currentDay
+                                                                            ? "todayCalendarCell"
+                                                                            : "calendarCell"
+                                                                    }
+                                                                >
+                                                                    {/* check if there are events */}
+                                                                    {calendarDay in
+                                                                    calendarEvents ? (
+                                                                        <span className="tag is-danger">
+                                                                            (
+                                                                            {
+                                                                                calendarEvents[
+                                                                                    calendarDay
+                                                                                ]
+                                                                                    .length
+                                                                            }
+                                                                            ){" "}
+                                                                        </span>
+                                                                    ) : (
+                                                                        <></>
+                                                                    )}
+                                                                    <br></br>
+                                                                    <label>
+                                                                        {
+                                                                            calendarDay
+                                                                        }
+                                                                    </label>
+                                                                </div>
+                                                            </Link>
+                                                        </td>
+                                                    );
+                                                }
+                                            )}
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </>
+                )}
             </div>
         </div>
     );
