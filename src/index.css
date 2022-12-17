@@ -118,13 +118,14 @@ code {
   align-self: center;
 }
 
-.yearChangeBtn,.ratingChangeBtn {
+.yearChangeBtn,.ratingChangeBtn,.yearChangeBtn:disabled,.ratingChangeBtn:disabled {
 
   background-color: blue;
   color: white;
 }
 
-.yearChangeBtnContainer,ratingChangeBtnContainer {
+
+.yearChangeBtnContainer,.ratingChangeBtnContainer {
   align-self: center;
 }
 

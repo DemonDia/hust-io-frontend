@@ -64,6 +64,7 @@ function JournalForm({ proceedFunction, currentJournalEntry }) {
                             type="text"
                             placeholder="Enter journal entry title"
                             value={journalTitle}
+                            disabled={currentJournalEntry}
                             onChange={(e) => {
                                 setJournalTitle(e.target.value);
                             }}
@@ -72,6 +73,7 @@ function JournalForm({ proceedFunction, currentJournalEntry }) {
                         <div id="ratingField">
                             <div className="control ratingChangeBtnContainer">
                                 <button
+                                    disabled={currentJournalEntry}
                                     className="button ratingChangeBtn"
                                     onClick={() => {
                                         changeRatingHandler(moodRating - 1);
@@ -94,6 +96,7 @@ function JournalForm({ proceedFunction, currentJournalEntry }) {
                             <div className="control ratingChangeBtnContainer">
                                 <button
                                     className="button ratingChangeBtn"
+                                    disabled={currentJournalEntry}
                                     onClick={() => {
                                         changeRatingHandler(moodRating + 1);
                                     }}
@@ -105,6 +108,7 @@ function JournalForm({ proceedFunction, currentJournalEntry }) {
 
                         <label className="label">Journal Content:</label>
                         <textarea
+                            disabled={currentJournalEntry}
                             className="textarea"
                             placeholder="Write up to 100 characters"
                             value={journalContent}
@@ -114,17 +118,23 @@ function JournalForm({ proceedFunction, currentJournalEntry }) {
                         />
                     </div>
                 </div>
-
-                <button
-                    className="button authBtn"
-                    onClick={() => {
-                        proceed();
-                    }}
-                >
-                    {currentJournalEntry ? <>Save</> : <>Add</>}
-                </button>
+                {currentJournalEntry ? (
+                    <></>
+                ) : (
+                    <>
+                        {" "}
+                        <button
+                            className="button authBtn"
+                            onClick={() => {
+                                proceed();
+                            }}
+                        >
+                            Add
+                        </button>
+                    </>
+                )}
                 <Link className="button cancelBtn" to="/journals">
-                    Cancel
+                    {currentJournalEntry ? <>Back</> : <>Cancel</>}
                 </Link>
             </div>
         </div>
