@@ -112,17 +112,19 @@ code {
 
 #yearField {
   justify-content: center;
+}
+#yearField,#ratingField{
   display: flex;
   align-self: center;
 }
 
-.yearChangeBtn {
+.yearChangeBtn,.ratingChangeBtn {
 
   background-color: blue;
   color: white;
 }
 
-.yearChangeBtnContainer {
+.yearChangeBtnContainer,ratingChangeBtnContainer {
   align-self: center;
 }
 

@@ -54,7 +54,6 @@ function EventForm({ proceedFunction, currentEvent }) {
                                 setEventName(e.target.value);
                             }}
                         />
-                        {dateTime}
                         <label className="label">Event Date and Time:</label>
                         <input
                             className="input"
