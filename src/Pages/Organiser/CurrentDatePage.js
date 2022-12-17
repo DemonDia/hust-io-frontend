@@ -6,6 +6,7 @@ import axios from "axios";
 // =============events=============
 import EventList from "../../Components/Events/EventList";
 // =============journal=============
+import JournalList from "../../Components/Journal/JournalList";
 
 // =============tasks=============
 import TaskList from "../../Components/Tasks/TaskList";
@@ -29,6 +30,12 @@ function CurrentDatePage(props) {
                 if (currDate) {
                     const [year, month, day] = currDate.split("-");
                     await loadDayEvents(year, month, day, result.data.id);
+                    await loadDayJournalEntries(
+                        year,
+                        month,
+                        day,
+                        result.data.id
+                    );
                     await loadDayTasks(year, month, day, result.data.id);
                 }
                 setLoading(false);
@@ -84,11 +91,48 @@ function CurrentDatePage(props) {
             });
     };
 
-    // =====================journal=====================
-    // ============load journal============
-    // ============add journal============
-    // ============delete journal============
-
+    // =====================journal entries=====================
+    const [journalEntries, setJournalEntries] = useState([]);
+    // ============load journal entries============
+    const loadDayJournalEntries = async (year, month, day, userId) => {
+        const getJournalEntryResults = await axios.get(
+            process.env.REACT_APP_BACKEND_API +
+                `/journals/${year}/${month - 1}/${day}/${userId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${currentToken}`,
+                },
+            }
+        );
+        if (getJournalEntryResults.data.success) {
+            setJournalEntries(getJournalEntryResults.data.data);
+        }
+    };
+    // ============delete journal entries============
+    const deleteJournal = async (journalId) => {
+        await axios
+            .delete(
+                process.env.REACT_APP_BACKEND_API + `/journals/${journalId}`,
+                {
+                    headers: { Authorization: `Bearer ${currentToken}` },
+                    data: {
+                        userId,
+                    },
+                }
+            )
+            .then(async (res) => {
+                if (res.data.success) {
+                    alert("Successfully deleted");
+                    await loadDayJournalEntries(userId);
+                } else {
+                    alert("Failed to delete");
+                }
+            })
+            .catch((err) => {
+                alert("Failed to delete");
+            });
+    };
+    
     // =====================tasks=====================
     const [tasks, setTasks] = useState([]);
     // ============load tasks============
@@ -127,7 +171,7 @@ function CurrentDatePage(props) {
             )
             .then(async (res) => {
                 if (res.data.success) {
-                    await loadDayTasks(year, month, day,userId);
+                    await loadDayTasks(year, month, day, userId);
                     alert("Successfully added");
                 } else {
                     console.log(res.data.message);
@@ -153,7 +197,7 @@ function CurrentDatePage(props) {
             .then(async (res) => {
                 if (res.data.success) {
                     const [year, month, day] = currDate.split("-");
-                    await loadDayTasks(year, month, day,userId);
+                    await loadDayTasks(year, month, day, userId);
                     alert("Successfully updated");
                 } else {
                     alert("Failed to update");
@@ -168,7 +212,8 @@ function CurrentDatePage(props) {
     const editTaskStatus = async (completed, taskId) => {
         await axios
             .put(
-                process.env.REACT_APP_BACKEND_API + `/tasks/completion/${taskId}`,
+                process.env.REACT_APP_BACKEND_API +
+                    `/tasks/completion/${taskId}`,
                 {
                     completed,
                     userId,
@@ -178,7 +223,7 @@ function CurrentDatePage(props) {
             .then(async (res) => {
                 if (res.data.success) {
                     const [year, month, day] = currDate.split("-");
-                    await loadDayTasks(year, month, day,userId);
+                    await loadDayTasks(year, month, day, userId);
                     alert("Successfully updated");
                 } else {
                     alert("Failed to update");
@@ -247,13 +292,13 @@ function CurrentDatePage(props) {
                             <>
                                 <EventList
                                     Contents={events}
-                                    DeleteContent={deleteEvent}
+                                    DeleteContent={deleteJournal}
                                 />
                             </>
                         ) : (
                             <>
                                 {currTab == 1 ? (
-                                    <>Journal Content</>
+                                    <JournalList Contents={journalEntries} />
                                 ) : (
                                     <>
                                         <TaskForm addTaskMethod={addNewTask} />
