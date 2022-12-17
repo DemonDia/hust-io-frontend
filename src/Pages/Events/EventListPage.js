@@ -65,9 +65,7 @@ function EventListPage(props) {
                 <>
                     <EventList
                         Contents={events}
-                        RefreshContents={loadUserEvents}
                         DeleteContent={deleteEvent}
-                        userId={userId}
                     />
                 </>
             )}
