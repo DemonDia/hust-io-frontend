@@ -57,13 +57,13 @@ code {
 }
 
 /* forgot password/email verification */
-.authForm{
+.authForm {
   background: white;
   padding: 25px;
   border-radius: 20px;
 }
-.cancelAuthBtn{
-}
+
+.cancelAuthBtn {}
 
 /* option box */
 .optionBox {
@@ -113,6 +113,13 @@ code {
   padding: 10px;
 }
 
+.calendarCell,
+.todayCalendarCell {
+  transition: 0.4s;
+}
+.todayCalendarCell:hover{
+  background: #0e1ead;
+}
 .calendarCell {
   background: white;
 
@@ -121,10 +128,12 @@ code {
   align-items: flex-end; */
 }
 
-.todayCalendarCell {
+.todayCalendarCell,
+.calendarCell:hover {
   background: #4050e3;
   color: white;
 }
+
 
 .calendarCellDisabled {
   background: #F2F4F7
@@ -145,7 +154,7 @@ code {
 .yearChangeBtn:disabled,
 .ratingChangeBtn:disabled {
 
-  background-color: blue;
+  background-color: rgb(18, 18, 185);
   color: white;
 }
 
@@ -197,7 +206,8 @@ code {
 .formContainer {}
 
 /* cancel btn */
-.cancelBtn,.cancelAuthBtn {
+.cancelBtn,
+.cancelAuthBtn {
   background: #000552;
   color: white;
 }
