@@ -38,7 +38,7 @@ function EmailVerificationPage(props) {
                     ) : (
                         <h1 className="title">Failed to verify</h1>
                     )}
-                    <Link to ="/login" className="button">Back to login</Link>
+                    <Link to ="/login" className="button is-link">Back to login</Link>
                 </>
             )}
         </div>
