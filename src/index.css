@@ -56,6 +56,15 @@ code {
   color: white;
 }
 
+/* forgot password/email verification */
+.authForm{
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+}
+.cancelAuthBtn{
+}
+
 /* option box */
 .optionBox {
   height: 20vh;
@@ -188,7 +197,7 @@ code {
 .formContainer {}
 
 /* cancel btn */
-.cancelBtn {
+.cancelBtn,.cancelAuthBtn {
   background: #000552;
   color: white;
 }

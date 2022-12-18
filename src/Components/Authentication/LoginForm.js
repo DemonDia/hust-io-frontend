@@ -46,7 +46,7 @@ function LoginForm(props) {
                         Login
                     </button>
                     <p>
-                        Forgot your password? Click <Link>here</Link>.
+                        Forgot your password? Click <Link to="/forgotpass">here</Link>.
                     </p>
                     <p>
                         Haven't joined us? Register{" "}
