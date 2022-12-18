@@ -71,6 +71,10 @@ code {
   display: flex;
   background: #0014C5;
   align-items: center;
+  transition: 0.4s;
+}
+.optionBox:hover{
+  background:#000c78;
 }
 
 .optionBox h1 {
