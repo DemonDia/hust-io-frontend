@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./Components/General/Navbar";
 // ================================authentication================================
 import EmailVerificationPage from "./Pages/Authentication/EmailVerificationPage";
+import SendResetPasswordRequest from "./Pages/Authentication/SendResetPasswordRequest";
 import ForgotPasswordFormPage from "./Pages/Authentication/ForgotPasswordFormPage";
 import LoginPage from "./Pages/Authentication/LoginPage";
 import RegistrationPage from "./Pages/Authentication/Registration";
@@ -56,6 +57,11 @@ function App() {
                         <Route
                             exact
                             path="/forgotpass"
+                            element={<SendResetPasswordRequest />}
+                        />
+                        <Route
+                            exact
+                            path="/resetpass/:userId/:token"
                             element={<ForgotPasswordFormPage />}
                         />
 

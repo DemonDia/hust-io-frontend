@@ -11,7 +11,7 @@ function ForgotPasswordFormPage(props) {
         } else {
             axios
                 .post(
-                    process.env.REACT_APP_BACKEND_API + "/api/users/changepass",
+                    process.env.REACT_APP_BACKEND_API + "/users/changepass",
                     {
                         newPassword,
                         userId,
