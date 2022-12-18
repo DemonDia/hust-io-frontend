@@ -4,7 +4,7 @@ function EventList({ Contents, DeleteContent }) {
     // ============search as you type============
     const [search, setSearch] = useState("");
     // ============filter in asc and desc============
-    const [filter, setFilter] = useState();
+    const [filter, setFilter] = useState(0);
     const filterOptions = ["Latest", "Earliest", "A-Z", "Z-A"];
     // ============delete event============
     const deleteEvent = async (eventId) => {
