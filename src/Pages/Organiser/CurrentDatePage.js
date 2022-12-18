@@ -308,8 +308,8 @@ function CurrentDatePage(props) {
                                     <JournalList Contents={journalEntries} />
                                 ) : (
                                     <>
-                                        <TaskForm addTaskMethod={addNewTask} />
                                         <TaskList
+                                            AddContent={addNewTask}
                                             Contents={tasks}
                                             EditName={editTaskName}
                                             EditStatus={editTaskStatus}

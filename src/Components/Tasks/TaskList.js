@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import TaskRow from "./TaskRow";
-function TaskList({ Contents, DeleteContent,EditStatus,EditName }) {
+import TaskForm from "./TaskForm";
+function TaskList({
+    Contents,
+    AddContent,
+    DeleteContent,
+    EditStatus,
+    EditName,
+    haveAddMethod,
+}) {
     // ============search as you type============
     const [search, setSearch] = useState("");
     // ============filter in asc and desc============
@@ -9,11 +17,11 @@ function TaskList({ Contents, DeleteContent,EditStatus,EditName }) {
     const filterOptions = ["A-Z", "Z-A"];
     // ============edit task name============
     const editTaskName = async (taskName, taskId) => {
-        await EditName(taskName, taskId)
+        await EditName(taskName, taskId);
     };
     // ============edit task completion============
     const editTaskCompletion = async (taskStatus, taskId) => {
-        await EditStatus(taskStatus, taskId)
+        await EditStatus(taskStatus, taskId);
     };
     // ============delete task============
     const deleteTask = async (eventId) => {
@@ -60,6 +68,14 @@ function TaskList({ Contents, DeleteContent,EditStatus,EditName }) {
                     </div>
                 </div>
             </div>
+            {AddContent ? (
+                <>
+                    <TaskForm addTaskMethod={AddContent} />
+                </>
+            ) : (
+                <></>
+            )}
+
             {Contents.length > 0 ? (
                 <>
                     {Contents.filter((content) => {
@@ -69,10 +85,12 @@ function TaskList({ Contents, DeleteContent,EditStatus,EditName }) {
                     })
                         .sort((a, b) =>
                             filter == 0
-                                ? a.taskName.toLowerCase() > b.taskName.toLowerCase()
+                                ? a.taskName.toLowerCase() >
+                                  b.taskName.toLowerCase()
                                     ? 1
                                     : -1
-                                : b.taskName.toLowerCase() > a.taskName.toLowerCase()
+                                : b.taskName.toLowerCase() >
+                                  a.taskName.toLowerCase()
                                 ? 1
                                 : -1
                         )
