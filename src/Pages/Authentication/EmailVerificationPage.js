@@ -16,13 +16,11 @@ function EmailVerificationPage(props) {
                     setVerificationFailed(false);
                     setVerified(true);
                 } else {
-                    console.log(res.data.message)
                     setVerificationFailed(true);
                     setVerified(false);
                 }
             })
             .catch((err) => {
-                console.log(err)
                 setVerificationFailed(true);
                 setVerified(false);
             });

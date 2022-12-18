@@ -39,12 +39,10 @@ function AddJournalPage(props) {
                     alert("Successfully added");
                     navigate("/journals");
                 } else {
-                    console.log(res.data.message);
                     alert("Failed to add");
                 }
             })
             .catch((err) => {
-                console.log(err);
                 alert("Failed to add");
             });
     };

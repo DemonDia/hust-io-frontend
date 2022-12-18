@@ -184,12 +184,10 @@ function CurrentDatePage(props) {
                     await loadDayTasks(year, month, day, currUserId);
                     alert("Successfully added");
                 } else {
-                    console.log(res.data.message);
                     alert("Failed to add");
                 }
             })
             .catch((err) => {
-                console.log(err);
                 alert("Failed to add");
             });
     };
@@ -214,7 +212,6 @@ function CurrentDatePage(props) {
                 }
             })
             .catch((err) => {
-                console.log(err);
                 alert("Failed to update");
             });
     };
@@ -240,7 +237,6 @@ function CurrentDatePage(props) {
                 }
             })
             .catch((err) => {
-                console.log(err);
                 alert("Failed to update");
             });
     };

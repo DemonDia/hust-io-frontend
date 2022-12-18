@@ -56,7 +56,6 @@ function TaskListPage(props) {
                 }
             })
             .catch((err) => {
-                console.log(err);
                 alert("Failed to update");
             });
     };
@@ -80,7 +79,6 @@ function TaskListPage(props) {
                 }
             })
             .catch((err) => {
-                console.log(err);
                 alert("Failed to update");
             });
     };

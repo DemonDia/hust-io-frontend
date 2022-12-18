@@ -13,7 +13,6 @@ function TaskList({ Contents, DeleteContent,EditStatus,EditName }) {
     };
     // ============edit task completion============
     const editTaskCompletion = async (taskStatus, taskId) => {
-        console.log(taskStatus, taskId)
         await EditStatus(taskStatus, taskId)
     };
     // ============delete task============
