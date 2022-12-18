@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import OptionBox from "../../Components/Home/OptionBox";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
+import { mainContext } from "../../Contexts/mainContext";
 
 function HomePage(props) {
+    const { setUserId } = useContext(mainContext);
     const [loading, setLoading] = useState(true);
     const [options, setOptions] = useState([]);
     // const { setLoggedIn,loggedIn } = useContext(NavbarContext);
@@ -11,6 +13,7 @@ function HomePage(props) {
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then((result) => {
             if (result.data.success) {
+                setUserId(result.data.id)
                 // setLoggedIn(true);
                 console.log("Logged in");
                 const today = new Date();

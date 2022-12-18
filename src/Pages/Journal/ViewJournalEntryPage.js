@@ -1,21 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import JournalForm from "../../Components/Journal/JournalForm";
 import { defaultAuthCheck } from "../../AuthCheck";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { mainContext } from "../../Contexts/mainContext";
 
 function ViewJournalEntryPage(props) {
-    // const { setLoggedIn,loggedIn } = useContext(NavbarContext);
+    const { setUserId } = useContext(mainContext);
     const { journalId } = useParams();
     const currentToken = localStorage.getItem("loginToken");
     const [loading, setLoading] = useState(true);
-    const [userId, setUserId] = useState(null);
+    const [currUserId, setCurrUserId] = useState(null);
     const [journalEntry, setJournalEntry] = useState(null);
     const navigate = useNavigate();
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then(async (result) => {
             if (result.data.success) {
                 setUserId(result.data.id);
+                setCurrUserId(result.data.id);
                 await getCurrentJournalEntry();
                 setLoading(false);
             }

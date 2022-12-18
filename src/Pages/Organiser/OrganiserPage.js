@@ -1,18 +1,19 @@
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState,useContext } from "react";
 import MainCalendar from "../../Components/Organiser/MainCalendar";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
+import { mainContext } from "../../Contexts/mainContext";
 
 function OrganiserPage(props) {
-    // const { setLoggedIn,loggedIn } = useContext(NavbarContext);
+    const { setUserId } = useContext(mainContext);
     const [loading,setLoading] = useState(true)
-    const [userId,setUserId] = useState(null) 
+    const [currUserId, setCurrUserId] = useState(null);
     const navigate = useNavigate();
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then((result) => {
             if (result.data.success) {
                 // setLoggedIn(true);
-                // console.log(result.data)
+                setCurrUserId(result.data.id);
                 setUserId(result.data.id)
                 console.log("Logged in");
                 setLoading(false)
@@ -24,7 +25,7 @@ function OrganiserPage(props) {
     }, []);
     return (
         <div>
-            {loading?<>Loading ...</>:<><MainCalendar userId = {userId}/></>}
+            {loading?<>Loading ...</>:<><MainCalendar userId = {currUserId}/></>}
         </div>
     );
 }

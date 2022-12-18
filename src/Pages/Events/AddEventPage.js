@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState,useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import EventForm from "../../Components/Events/EventForm";
 import { defaultAuthCheck } from "../../AuthCheck";
 import axios from "axios";
+import { mainContext } from "../../Contexts/mainContext";
+
 function AddEventPage(props) {
-    // const { setLoggedIn,loggedIn } = useContext(NavbarContext);
+    const { setUserId } = useContext(mainContext);
     const currentToken = localStorage.getItem("loginToken");
     const [loading, setLoading] = useState(true);
-    const [userId, setUserId] = useState(null);
+    const [currUserId, setCurrUserId] = useState(null);
     const navigate = useNavigate();
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then((result) => {
             if (result.data.success) {
                 setUserId(result.data.id);
+                setCurrUserId(result.data.id);
                 console.log("Logged in");
                 setLoading(false);
             }
@@ -29,7 +32,7 @@ function AddEventPage(props) {
                 process.env.REACT_APP_BACKEND_API + "/events/",
                 {
                     ...newEvent,
-                    userId,
+                    userId:currUserId,
                 },
                 { headers: { Authorization: `Bearer ${currentToken}` } }
             )

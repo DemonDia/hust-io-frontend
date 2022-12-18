@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { mainContext } from "../../Contexts/mainContext";
 
 // =============events=============
 import EventList from "../../Components/Events/EventList";
@@ -15,7 +16,7 @@ import TaskForm from "../../Components/Tasks/TaskForm";
 
 function CurrentDatePage(props) {
     const currentToken = localStorage.getItem("loginToken");
-    // const { setLoggedIn,loggedIn } = useContext(NavbarContext);
+    const { setUserId } = useContext(mainContext);
     const { currDate } = useParams();
     const [year,setYear] = useState(null)
     const [month,setMonth] = useState(null)
@@ -23,7 +24,7 @@ function CurrentDatePage(props) {
 
     const [currTab, setCurrTab] = useState(0);
     const [loading, setLoading] = useState(true);
-    const [userId, setUserId] = useState(null);
+    const [currUserId, setCurrUserId] = useState(null);
     const navigate = useNavigate();
     const tabs = ["Events", "Journal", "Tasks"];
     const loadPage = async () => {
@@ -31,6 +32,7 @@ function CurrentDatePage(props) {
         await defaultAuthCheck(navigate).then(async (result) => {
             if (result.data.success) {
                 setUserId(result.data.id);
+                setCurrUserId(result.data.id);                
                 // get events
                 if (currDate) {
                     const [year, month, day] = currDate.split("-");
@@ -80,14 +82,14 @@ function CurrentDatePage(props) {
             .delete(process.env.REACT_APP_BACKEND_API + `/events/${eventId}`, {
                 headers: { Authorization: `Bearer ${currentToken}` },
                 data: {
-                    userId,
+                    userId:currUserId,
                 },
             })
             .then(async (res) => {
                 if (res.data.success) {
                     if (currDate) {
                         const [year, month, day] = currDate.split("-");
-                        await loadDayEvents(year, month, day, userId);
+                        await loadDayEvents(year, month, day, currUserId);
                         alert("Successfully deleted");
                     }
                 } else {
@@ -124,14 +126,14 @@ function CurrentDatePage(props) {
                 {
                     headers: { Authorization: `Bearer ${currentToken}` },
                     data: {
-                        userId,
+                        userId:currUserId,
                     },
                 }
             )
             .then(async (res) => {
                 if (res.data.success) {
                     alert("Successfully deleted");
-                    await loadDayJournalEntries(userId);
+                    await loadDayJournalEntries(currUserId);
                 } else {
                     alert("Failed to delete");
                 }
@@ -173,13 +175,13 @@ function CurrentDatePage(props) {
                         month: month - 1,
                         day,
                     },
-                    userId,
+                    userId:currUserId,
                 },
                 { headers: { Authorization: `Bearer ${currentToken}` } }
             )
             .then(async (res) => {
                 if (res.data.success) {
-                    await loadDayTasks(year, month, day, userId);
+                    await loadDayTasks(year, month, day, currUserId);
                     alert("Successfully added");
                 } else {
                     console.log(res.data.message);
@@ -198,14 +200,14 @@ function CurrentDatePage(props) {
                 process.env.REACT_APP_BACKEND_API + `/tasks/${taskId}`,
                 {
                     taskName,
-                    userId,
+                    userId:currUserId,
                 },
                 { headers: { Authorization: `Bearer ${currentToken}` } }
             )
             .then(async (res) => {
                 if (res.data.success) {
                     const [year, month, day] = currDate.split("-");
-                    await loadDayTasks(year, month, day, userId);
+                    await loadDayTasks(year, month, day, currUserId);
                     alert("Successfully updated");
                 } else {
                     alert("Failed to update");
@@ -224,14 +226,14 @@ function CurrentDatePage(props) {
                     `/tasks/completion/${taskId}`,
                 {
                     completed,
-                    userId,
+                    userId:currUserId,
                 },
                 { headers: { Authorization: `Bearer ${currentToken}` } }
             )
             .then(async (res) => {
                 if (res.data.success) {
                     const [year, month, day] = currDate.split("-");
-                    await loadDayTasks(year, month, day, userId);
+                    await loadDayTasks(year, month, day, currUserId);
                     alert("Successfully updated");
                 } else {
                     alert("Failed to update");
@@ -249,14 +251,14 @@ function CurrentDatePage(props) {
             .delete(process.env.REACT_APP_BACKEND_API + `/tasks/${eventId}`, {
                 headers: { Authorization: `Bearer ${currentToken}` },
                 data: {
-                    userId,
+                    userId:currUserId,
                 },
             })
             .then(async (res) => {
                 if (res.data.success) {
                     if (currDate) {
                         const [year, month, day] = currDate.split("-");
-                        await loadDayTasks(year, month, day, userId);
+                        await loadDayTasks(year, month, day, currUserId);
                         alert("Successfully deleted");
                     }
                 } else {

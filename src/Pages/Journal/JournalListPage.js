@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import JournalList from "../../Components/Journal/JournalList";
+import { mainContext } from "../../Contexts/mainContext";
+
 function JournalListPage(props) {
     const currentToken = localStorage.getItem("loginToken");
-    // const { setLoggedIn,loggedIn } = useContext(NavbarContext);
+    const { setUserId } = useContext(mainContext);
     const [loading, setLoading] = useState(true);
-    const [userId, setUserId] = useState(null);
+    const [currUserId, setCurrUserId] = useState(null);
     const [journals, setJournals] = useState([]);
     const navigate = useNavigate();
     const loadUserJournals = async (userId) => {
@@ -27,6 +29,8 @@ function JournalListPage(props) {
         await defaultAuthCheck(navigate).then(async (result) => {
             if (result.data.success) {
                 setUserId(result.data.id);
+                setCurrUserId(result.data.id);
+
                 // get journal entries
                 await loadUserJournals(result.data.id);
                 setLoading(false);
@@ -40,14 +44,14 @@ function JournalListPage(props) {
                 {
                     headers: { Authorization: `Bearer ${currentToken}` },
                     data: {
-                        userId,
+                        userId:currUserId,
                     },
                 }
             )
             .then(async (res) => {
                 if (res.data.success) {
                     alert("Successfully deleted");
-                    await loadUserJournals(userId);
+                    await loadUserJournals(currUserId);
                 } else {
                     alert("Failed to delete");
                 }

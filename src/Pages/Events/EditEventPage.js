@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import EventForm from "../../Components/Events/EventForm";
 import { defaultAuthCheck } from "../../AuthCheck";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { mainContext } from "../../Contexts/mainContext";
 
 function EditEventPage(props) {
-    // const { setLoggedIn,loggedIn } = useContext(NavbarContext);
+    const { setUserId } = useContext(mainContext);
     const { eventId } = useParams();
     const currentToken = localStorage.getItem("loginToken");
     const [loading, setLoading] = useState(true);
-    const [userId, setUserId] = useState(null);
+    const [currUserId, setCurrUserId] = useState(null);
     const [event,setEvent] = useState(null)
     const navigate = useNavigate();
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then(async(result) => {
             if (result.data.success) {
+                setCurrUserId(result.data.id);
                 setUserId(result.data.id);
                 await getCurrentEvent()
                 setLoading(false);
@@ -46,7 +48,7 @@ function EditEventPage(props) {
                 process.env.REACT_APP_BACKEND_API + `/events/${eventId}`,
                 {
                     ...updatedEvent,
-                    userId,
+                    userId:currUserId,
                 },
                 { headers: { Authorization: `Bearer ${currentToken}` } }
             )

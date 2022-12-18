@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import TaskList from "../../Components/Tasks/TaskList";
+import { mainContext } from "../../Contexts/mainContext";
 
 function TaskListPage(props) {
     const currentToken = localStorage.getItem("loginToken");
-    // const { setLoggedIn,loggedIn } = useContext(NavbarContext);
+    const { setUserId } = useContext(mainContext);
     const [loading, setLoading] = useState(true);
-    const [userId, setUserId] = useState(null);
+    const [currUserId, setCurrUserId] = useState(null);
     const [tasks, setTasks] = useState([]);
     const navigate = useNavigate();
     const loadUserTasks = async (userId) => {
@@ -27,6 +28,7 @@ function TaskListPage(props) {
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then(async (result) => {
             if (result.data.success) {
+                setCurrUserId(result.data.id);
                 setUserId(result.data.id);
                 // get tasks
                 await loadUserTasks(result.data.id);
@@ -41,13 +43,13 @@ function TaskListPage(props) {
                 process.env.REACT_APP_BACKEND_API + `/tasks/${taskId}`,
                 {
                     taskName,
-                    userId,
+                    userId:currUserId,
                 },
                 { headers: { Authorization: `Bearer ${currentToken}` } }
             )
             .then(async (res) => {
                 if (res.data.success) {
-                    await loadUserTasks(userId);
+                    await loadUserTasks(currUserId);
                     alert("Successfully updated");
                 } else {
                     alert("Failed to update");
@@ -60,19 +62,18 @@ function TaskListPage(props) {
     };
 
     const editTaskStatus = async (completed, taskId) => {
-        console.log(completed, taskId)
         await axios
             .put(
                 process.env.REACT_APP_BACKEND_API + `/tasks/completion/${taskId}`,
                 {
                     completed,
-                    userId,
+                    userId:currUserId,
                 },
                 { headers: { Authorization: `Bearer ${currentToken}` } }
             )
             .then(async (res) => {
                 if (res.data.success) {
-                    await loadUserTasks(userId);
+                    await loadUserTasks(currUserId);
                     alert("Successfully updated");
                 } else {
                     alert("Failed to update");
@@ -88,13 +89,13 @@ function TaskListPage(props) {
             .delete(process.env.REACT_APP_BACKEND_API + `/tasks/${taskId}`, {
                 headers: { Authorization: `Bearer ${currentToken}` },
                 data: {
-                    userId,
+                    userId:currUserId,
                 },
             })
             .then(async (res) => {
                 if (res.data.success) {
                     alert("Successfully deleted");
-                    await loadUserTasks(userId);
+                    await loadUserTasks(currUserId);
                 } else {
                     alert("Failed to delete");
                 }
