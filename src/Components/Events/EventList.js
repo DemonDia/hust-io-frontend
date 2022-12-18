@@ -12,9 +12,6 @@ function EventList({ Contents, DeleteContent }) {
     };
     return (
         <div className="listComponent">
-            <div className="container">
-                <h1 className="title">Event List</h1>
-            </div>
             <div className="columns">
                 <div className="column is-half-tablet">
                     <label>Search:</label>

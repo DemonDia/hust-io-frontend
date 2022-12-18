@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-function EventForm({ proceedFunction, currentEvent }) {
+function EventForm({ proceedFunction, currentEvent,header }) {
     const [eventName, setEventName] = useState("");
     const [tags, setTags] = useState([]);
     const [dateTime, setDateTime] = useState(null);
@@ -41,6 +41,7 @@ function EventForm({ proceedFunction, currentEvent }) {
 
     return (
         <div className="formContainer container">
+            <h1 className="title">{header}</h1>
             <div className="container">
                 <div className="field">
                     <p className="control">

@@ -68,12 +68,11 @@ function EditEventPage(props) {
 
     return (
         <div>
-            <h1 className="title">Edit Event</h1>
             {loading ? (
                 <>Loading...</>
             ) : (
                 <>
-                    <EventForm proceedFunction={editEvent} currentEvent={event}/>
+                    <EventForm proceedFunction={editEvent} currentEvent={event} header={"Edit Event"}/>
                 </>
             )}
         </div>

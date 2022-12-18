@@ -65,6 +65,7 @@ function JournalListPage(props) {
     }, []);
     return (
         <div>
+            <h1 className="title">All Journal Entries</h1>
             {loading ? (
                 <>Loading ...</>
             ) : (

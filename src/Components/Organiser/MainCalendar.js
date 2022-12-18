@@ -122,6 +122,9 @@ function MainCalendar(props) {
     return (
         <div>
             <div className="container calendarContainer">
+                <h2 className="title">
+                    {monthArr[month]} {year}
+                </h2>
                 <div className="columns">
                     <div className="column is-half">
                         <label>Year:</label>
@@ -180,9 +183,6 @@ function MainCalendar(props) {
                         </div>
                     </div>
                 </div>
-                <h2 className="title">
-                    {monthArr[month]} {year}
-                </h2>
                 {loading ? (
                     <>Loading ...</>
                 ) : (

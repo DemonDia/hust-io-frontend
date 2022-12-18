@@ -13,9 +13,6 @@ function JournalList({ Contents, DeleteContent }) {
     return (
         <div>
             <div className="listComponent">
-                <div className="container">
-                    <h1 className="title">Journal Entry List</h1>
-                </div>
                 <div className="columns">
                     <div className="column is-half-tablet">
                         <label>Search:</label>

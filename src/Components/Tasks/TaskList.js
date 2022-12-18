@@ -21,9 +21,6 @@ function TaskList({ Contents, DeleteContent,EditStatus,EditName }) {
     };
     return (
         <div className="listComponent">
-            <div className="container">
-                <h1 className="title">Task List</h1>
-            </div>
             <div className="columns">
                 <div className="column is-half-tablet">
                     <label>Search:</label>

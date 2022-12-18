@@ -50,12 +50,11 @@ function AddEventPage(props) {
     };
     return (
         <div>
-            <h1 className="title">Add New Event</h1>
             {loading ? (
                 <>Loading...</>
             ) : (
                 <>
-                    <EventForm proceedFunction={addNewEvent} />
+                    <EventForm proceedFunction={addNewEvent} header={"Add New Event"}/>
                 </>
             )}
         </div>

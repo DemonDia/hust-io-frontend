@@ -61,6 +61,7 @@ function EventListPage(props) {
     }, []);
     return (
         <div>
+            <h1 className="title">All Events</h1>
             {loading ? (
                 <>Loading ...</>
             ) : (

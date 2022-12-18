@@ -48,12 +48,11 @@ function AddJournalPage(props) {
     };
     return (
         <div>
-            <h1 className="title">Add New Journal Entry</h1>
             {loading ? (
                 <>Loading...</>
             ) : (
                 <>
-                    <JournalForm proceedFunction={addNewJournalEntry} />
+                    <JournalForm proceedFunction={addNewJournalEntry} heading={"New Journal Entry"}/>
                 </>
             )}
         </div>

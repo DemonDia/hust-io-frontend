@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-function JournalForm({ proceedFunction, currentJournalEntry }) {
+function JournalForm({ proceedFunction, currentJournalEntry, heading }) {
     const [journalTitle, setJournalTitle] = useState("");
     const [journalContent, setJournalContent] = useState("");
     const [moodRating, setMoodRating] = useState(1);
@@ -47,7 +47,7 @@ function JournalForm({ proceedFunction, currentJournalEntry }) {
             const dateTime = `${day}-${month + 1}-${year}, ${
                 hour == 0 ? "00" : hour
             }:${minute}`;
-            setDateTime(dateTime)
+            setDateTime(dateTime);
             setJournalTitle(journalTitle);
             setJournalContent(journalContent);
             setMoodRating(moodRating);
@@ -56,13 +56,19 @@ function JournalForm({ proceedFunction, currentJournalEntry }) {
     }, []);
     return (
         <div className="formContainer container">
+            <h1 className="title">{heading}</h1>
             <div className="container">
-                {
-                    currentJournalEntry?<> <label className="label">Published at: {dateTime}</label></>:<></>
-                }
-                <>
-
-                </>
+                {currentJournalEntry ? (
+                    <>
+                        {" "}
+                        <label className="label">
+                            Published at: {dateTime}
+                        </label>
+                    </>
+                ) : (
+                    <></>
+                )}
+                <></>
                 <div className="field">
                     <div className="control">
                         <label className="label">Journal Title:</label>

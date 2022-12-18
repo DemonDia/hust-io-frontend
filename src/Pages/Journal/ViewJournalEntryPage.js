@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { mainContext } from "../../Contexts/mainContext";
 
-function ViewJournalEntryPage(props) {
+function ViewJournalEntryPage() {
     const { setUserId } = useContext(mainContext);
     const { journalId } = useParams();
     const currentToken = localStorage.getItem("loginToken");
@@ -44,12 +44,11 @@ function ViewJournalEntryPage(props) {
     };
     return (
         <div>
-            <h1 className="title">View Journal Entry</h1>
             {loading ? (
                 <>Loading...</>
             ) : (
                 <>
-                    <JournalForm currentJournalEntry={journalEntry} />
+                    <JournalForm currentJournalEntry={journalEntry} heading={"View Journal Entry"}/>
                 </>
             )}
         </div>
