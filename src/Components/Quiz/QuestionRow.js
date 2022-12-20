@@ -44,7 +44,7 @@ function QuestionRow({
         <div>
             <h1 className="title">Title:{question}</h1>
             <h1 className="title">Answer:{correctAnswer}</h1>
-            <h1 className="title">Explanation{explanation}</h1>
+            <h1 className="title">Explanation:{explanation}</h1>
         </div>
     );
 }
