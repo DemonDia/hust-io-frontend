@@ -31,6 +31,11 @@ import JournalListPage from "./Pages/Journal/JournalListPage";
 import AddJournalPage from "./Pages/Journal/AddJournalPage";
 import ViewJournalEntryPage from "./Pages/Journal/ViewJournalEntryPage";
 
+// ================================quiz================================
+import QuizListPage from "./Pages/Quiz/QuizListPage";
+import AddQuizPage from "./Pages/Quiz/AddQuizPage";
+import EditQuizPage from "./Pages/Quiz/EditQuizPage";
+
 // ================================redirects================================
 import ErrorPage from "./Pages/Redirects/ErrorPage";
 import RedirectPage from "./Pages/Redirects/RedirectPage";
@@ -130,6 +135,23 @@ function App() {
                                 exact
                                 path="/journals/:journalId"
                                 element={<ViewJournalEntryPage />}
+                            />
+
+                            {/* ================================quiz================================  */}
+                            <Route
+                                exact
+                                path="/quizzes"
+                                element={<QuizListPage />}
+                            />
+                            <Route
+                                exact
+                                path="/quizzes/add"
+                                element={<AddQuizPage />}
+                            />
+                            <Route
+                                exact
+                                path="/quizzes/:quizId"
+                                element={<EditQuizPage />}
                             />
 
                             {/* ================================redirects================================  */}
