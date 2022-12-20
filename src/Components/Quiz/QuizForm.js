@@ -51,7 +51,6 @@ function QuizForm({ proceedFunction, currentQuiz, heading }) {
     const selectQuestion = (index) => {
         if (index != -1) {
             setSelectedQuestion(questions[index]);
-            console.log(questions[index]);
             setSelectedQuestionIndex(index);
             const { question, correctAnswer, explanation } = questions[index];
             setQuestion(question);

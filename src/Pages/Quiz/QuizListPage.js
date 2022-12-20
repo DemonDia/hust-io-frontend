@@ -22,7 +22,6 @@ function QuizListPage(props) {
             }
         );
         if (getQuizResults.data.success) {
-            console.log(getQuizResults.data.data);
             setQuizzes(getQuizResults.data.data);
         }
     };
