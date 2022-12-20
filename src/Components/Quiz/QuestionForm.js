@@ -25,12 +25,61 @@ function QuestionForm({ addQuestionFunction }) {
                 explanation,
             };
             addQuestionFunction(questionObject);
-            setQuestion("")
-            setCorrectAnswer("")
-            setExplanation("")
+            setQuestion("");
+            setCorrectAnswer("");
+            setExplanation("");
         }
     };
-    return <div></div>;
+    return (
+        <div className="field questionField">
+            <div className="control">
+                <label className="label">Question:*</label>
+                <input
+                    className="input"
+                    type="text"
+                    placeholder="Add new question"
+                    value={question}
+                    onChange={(e) => {
+                        setQuestion(e.target.value);
+                    }}
+                />
+            </div>
+            <div className="control">
+                <label className="label">Answer:*</label>
+                <input
+                    className="input"
+                    type="text"
+                    placeholder="Add correct answer"
+                    value={correctAnswer}
+                    onChange={(e) => {
+                        setCorrectAnswer(e.target.value);
+                    }}
+                />
+            </div>
+            <div className="control">
+                <label className="label">Explanation:</label>
+                <textarea
+                    className="textarea"
+                    placeholder="Add an explanation"
+                    value={explanation}
+                    onChange={(e) => {
+                        setExplanation(e.target.value);
+                    }}
+                />
+            </div>
+            <div className="control">
+                <button
+                    className="button authBtn"
+                    onClick={() => {
+                        addQuestion();
+                    }}
+                >
+                    Add Question
+                </button>
+            </div>
+            
+        </div>
+    );
 }
 
 export default QuestionForm;

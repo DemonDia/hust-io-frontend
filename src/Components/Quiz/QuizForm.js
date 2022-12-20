@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import QuestionRow from "./QuestionRow";
+import QuestionForm from "./QuestionForm";
 function QuizForm({ proceedFunction, currentQuiz, heading }) {
     const [quizName, setQuizName] = useState("");
-    const [questions, setQuestions] = useState("");
+    const [questions, setQuestions] = useState([]);
 
     // =====================add quiz=====================
     const proceed = async () => {
@@ -14,9 +15,11 @@ function QuizForm({ proceedFunction, currentQuiz, heading }) {
     };
 
     // =====================add question=====================
-    const addQuestion = (questionObject)=>{
-        questions.push(questionObject)
-    }
+    const addQuestion = (questionObject) => {
+        questions.push(questionObject);
+    };
+    // =====================update question=====================
+
     // =====================delete question=====================
     const deleteQuestion = (questionToDelete) => {
         const updatedQuestions = questions.filter((currQuestion) => {
@@ -47,6 +50,11 @@ function QuizForm({ proceedFunction, currentQuiz, heading }) {
                         />
                     </div>
                 </div>
+                <QuestionForm addQuestionFunction={addQuestion} />
+                {questions.map((question, index) => {
+                    return<QuestionRow questionObject={question} questionIndex={index}
+                    deleteQuestionFunction={deleteQuestion}/>
+                })}
 
                 <button
                     className="button authBtn"

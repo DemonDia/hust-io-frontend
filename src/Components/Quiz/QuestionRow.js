@@ -9,37 +9,44 @@ function QuestionRow({
 }) {
     const [isEditing, setIsEditing] = useState(false);
     const [question, setQuestion] = useState(questionObject.question);
-    const [correctAnswer,setCorrectAnswer] = useState(questionObject.correctAnswer)
-    const [questionType,setQuestionType] = useState(questionObject.questionType)
-    const [explanation,setExplanation] = useState(questionObject.explanation)
+    const [correctAnswer, setCorrectAnswer] = useState(
+        questionObject.correctAnswer
+    );
+    const [questionType, setQuestionType] = useState(
+        questionObject.questionType
+    );
+    const [explanation, setExplanation] = useState(questionObject.explanation);
     const saveChanges = () => {
         if (question.length > 130) {
             alert("Question cannot exceed 130 characters");
-        }
-        else if(question.length == 0){
-            alert("Question cannot be empty")
-        }
-        else if(correctAnswer.length > 130){
+        } else if (question.length == 0) {
+            alert("Question cannot be empty");
+        } else if (correctAnswer.length > 130) {
             alert("Correct answer cannot exceed 130 characters");
-        } 
-        else if(question.length == 0){
-            alert("Correct answer cannot be empty")
-        }
-        else if(explanation.length > 300){
+        } else if (question.length == 0) {
+            alert("Correct answer cannot be empty");
+        } else if (explanation.length > 300) {
             alert("Explanation cannot exceed 300 characters");
-        }
-        else {
+        } else {
             const newQuestionObject = {
-                question,correctAnswer,explanation
-            }
+                question,
+                correctAnswer,
+                explanation,
+            };
             updateQuestionFunction(newQuestionObject, questionIndex);
             isEditing(false);
         }
     };
-    const deleteRow = ()=>{
-        deleteQuestionFunction(questionObject)
-    }
-    return <div></div>;
+    const deleteRow = () => {
+        deleteQuestionFunction(questionObject);
+    };
+    return (
+        <div>
+            <h1 className="title">Title:{question}</h1>
+            <h1 className="title">Answer:{correctAnswer}</h1>
+            <h1 className="title">Explanation{explanation}</h1>
+        </div>
+    );
 }
 
 export default QuestionRow;

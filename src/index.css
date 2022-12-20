@@ -227,3 +227,10 @@ code {
   margin: auto;
   justify-content: center;
 }
+
+/* questions */
+.questionField{
+  background:#e4e2e2;
+  border-radius: 15px;
+  padding:15px;
+}
