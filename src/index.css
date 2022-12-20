@@ -73,8 +73,9 @@ code {
   align-items: center;
   transition: 0.4s;
 }
-.optionBox:hover{
-  background:#000c78;
+
+.optionBox:hover {
+  background: #000c78;
 }
 
 .optionBox h1 {
@@ -121,9 +122,11 @@ code {
 .todayCalendarCell {
   transition: 0.4s;
 }
-.todayCalendarCell:hover{
+
+.todayCalendarCell:hover {
   background: #0e1ead;
 }
+
 .calendarCell {
   background: white;
 
@@ -229,8 +232,34 @@ code {
 }
 
 /* questions */
-.questionField{
-  background:#e4e2e2;
+.questionField,
+.questionRow {
+  background: #e4e2e2;
   border-radius: 15px;
-  padding:15px;
+  padding: 15px;
+  margin: 10px;
+}
+
+.questionRow {
+  padding: 5px;
+  display: flex;
+}
+
+.questionRow div {
+  margin: auto;
+}
+
+.questionRow .column {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.questionRow .column h1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.selectLink {
+  display: flex;
+  justify-content: end;
 }

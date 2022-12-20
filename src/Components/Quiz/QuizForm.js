@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import QuestionRow from "./QuestionRow";
 function QuizForm({ proceedFunction, currentQuiz, heading }) {
     // =====================quiz=====================
     const [quizName, setQuizName] = useState("");
@@ -15,13 +14,16 @@ function QuizForm({ proceedFunction, currentQuiz, heading }) {
     };
 
     // =====================question=====================
+    const [selectedQustion, setSelectedQuestion] = useState(null);
+    const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(-1);
+
     const [question, setQuestion] = useState("");
     const [correctAnswer, setCorrectAnswer] = useState("");
     const [questionType, setQuestionType] = useState(1);
     const [explanation, setExplanation] = useState("");
 
     // ==========add question==========
-    const addQuestion = (questionObject) => {
+    const addQuestion = () => {
         if (question.length > 130) {
             alert("Question cannot exceed 130 characters");
         } else if (question.length == 0) {
@@ -45,18 +47,62 @@ function QuizForm({ proceedFunction, currentQuiz, heading }) {
             setExplanation("");
         }
     };
+    // ==========select question==========
+    const selectQuestion = (index) => {
+        if (index != -1) {
+            setSelectedQuestion(questions[index]);
+            console.log(questions[index]);
+            setSelectedQuestionIndex(index);
+            const { question, correctAnswer, explanation } = questions[index];
+            setQuestion(question);
+            setCorrectAnswer(correctAnswer);
+            setExplanation(explanation);
+        }
+    };
+
+    // ==========cancel select question==========
+    const cancelSelectQuestion = () => {
+        setSelectedQuestion(null);
+        setSelectedQuestionIndex(-1);
+        setQuestion("");
+        setCorrectAnswer("");
+        setExplanation("");
+    };
+
     // ==========update question==========
+    const updateQuestion = () => {
+        if (question.length > 130) {
+            alert("Question cannot exceed 130 characters");
+        } else if (question.length == 0) {
+            alert("Question cannot be empty");
+        } else if (correctAnswer.length > 130) {
+            alert("Correct answer cannot exceed 130 characters");
+        } else if (correctAnswer.length == 0) {
+            alert("Correct answer cannot be empty");
+        } else if (explanation.length > 300) {
+            alert("Explanation cannot exceed 300 characters");
+        } else {
+            questions[selectedQuestionIndex] = {
+                question,
+                correctAnswer,
+                questionType,
+                explanation,
+            };
+            cancelSelectQuestion();
+        }
+    };
 
     // ==========delete question==========
-    const deleteQuestion = (questionToDelete) => {
+    const deleteQuestion = () => {
         const updatedQuestions = questions.filter((currQuestion) => {
             return !(
-                questionToDelete.question == currQuestion.question &&
-                questionToDelete.correctAnswer == currQuestion.correctAnswer &&
-                questionToDelete.questionType == currQuestion.questionType &&
-                questionToDelete.explanation == currQuestion.explanation
+                selectedQustion.question == currQuestion.question &&
+                selectedQustion.correctAnswer == currQuestion.correctAnswer &&
+                selectedQustion.questionType == currQuestion.questionType &&
+                selectedQustion.explanation == currQuestion.explanation
             );
         });
+        cancelSelectQuestion();
         setQuestions(updatedQuestions);
     };
     return (
@@ -78,59 +124,108 @@ function QuizForm({ proceedFunction, currentQuiz, heading }) {
                     </div>
                 </div>
                 <div className="field questionField">
-            <div className="control">
-                <label className="label">Question:*</label>
-                <input
-                    className="input"
-                    type="text"
-                    placeholder="Add new question"
-                    value={question}
-                    onChange={(e) => {
-                        setQuestion(e.target.value);
-                    }}
-                />
-            </div>
-            <div className="control">
-                <label className="label">Answer:*</label>
-                <input
-                    className="input"
-                    type="text"
-                    placeholder="Add correct answer"
-                    value={correctAnswer}
-                    onChange={(e) => {
-                        setCorrectAnswer(e.target.value);
-                    }}
-                />
-            </div>
-            <div className="control">
-                <label className="label">Explanation:</label>
-                <textarea
-                    className="textarea"
-                    placeholder="Add an explanation"
-                    value={explanation}
-                    onChange={(e) => {
-                        setExplanation(e.target.value);
-                    }}
-                />
-            </div>
-            <div className="control">
-                <button
-                    className="button authBtn"
-                    onClick={() => {
-                        addQuestion();
-                    }}
-                >
-                    Add Question
-                </button>
-            </div>
-        </div>
-                {questions.map((question, index) => {
-                    return (
-                        <QuestionRow
-                            questionObject={question}
-                            questionIndex={index}
-                            deleteQuestionFunction={deleteQuestion}
+                    <div className="control">
+                        <label className="label">Question:*</label>
+                        <input
+                            className="input"
+                            type="text"
+                            placeholder="Add new question"
+                            value={question}
+                            onChange={(e) => {
+                                setQuestion(e.target.value);
+                            }}
                         />
+                    </div>
+                    <div className="control">
+                        <label className="label">Answer:*</label>
+                        <input
+                            className="input"
+                            type="text"
+                            placeholder="Add correct answer"
+                            value={correctAnswer}
+                            onChange={(e) => {
+                                setCorrectAnswer(e.target.value);
+                            }}
+                        />
+                    </div>
+                    <div className="control">
+                        <label className="label">Explanation:</label>
+                        <textarea
+                            className="textarea"
+                            placeholder="Add an explanation"
+                            value={explanation}
+                            onChange={(e) => {
+                                setExplanation(e.target.value);
+                            }}
+                        />
+                    </div>
+                    {selectedQuestionIndex == -1 ? (
+                        <>
+                            <div className="control">
+                                <button
+                                    className="button authBtn"
+                                    onClick={() => {
+                                        addQuestion();
+                                    }}
+                                >
+                                    Add Question
+                                </button>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <div className="control">
+                                <button
+                                    className="button authBtn is-link"
+                                    onClick={() => {
+                                        updateQuestion();
+                                    }}
+                                >
+                                    Save Question
+                                </button>
+                            </div>
+                            <div className="control">
+                                <button
+                                    className="button authBtn is-danger"
+                                    onClick={() => {
+                                        deleteQuestion();
+                                    }}
+                                >
+                                    Delete Question
+                                </button>
+                            </div>
+                            <div className="control">
+                                <button
+                                    className="button authBtn is-info"
+                                    onClick={() => {
+                                        cancelSelectQuestion();
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </>
+                    )}
+                </div>
+                {questions.map((currQuestion, index) => {
+                    const { question, correctAnswer, explanation } =
+                        currQuestion;
+                    return (
+                        <div key={index} className="questionRow columns">
+                            <div className="column">
+                                <h1 className="subtitle">{question}</h1>
+                            </div>
+                            <div className="column selectLink">
+                                <Link
+                                    className="button is-link"
+                                    onClick={() => {
+                                        selectQuestion(index);
+                                    }}
+                                >
+                                    Select
+                                </Link>
+                            </div>
+                        </div>
                     );
                 })}
 
@@ -143,7 +238,7 @@ function QuizForm({ proceedFunction, currentQuiz, heading }) {
                     {currentQuiz ? <>Save</> : <>Add</>}
                 </button>
 
-                <Link className="button cancelBtn" to="/journals">
+                <Link className="button cancelBtn" to="/quizzes">
                     {currentQuiz ? <>Back</> : <>Cancel</>}
                 </Link>
             </div>
