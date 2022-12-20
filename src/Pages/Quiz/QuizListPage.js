@@ -70,10 +70,6 @@ function QuizListPage(props) {
                 </>
             )}
         </div>
-        // <div>
-        //     <h1 className="title">Quiz List Page</h1>
-        //     <QuizList />
-        // </div>
     );
 }
 
