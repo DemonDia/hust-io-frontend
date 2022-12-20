@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import OptionBox from "../../Components/Home/OptionBox";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,7 @@ function HomePage(props) {
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then((result) => {
             if (result.data.success) {
-                setUserId(result.data.id);
+                setUserId(result.data.id)
                 // setLoggedIn(true);
                 console.log("Logged in");
                 const today = new Date();
@@ -27,29 +27,9 @@ function HomePage(props) {
                     { name: "Events", link: "/events" },
                     { name: "Journal", link: "/journals" },
                     { name: "Tasks", link: "/tasks" },
-                    { name: "Quizzes", link: "/quizzes" },
                     { name: "Logout", link: "/logout" },
                 ];
-                var dividedOptions = [];
-                var noOfBoxes = Math.ceil(options.length / 4);
-
-                for (var i = 0; i < noOfBoxes; i++) {
-                    dividedOptions.push([]);
-                }
-                // break down into 4
-                // 4n - 1 --> 0, 3 , 7 --> 1,4,8
-                var optionIndex = 0;
-                var boxIndex = 0;
-                options.map((option) => {
-                    // next box
-                    dividedOptions[boxIndex].push(option);
-                    optionIndex += 1;
-                    if (optionIndex % 4 == 0) {
-                        boxIndex += 1;
-                    }
-                });
-
-                setOptions(dividedOptions);
+                setOptions(options);
                 setLoading(false);
             }
         });
@@ -64,20 +44,12 @@ function HomePage(props) {
                 <h1>Loading...</h1>
             ) : (
                 <>
-                    {options.map((optionList, index) => {
-                        return (
-                            <div className="columns" key={index}>
-                                {optionList.map((option, index) => {
-                                    return (
-                                        <OptionBox
-                                            key={index}
-                                            option={option}
-                                        />
-                                    );
-                                })}
-                            </div>
-                        );
-                    })}
+                    {" "}
+                    <div className="columns">
+                        {options.map((option, index) => {
+                            return <OptionBox key={index} option={option} />;
+                        })}
+                    </div>
                 </>
             )}
         </div>
