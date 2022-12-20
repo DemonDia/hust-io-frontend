@@ -16,9 +16,15 @@ function QuestionRow({
         if (question.length > 130) {
             alert("Question cannot exceed 130 characters");
         }
+        else if(question.length == 0){
+            alert("Question cannot be empty")
+        }
         else if(correctAnswer.length > 130){
             alert("Correct answer cannot exceed 130 characters");
         } 
+        else if(question.length == 0){
+            alert("Correct answer cannot be empty")
+        }
         else if(explanation.length > 300){
             alert("Explanation cannot exceed 300 characters");
         }
