@@ -105,6 +105,14 @@ function QuizForm({ proceedFunction, currentQuiz, heading }) {
         cancelSelectQuestion();
         setQuestions(updatedQuestions);
     };
+
+    useEffect(()=>{
+        if(currentQuiz){
+            const {quizName,questions} = currentQuiz
+            setQuizName(quizName)
+            setQuestions(questions)
+        }
+    })
     return (
         <div className="formContainer container">
             <h1 className="title">{heading}</h1>
