@@ -79,7 +79,7 @@ function QuizList({ Contents, DeleteContent }) {
                                     : -1
                             )
                             .map((content) => {
-                                const {  quizName, _id } = content;
+                                const { quizName, _id } = content;
                                 return (
                                     <div key={_id} className="listItem">
                                         <div className="listItem-contents">
@@ -88,6 +88,9 @@ function QuizList({ Contents, DeleteContent }) {
                                             </h5>
                                         </div>
                                         <div className="listItem-buttons">
+                                            <Link to={`/quizzes/attempt/add/${_id}`}>
+                                                Attempt
+                                            </Link>
                                             <Link to={`/quizzes/${_id}`}>
                                                 Edit
                                             </Link>

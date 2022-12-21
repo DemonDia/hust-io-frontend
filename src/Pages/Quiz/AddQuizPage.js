@@ -1,8 +1,8 @@
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { defaultAuthCheck } from "../../AuthCheck";
 import axios from "axios";
-import QuizForm from "../../Components/Quiz/QuizForm"
+import QuizForm from "../../Components/Quiz/QuizForm";
 import { mainContext } from "../../Contexts/mainContext";
 
 function AddQuizPage(props) {
@@ -21,29 +21,29 @@ function AddQuizPage(props) {
             }
         });
     };
-        // =================methods=================
-        const addNewQuiz = async (newQuiz) => {
-            await axios
-                .post(
-                    process.env.REACT_APP_BACKEND_API + "/quizzes/",
-                    {
-                        ...newQuiz,
-                        userId:currUserId,
-                    },
-                    { headers: { Authorization: `Bearer ${currentToken}` } }
-                )
-                .then((res) => {
-                    if (res.data.success) {
-                        alert("Successfully added");
-                        navigate("/quizzes");
-                    } else {
-                        alert("Failed to add");
-                    }
-                })
-                .catch((err) => {
+    // =================methods=================
+    const addNewQuiz = async (newQuiz) => {
+        await axios
+            .post(
+                process.env.REACT_APP_BACKEND_API + "/quizzes/",
+                {
+                    ...newQuiz,
+                    userId: currUserId,
+                },
+                { headers: { Authorization: `Bearer ${currentToken}` } }
+            )
+            .then((res) => {
+                if (res.data.success) {
+                    alert("Successfully added");
+                    navigate("/quizzes");
+                } else {
                     alert("Failed to add");
-                });
-        };
+                }
+            })
+            .catch((err) => {
+                alert("Failed to add");
+            });
+    };
     useEffect(() => {
         loadPage();
     }, []);
@@ -53,7 +53,10 @@ function AddQuizPage(props) {
                 <>Loading...</>
             ) : (
                 <>
-                    <QuizForm proceedFunction={addNewQuiz} heading={"New Quiz"}/>
+                    <QuizForm
+                        proceedFunction={addNewQuiz}
+                        heading={"New Quiz"}
+                    />
                 </>
             )}
         </div>

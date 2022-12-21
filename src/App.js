@@ -36,6 +36,10 @@ import QuizListPage from "./Pages/Quiz/QuizListPage";
 import AddQuizPage from "./Pages/Quiz/AddQuizPage";
 import EditQuizPage from "./Pages/Quiz/EditQuizPage";
 
+// ================================quiz attempt================================
+import CreateQuizAttempt from "./Pages/QuizAttempt/CreateQuizAttempt";
+import QuizAttemptPage from "./Pages/QuizAttempt/QuizAttemptPage";
+
 // ================================redirects================================
 import ErrorPage from "./Pages/Redirects/ErrorPage";
 import RedirectPage from "./Pages/Redirects/RedirectPage";
@@ -153,6 +157,19 @@ function App() {
                                 path="/quizzes/:quizId"
                                 element={<EditQuizPage />}
                             />
+
+                            {/* ================================quiz attempt================================  */}
+                            <Route
+                                exact
+                                path="/quizzes/attempt/add/:quizId"
+                                element={<CreateQuizAttempt />}
+                            />
+                            <Route
+                                exact
+                                path="/quizzes/attempt/:quizAttemptId"
+                                element={<QuizAttemptPage />}
+                            />
+
 
                             {/* ================================redirects================================  */}
                             <Route exact path="/" element={<RedirectPage />} />
