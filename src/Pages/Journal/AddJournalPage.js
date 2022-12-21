@@ -15,7 +15,6 @@ function AddJournalPage(props) {
             if (result.data.success) {
                 setUserId(result.data.id);
                 setCurrUserId(result.data.id);
-                console.log("Logged in");
                 setLoading(false);
             }
         });

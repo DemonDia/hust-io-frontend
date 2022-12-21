@@ -16,23 +16,16 @@ function QuizAttemptList({ Contents, DeleteContent }) {
         { value: 2, text: "Marking in progress", checked: true },
         { value: 3, text: "Completed", checked: true },
     ]);
-    // var statusDict = [
-    //     { value: 1, text: "In progress", checked: true },
-    //     { value: 2, text: "Marking in progress", checked: true },
-    //     { value: 3, text: "Completed", checked: true },
-    // ];
 
     // ============handle checkbox change============
     const changeTickedStatus = (currentStatus, newValue) => {
         const updatedStatus = statusDict.map((status) => {
             if (status.value == currentStatus) {
-                console.log(currentStatus);
                 status.checked = newValue;
             }
             return status;
         });
         setStatusDict(updatedStatus)
-        // currentStatus.checked = newValue;
         updateTickFilter();
     };
 
@@ -43,7 +36,6 @@ function QuizAttemptList({ Contents, DeleteContent }) {
                 tickedValues.push(status.value);
             }
         });
-        console.log(tickedValues);
         setTickedValues(tickedValues);
     };
 

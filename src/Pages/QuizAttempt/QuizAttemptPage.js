@@ -73,7 +73,6 @@ function QuizAttemptPage(props) {
 
     // mark answer
     const handleMarking = (isCorrectStatus,index)=>{
-        console.log(quizAttempt.questions[index])
         quizAttempt.questions[index].isCorrect = isCorrectStatus;
     }
 

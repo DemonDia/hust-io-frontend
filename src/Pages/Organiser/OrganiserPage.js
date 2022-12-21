@@ -15,7 +15,6 @@ function OrganiserPage(props) {
                 // setLoggedIn(true);
                 setCurrUserId(result.data.id);
                 setUserId(result.data.id)
-                console.log("Logged in");
                 setLoading(false)
             }
         });

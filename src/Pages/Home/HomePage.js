@@ -14,7 +14,6 @@ function HomePage(props) {
         await defaultAuthCheck(navigate).then((result) => {
             if (result.data.success) {
                 setUserId(result.data.id);
-                // setLoggedIn(true);
                 console.log("Logged in");
                 const today = new Date();
                 const year = today.getFullYear();
