@@ -47,7 +47,7 @@ function UserProfile(props) {
                     }
                 })
                 .catch((err) => {
-                    console.log(err)
+                    console.log(err);
                     alert("Failed to save");
                 });
         }
@@ -125,8 +125,10 @@ function UserProfile(props) {
             ) : (
                 <>
                     <div className="container card formContainer">
-                        <h1 className="title is-2">User profile</h1>
+                        <h1 className="title is-2">User Profile</h1>
+                        <hr />
                         <div className="field">
+                            <h1 className="title is-4 is-spaced">User Info</h1>
                             <p className="control">
                                 <label className="label">Name:</label>
                                 <input
@@ -138,8 +140,12 @@ function UserProfile(props) {
                                     }}
                                 />
                                 <label className="label"></label>
-                                <button className="button authBtn"
-                                onClick={()=>{saveUsername()}}>
+                                <button
+                                    className="button authBtn"
+                                    onClick={() => {
+                                        saveUsername();
+                                    }}
+                                >
                                     Change Name
                                 </button>
                                 <label className="label">Email:</label>
@@ -153,10 +159,10 @@ function UserProfile(props) {
                                     disabled
                                 />
                                 <hr></hr>
-                                <label className="title is-5">
-                                    Only if you want to change password
-                                </label>
-                                <label className="label">Password:</label>
+                                <h1 className="title is-4 is-spaced">
+                                    Change Password
+                                </h1>
+                                <label className="label">New Password: </label>
                                 <input
                                     className="input"
                                     type="password"
@@ -166,7 +172,9 @@ function UserProfile(props) {
                                         setNewPassword(e.target.value);
                                     }}
                                 />
-                                <label className="label">Name:</label>
+                                <label className="label">
+                                    Confirm New Password:
+                                </label>
                                 <input
                                     className="input"
                                     type="password"
@@ -178,13 +186,21 @@ function UserProfile(props) {
                                 />
                             </p>
                         </div>
-                        <button className="button authBtn"
-                        onClick={()=>{savePassword()}}>
+                        <button
+                            className="button authBtn"
+                            onClick={() => {
+                                savePassword();
+                            }}
+                        >
                             Change Password
                         </button>
                         <label className="label"></label>
-                        <button className="button is-danger authBtn"
-                        onClick={()=>{deleteAccount()}}>
+                        <button
+                            className="button is-danger authBtn"
+                            onClick={() => {
+                                deleteAccount();
+                            }}
+                        >
                             Delete Account
                         </button>
                     </div>
