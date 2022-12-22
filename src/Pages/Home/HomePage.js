@@ -15,7 +15,6 @@ function HomePage(props) {
         await defaultAuthCheck(navigate).then((result) => {
             if (result.data.success) {
                 setUserId(result.data.id);
-                console.log("Logged in");
                 const today = new Date();
                 const year = today.getFullYear();
                 const month = today.getMonth();
@@ -28,6 +27,7 @@ function HomePage(props) {
                     { name: "Journal", link: "/journals" },
                     { name: "Tasks", link: "/tasks" },
                     { name: "Quizzes", link: "/quizzes" },
+                    { name: "User Profile", link: "/profile" },
                     { name: "Logout", link: "/logout" },
                 ];
                 var dividedOptions = [];

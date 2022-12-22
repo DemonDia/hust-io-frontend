@@ -40,6 +40,9 @@ import EditQuizPage from "./Pages/Quiz/EditQuizPage";
 import CreateQuizAttempt from "./Pages/QuizAttempt/CreateQuizAttempt";
 import QuizAttemptPage from "./Pages/QuizAttempt/QuizAttemptPage";
 
+// ================================user profile================================
+import UserProfile from "./Pages/Users/UserProfile";
+
 // ================================redirects================================
 import ErrorPage from "./Pages/Redirects/ErrorPage";
 import RedirectPage from "./Pages/Redirects/RedirectPage";
@@ -170,6 +173,12 @@ function App() {
                                 element={<QuizAttemptPage />}
                             />
 
+                            {/* ================================user profile================================  */}
+                            <Route
+                                exact
+                                path="/profile"
+                                element={<UserProfile />}
+                            />
 
                             {/* ================================redirects================================  */}
                             <Route exact path="/" element={<RedirectPage />} />

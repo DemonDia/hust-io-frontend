@@ -9,6 +9,7 @@ function Navbar({ userId }) {
         { linkName: "Journal", link: "/journals" },
         { linkName: "Tasks", link: "/tasks" },
         { linkName: "Quizzes", link: "/quizzes" },
+        { linkName: "User Profile", link: "/profile" },
         { linkName: "Logout", link: "/logout" },
     ];
     const notLoggedInLinks = [
