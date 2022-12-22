@@ -68,7 +68,6 @@ code {
   border-radius: 20px;
 }
 
-.cancelAuthBtn {}
 
 /* option box */
 .optionBox {
@@ -284,4 +283,14 @@ code {
   margin: 15px;
   border-radius: 5px;
 
+}
+
+
+.cancelBtn {
+  background:rgb(84, 83, 83);
+}
+
+.addButton{
+  background: rgb(36, 36, 139);
+  color: white;
 }

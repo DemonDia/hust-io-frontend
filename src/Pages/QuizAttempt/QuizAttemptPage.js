@@ -179,7 +179,7 @@ function QuizAttemptPage(props) {
                             </>
                         )}
                         <Link
-                            className="button quizAttemptSubmitBtn"
+                            className="button quizAttemptSubmitBtn cancelBtn"
                             to="/quizzes"
                         >
                             Back

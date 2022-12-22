@@ -55,7 +55,7 @@ function JournalList({ Contents, DeleteContent }) {
                         className="column is-one-quarter-tablet is-half-mobile"
                         style={{ alignSelf: "center" }}
                     >
-                        <Link className="button button-link" to="/journals/add">
+                        <Link className="button addButton" to="/journals/add">
                             Add
                         </Link>
                     </div>

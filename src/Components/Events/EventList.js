@@ -54,7 +54,7 @@ function EventList({ Contents, DeleteContent }) {
                     className="column is-one-quarter-tablet is-half-mobile"
                     style={{ alignSelf: "center" }}
                 >
-                    <Link className="button button-link" to="/events/add">
+                    <Link className="button addButton" to="/events/add">
                         Add
                     </Link>
                 </div>

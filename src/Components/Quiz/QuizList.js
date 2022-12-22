@@ -55,7 +55,7 @@ function QuizList({ Contents, DeleteContent }) {
                         className="column is-one-quarter-tablet is-half-mobile"
                         style={{ alignSelf: "center" }}
                     >
-                        <Link className="button button-link" to="/quizzes/add">
+                        <Link className="button addButton" to="/quizzes/add">
                             Add
                         </Link>
                     </div>
