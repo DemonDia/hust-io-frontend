@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 function Breadcrumbs({ links }) {
     return (
-        <nav className="breadcrumb" aria-label="breadcrumbs">
+        <nav className="breadcrumb breadCrumbContainer" aria-label="breadcrumbs">
             <ul>
                 {links.map((link, index) => {
                     return (

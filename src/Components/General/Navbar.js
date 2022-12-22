@@ -19,7 +19,7 @@ function Navbar({ userId }) {
 
     return (
         <nav className="navbar" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand">
+            <div className="navbar-brand">
                 <Link className="navbar-item navbarLogo">Hustl.io</Link>
                 <Link
                 onClick={() => {

@@ -29,6 +29,11 @@ code {
   font-size: 25px;
 }
 
+#currUserName{
+  color:blue;
+  text-decoration: underline;
+}
+
 /* banner */
 .banner {
   background: white;
@@ -285,6 +290,13 @@ code {
 
 }
 
+
+/* breadcrumbs */
+.breadCrumbContainer{
+  padding:10px;
+  background:rgb(255, 255, 255);
+  border-radius: 10px;
+}
 
 .cancelBtn {
   background:rgb(84, 83, 83);

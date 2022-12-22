@@ -62,7 +62,7 @@ function HomePage(props) {
     return (
         <div>
             <Breadcrumbs links={[{ text: "Home" }]} />
-            <h1 className="title is-2">Welcome, {name}</h1>
+            <h1 className="title is-2">Welcome, <em id="currUserName">{name}</em>.</h1>
             {loading ? (
                 <h1>Loading...</h1>
             ) : (
