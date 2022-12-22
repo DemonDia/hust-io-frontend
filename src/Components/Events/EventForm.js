@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-function EventForm({ proceedFunction, currentEvent,header }) {
+function EventForm({ proceedFunction, currentEvent, header }) {
     const [eventName, setEventName] = useState("");
     const [tags, setTags] = useState([]);
     const [dateTime, setDateTime] = useState(null);
@@ -30,24 +30,31 @@ function EventForm({ proceedFunction, currentEvent,header }) {
         if (currentEvent) {
             const { eventName, tags, date } = currentEvent;
             const { year, month, day, hour, minute } = date;
-            const dateTime = `${year}-${month+1}-${day}T${
+            const dateTime = `${year}-${month + 1}-${day}T${
                 hour == 0 ? "00" : hour
-            }:${ minute == 0 ? "00" : minute}`;
+            }:${minute == 0 ? "00" : minute}`;
             setEventName(eventName);
             setTags(tags);
+            console.log(dateTime);
             setDateTime(dateTime);
-        }
-        else{
-            const defaultDate = new Date()
+        } else {
+            const defaultDate = new Date();
             const year = defaultDate.getFullYear();
             const month = defaultDate.getMonth();
             const day = defaultDate.getDate();
-            const hour = defaultDate.getHours();
-            const minute = defaultDate.getMinutes();
-            const dateTime = `${year}-${month+1}-${day}T${
+            var hour = defaultDate.getHours();
+            var minute = defaultDate.getMinutes();
+            if (hour <= 9) {
+                hour = "0" + hour;
+            }
+            if (minute <= 9) {
+                minute = "0" + minute;
+            }
+            const dateTime = `${year}-${month + 1}-${day}T${
                 hour == 0 ? "00" : hour
-            }:${ minute == 0 ? "00" : minute}`;
-
+            }:${minute == 0 ? "00" : minute}`;
+            console.log(dateTime);
+            setDateTime(dateTime);
         }
     }, []);
 
