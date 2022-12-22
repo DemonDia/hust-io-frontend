@@ -4,6 +4,8 @@ import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { mainContext } from "../../Contexts/mainContext";
+import Breadcrumbs from "../../Components/General/Breadcrumbs";
+
 function EditQuizPage(props) {
     const { setUserId } = useContext(mainContext);
     const { quizId } = useParams();
@@ -62,11 +64,27 @@ function EditQuizPage(props) {
     };
     return (
         <div>
+            <Breadcrumbs
+                links={[
+                    { text: "Home", linkDest: "/home" },
+                    {
+                        text: "Quizzes",
+                        linkDest: "/quizzes",
+                    },
+                    {
+                        text: "Edit Quiz",
+                    },
+                ]}
+            />
             {loading ? (
                 <>Loading...</>
             ) : (
                 <>
-                    <QuizForm proceedFunction={editQuiz} currentQuiz={quiz} heading={"Edit Quiz"}/>
+                    <QuizForm
+                        proceedFunction={editQuiz}
+                        currentQuiz={quiz}
+                        heading={"Edit Quiz"}
+                    />
                 </>
             )}
         </div>

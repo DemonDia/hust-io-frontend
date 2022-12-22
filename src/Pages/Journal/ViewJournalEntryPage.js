@@ -1,9 +1,10 @@
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import JournalForm from "../../Components/Journal/JournalForm";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { mainContext } from "../../Contexts/mainContext";
+import Breadcrumbs from "../../Components/General/Breadcrumbs";
 
 function ViewJournalEntryPage() {
     const { setUserId } = useContext(mainContext);
@@ -44,11 +45,26 @@ function ViewJournalEntryPage() {
     };
     return (
         <div>
+            <Breadcrumbs
+                links={[
+                    { text: "Home", linkDest: "/home" },
+                    {
+                        text: "Journal Entries",
+                        linkDest: "/journals",
+                    },
+                    {
+                        text: "View Journal Entry",
+                    },
+                ]}
+            />
             {loading ? (
                 <>Loading...</>
             ) : (
                 <>
-                    <JournalForm currentJournalEntry={journalEntry} heading={"View Journal Entry"}/>
+                    <JournalForm
+                        currentJournalEntry={journalEntry}
+                        heading={"View Journal Entry"}
+                    />
                 </>
             )}
         </div>

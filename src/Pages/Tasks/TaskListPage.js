@@ -1,9 +1,10 @@
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import TaskList from "../../Components/Tasks/TaskList";
 import { mainContext } from "../../Contexts/mainContext";
+import Breadcrumbs from "../../Components/General/Breadcrumbs";
 
 function TaskListPage(props) {
     const currentToken = localStorage.getItem("loginToken");
@@ -43,7 +44,7 @@ function TaskListPage(props) {
                 process.env.REACT_APP_BACKEND_API + `/tasks/${taskId}`,
                 {
                     taskName,
-                    userId:currUserId,
+                    userId: currUserId,
                 },
                 { headers: { Authorization: `Bearer ${currentToken}` } }
             )
@@ -63,10 +64,11 @@ function TaskListPage(props) {
     const editTaskStatus = async (completed, taskId) => {
         await axios
             .put(
-                process.env.REACT_APP_BACKEND_API + `/tasks/completion/${taskId}`,
+                process.env.REACT_APP_BACKEND_API +
+                    `/tasks/completion/${taskId}`,
                 {
                     completed,
-                    userId:currUserId,
+                    userId: currUserId,
                 },
                 { headers: { Authorization: `Bearer ${currentToken}` } }
             )
@@ -87,7 +89,7 @@ function TaskListPage(props) {
             .delete(process.env.REACT_APP_BACKEND_API + `/tasks/${taskId}`, {
                 headers: { Authorization: `Bearer ${currentToken}` },
                 data: {
-                    userId:currUserId,
+                    userId: currUserId,
                 },
             })
             .then(async (res) => {
@@ -107,6 +109,14 @@ function TaskListPage(props) {
     }, []);
     return (
         <div>
+            <Breadcrumbs
+                links={[
+                    { text: "Home", linkDest: "/home" },
+                    {
+                        text: "Tasks",
+                    },
+                ]}
+            />
             <h1 className="title">All Tasks</h1>
             {loading ? (
                 <>Loading ...</>

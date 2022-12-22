@@ -1,9 +1,10 @@
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import EventForm from "../../Components/Events/EventForm";
 import { defaultAuthCheck } from "../../AuthCheck";
 import axios from "axios";
 import { mainContext } from "../../Contexts/mainContext";
+import Breadcrumbs from "../../Components/General/Breadcrumbs";
 
 function AddEventPage(props) {
     const { setUserId } = useContext(mainContext);
@@ -31,7 +32,7 @@ function AddEventPage(props) {
                 process.env.REACT_APP_BACKEND_API + "/events/",
                 {
                     ...newEvent,
-                    userId:currUserId,
+                    userId: currUserId,
                 },
                 { headers: { Authorization: `Bearer ${currentToken}` } }
             )
@@ -49,11 +50,26 @@ function AddEventPage(props) {
     };
     return (
         <div>
+            <Breadcrumbs
+                links={[
+                    { text: "Home", linkDest: "/home" },
+                    {
+                        text: "Events",
+                        linkDest: "/events",
+                    },
+                    {
+                        text: "Add Event",
+                    },
+                ]}
+            />
             {loading ? (
                 <>Loading...</>
             ) : (
                 <>
-                    <EventForm proceedFunction={addNewEvent} header={"Add New Event"}/>
+                    <EventForm
+                        proceedFunction={addNewEvent}
+                        header={"Add New Event"}
+                    />
                 </>
             )}
         </div>

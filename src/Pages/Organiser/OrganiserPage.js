@@ -1,12 +1,13 @@
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import MainCalendar from "../../Components/Organiser/MainCalendar";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
 import { mainContext } from "../../Contexts/mainContext";
+import Breadcrumbs from "../../Components/General/Breadcrumbs";
 
 function OrganiserPage(props) {
     const { setUserId } = useContext(mainContext);
-    const [loading,setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
     const navigate = useNavigate();
     const loadPage = async () => {
@@ -14,8 +15,8 @@ function OrganiserPage(props) {
             if (result.data.success) {
                 // setLoggedIn(true);
                 setCurrUserId(result.data.id);
-                setUserId(result.data.id)
-                setLoading(false)
+                setUserId(result.data.id);
+                setLoading(false);
             }
         });
     };
@@ -24,7 +25,19 @@ function OrganiserPage(props) {
     }, []);
     return (
         <div>
-            {loading?<>Loading ...</>:<><MainCalendar userId = {currUserId}/></>}
+            <Breadcrumbs
+                links={[
+                    { text: "Home", linkDest: "/home"},
+                    { text: "Organiser"},
+                ]}
+            />
+            {loading ? (
+                <>Loading ...</>
+            ) : (
+                <>
+                    <MainCalendar userId={currUserId} />
+                </>
+            )}
         </div>
     );
 }

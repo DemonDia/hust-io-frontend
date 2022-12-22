@@ -5,6 +5,7 @@ import axios from "axios";
 import QuizList from "../../Components/Quiz/QuizList";
 import QuizAttemptList from "../../Components/QuizAttempt/QuizAttemptList";
 import { mainContext } from "../../Contexts/mainContext";
+import Breadcrumbs from "../../Components/General/Breadcrumbs";
 
 function QuizListPage(props) {
     const navigate = useNavigate();
@@ -114,6 +115,14 @@ function QuizListPage(props) {
 
     return (
         <div>
+            <Breadcrumbs
+                links={[
+                    { text: "Home", linkDest: "/home" },
+                    {
+                        text: "Quizzes",
+                    },
+                ]}
+            />
             <h1 className="title">Quiz Management</h1>
             <div className="tabs">
                 <ul>
@@ -135,24 +144,25 @@ function QuizListPage(props) {
                     })}
                 </ul>
             </div>
-            <div className="tabContents"></div>
-            {loading ? (
-                <>Loading ...</>
-            ) : (
-                <>
-                    {tab == 0 ? (
-                        <QuizList
-                            Contents={quizzes}
-                            DeleteContent={deleteQuiz}
-                        />
-                    ) : (
-                        <QuizAttemptList
-                            Contents={quizAttempts}
-                            DeleteContent={deleteQuizAttempt}
-                        />
-                    )}
-                </>
-            )}
+            <div className="tabContents">
+                {loading ? (
+                    <>Loading ...</>
+                ) : (
+                    <>
+                        {tab == 0 ? (
+                            <QuizList
+                                Contents={quizzes}
+                                DeleteContent={deleteQuiz}
+                            />
+                        ) : (
+                            <QuizAttemptList
+                                Contents={quizAttempts}
+                                DeleteContent={deleteQuizAttempt}
+                            />
+                        )}
+                    </>
+                )}
+            </div>
         </div>
     );
 }

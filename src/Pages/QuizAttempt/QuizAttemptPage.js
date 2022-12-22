@@ -4,6 +4,7 @@ import { defaultAuthCheck } from "../../AuthCheck";
 import axios from "axios";
 import { mainContext } from "../../Contexts/mainContext";
 import QuizAttemptQuestion from "../../Components/QuizAttempt/QuizAttemptQuestion";
+import Breadcrumbs from "../../Components/General/Breadcrumbs";
 
 function QuizAttemptPage(props) {
     const { setUserId } = useContext(mainContext);
@@ -72,9 +73,9 @@ function QuizAttemptPage(props) {
     };
 
     // mark answer
-    const handleMarking = (isCorrectStatus,index)=>{
+    const handleMarking = (isCorrectStatus, index) => {
         quizAttempt.questions[index].isCorrect = isCorrectStatus;
-    }
+    };
 
     // ==========handlers==========
     // handle submission (finish submitting)
@@ -84,7 +85,7 @@ function QuizAttemptPage(props) {
             if (confirmSubmit == "ok") {
                 quizAttempt.attemptStatus = 2;
                 await editQuizAttempt();
-                alert("Submitted")
+                alert("Submitted");
             }
         }
     };
@@ -95,12 +96,24 @@ function QuizAttemptPage(props) {
             if (confirmSubmit == "ok") {
                 quizAttempt.attemptStatus = 3;
                 await editQuizAttempt();
-                alert("Submitted")
+                alert("Submitted");
             }
         }
     };
     return (
         <div>
+            <Breadcrumbs
+                links={[
+                    { text: "Home", linkDest: "/home" },
+                    {
+                        text: "Quizzes",
+                        linkDest: "/quizzes",
+                    },
+                    {
+                        text: "Quiz Attempt",
+                    },
+                ]}
+            />
             <h1 className="title">Quiz Attempt</h1>
             <Link to="/quizzes">Back</Link>
             {loading ? (
@@ -115,11 +128,14 @@ function QuizAttemptPage(props) {
                         <h3 className="subtitle">
                             Completion Status:{" "}
                             {statuses[quizAttempt.attemptStatus]}
-                            {
-                                quizAttempt.attemptStatus == 3?<>
-                                (Score: {quizAttempt.quizScore}/{quizAttempt.noOfQuestions})
-                                </>:<></>
-                            }
+                            {quizAttempt.attemptStatus == 3 ? (
+                                <>
+                                    (Score: {quizAttempt.quizScore}/
+                                    {quizAttempt.noOfQuestions})
+                                </>
+                            ) : (
+                                <></>
+                            )}
                         </h3>
                         {quizAttempt.questions.map((question, index) => {
                             return (

@@ -1,9 +1,10 @@
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import EventList from "../../Components/Events/EventList";
 import { mainContext } from "../../Contexts/mainContext";
+import Breadcrumbs from "../../Components/General/Breadcrumbs";
 
 function EventListPage(props) {
     const currentToken = localStorage.getItem("loginToken");
@@ -28,7 +29,7 @@ function EventListPage(props) {
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then(async (result) => {
             if (result.data.success) {
-                setUserId(result.data.id)
+                setUserId(result.data.id);
                 setCurrUserId(result.data.id);
                 // get events
                 await loadUserEvents(result.data.id);
@@ -41,7 +42,7 @@ function EventListPage(props) {
             .delete(process.env.REACT_APP_BACKEND_API + `/events/${eventId}`, {
                 headers: { Authorization: `Bearer ${currentToken}` },
                 data: {
-                    userId:currUserId,
+                    userId: currUserId,
                 },
             })
             .then(async (res) => {
@@ -61,15 +62,20 @@ function EventListPage(props) {
     }, []);
     return (
         <div>
+            <Breadcrumbs
+                links={[
+                    { text: "Home", linkDest: "/home" },
+                    {
+                        text: "Events",
+                    },
+                ]}
+            />
             <h1 className="title">All Events</h1>
             {loading ? (
                 <>Loading ...</>
             ) : (
                 <>
-                    <EventList
-                        Contents={events}
-                        DeleteContent={deleteEvent}
-                    />
+                    <EventList Contents={events} DeleteContent={deleteEvent} />
                 </>
             )}
         </div>

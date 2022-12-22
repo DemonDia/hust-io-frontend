@@ -3,6 +3,7 @@ import OptionBox from "../../Components/Home/OptionBox";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
 import { mainContext } from "../../Contexts/mainContext";
+import Breadcrumbs from "../../Components/General/Breadcrumbs";
 
 function HomePage(props) {
     const { setUserId } = useContext(mainContext);
@@ -58,6 +59,7 @@ function HomePage(props) {
     }, []);
     return (
         <div>
+            <Breadcrumbs links={[{ text: "Home" }]} />
             <h1 className="title">Home Page</h1>
             {loading ? (
                 <h1>Loading...</h1>

@@ -4,6 +4,7 @@ import { defaultAuthCheck } from "../../AuthCheck";
 import axios from "axios";
 import QuizForm from "../../Components/Quiz/QuizForm";
 import { mainContext } from "../../Contexts/mainContext";
+import Breadcrumbs from "../../Components/General/Breadcrumbs";
 
 function AddQuizPage(props) {
     const { setUserId } = useContext(mainContext);
@@ -48,6 +49,18 @@ function AddQuizPage(props) {
     }, []);
     return (
         <div>
+            <Breadcrumbs
+                links={[
+                    { text: "Home", linkDest: "/home" },
+                    {
+                        text: "Quizzes",
+                        linkDest: "/quizzes",
+                    },
+                    {
+                        text: "New Quiz",
+                    },
+                ]}
+            />
             {loading ? (
                 <>Loading...</>
             ) : (

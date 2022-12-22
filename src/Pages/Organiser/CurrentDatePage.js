@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { mainContext } from "../../Contexts/mainContext";
+import Breadcrumbs from "../../Components/General/Breadcrumbs";
 
 // =============events=============
 import EventList from "../../Components/Events/EventList";
@@ -268,7 +269,12 @@ function CurrentDatePage(props) {
 
     return (
         <div>
-            <Link to="/organiser">Back</Link>
+            <Breadcrumbs
+                links={[
+                    { text: "Home", linkDest: "/home", isCurrent: false },
+                    { text: "Organiser", linkDest: "/organiser", isCurrent: false },
+                ]}
+            />
             <h1 className="title"> As of {day}-{month}-{year}:</h1>
             <div className="tabs">
                 <ul>

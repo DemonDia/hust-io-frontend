@@ -1,9 +1,10 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import EventForm from "../../Components/Events/EventForm";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { mainContext } from "../../Contexts/mainContext";
+import Breadcrumbs from "../../Components/General/Breadcrumbs";
 
 function EditEventPage(props) {
     const { setUserId } = useContext(mainContext);
@@ -11,14 +12,14 @@ function EditEventPage(props) {
     const currentToken = localStorage.getItem("loginToken");
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
-    const [event,setEvent] = useState(null)
+    const [event, setEvent] = useState(null);
     const navigate = useNavigate();
     const loadPage = async () => {
-        await defaultAuthCheck(navigate).then(async(result) => {
+        await defaultAuthCheck(navigate).then(async (result) => {
             if (result.data.success) {
                 setCurrUserId(result.data.id);
                 setUserId(result.data.id);
-                await getCurrentEvent()
+                await getCurrentEvent();
                 setLoading(false);
             }
         });
@@ -30,11 +31,9 @@ function EditEventPage(props) {
     // =================methods=================
     const getCurrentEvent = async () => {
         await axios
-            .get(
-                process.env.REACT_APP_BACKEND_API +
-                    `/events/id/${eventId}`,
-                { headers: { Authorization: `Bearer ${currentToken}` } }
-            )
+            .get(process.env.REACT_APP_BACKEND_API + `/events/id/${eventId}`, {
+                headers: { Authorization: `Bearer ${currentToken}` },
+            })
             .then((res) => {
                 if (res.data.success) {
                     setEvent(res.data.data);
@@ -48,7 +47,7 @@ function EditEventPage(props) {
                 process.env.REACT_APP_BACKEND_API + `/events/${eventId}`,
                 {
                     ...updatedEvent,
-                    userId:currUserId,
+                    userId: currUserId,
                 },
                 { headers: { Authorization: `Bearer ${currentToken}` } }
             )
@@ -67,11 +66,27 @@ function EditEventPage(props) {
 
     return (
         <div>
+            <Breadcrumbs
+                links={[
+                    { text: "Home", linkDest: "/home" },
+                    {
+                        text: "Events",
+                        linkDest: "/events",
+                    },
+                    {
+                        text: "Edit Event",
+                    },
+                ]}
+            />
             {loading ? (
                 <>Loading...</>
             ) : (
                 <>
-                    <EventForm proceedFunction={editEvent} currentEvent={event} header={"Edit Event"}/>
+                    <EventForm
+                        proceedFunction={editEvent}
+                        currentEvent={event}
+                        header={"Edit Event"}
+                    />
                 </>
             )}
         </div>

@@ -1,9 +1,10 @@
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import JournalList from "../../Components/Journal/JournalList";
 import { mainContext } from "../../Contexts/mainContext";
+import Breadcrumbs from "../../Components/General/Breadcrumbs";
 
 function JournalListPage(props) {
     const currentToken = localStorage.getItem("loginToken");
@@ -44,7 +45,7 @@ function JournalListPage(props) {
                 {
                     headers: { Authorization: `Bearer ${currentToken}` },
                     data: {
-                        userId:currUserId,
+                        userId: currUserId,
                     },
                 }
             )
@@ -65,6 +66,14 @@ function JournalListPage(props) {
     }, []);
     return (
         <div>
+            <Breadcrumbs
+                links={[
+                    { text: "Home", linkDest: "/home" },
+                    {
+                        text: "Journal Entries",
+                    },
+                ]}
+            />
             <h1 className="title">All Journal Entries</h1>
             {loading ? (
                 <>Loading ...</>
