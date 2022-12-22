@@ -94,7 +94,7 @@ function JournalList({ Contents, DeleteContent }) {
                                                 {journalTitle} ({moodRating}/5) -{" "}
                                                 {`${year}/${
                                                     month + 1
-                                                }/${day} ${hour}:${
+                                                }/${day} ${hour == 0 ? "00" : hour}:${
                                                     minute == 0 ? "00" : minute
                                                 }`}
                                             </h5>

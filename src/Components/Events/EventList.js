@@ -89,7 +89,7 @@ function EventList({ Contents, DeleteContent }) {
                                 <div className="listItem-contents">
                                     <h5 className="subtitle">
                                         {eventName} -{" "}
-                                        {`${year}/${month + 1}/${day} ${hour}:${
+                                        {`${year}/${month + 1}/${day}, ${hour == 0 ? "00" : hour}:${
                                             minute == 0 ? "00" : minute
                                         }`}
                                     </h5>
@@ -98,7 +98,6 @@ function EventList({ Contents, DeleteContent }) {
                                     <Link to={`/events/${_id}`}>Edit</Link>
                                     <Link onClick={() => deleteEvent(_id)}>
                                         Delete
-                                       {/* <DeleteIcon/> */}
                                     </Link>
                                 </div>
                             </div>

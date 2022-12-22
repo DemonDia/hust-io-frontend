@@ -32,10 +32,23 @@ function EventForm({ proceedFunction, currentEvent,header }) {
             const { year, month, day, hour, minute } = date;
             const dateTime = `${year}-${month+1}-${day}T${
                 hour == 0 ? "00" : hour
-            }:${minute}`;
+            }:${ minute == 0 ? "00" : minute}`;
             setEventName(eventName);
             setTags(tags);
             setDateTime(dateTime);
+        }
+        else{
+            const defaultDate = new Date()
+            const year = defaultDate.getFullYear();
+            const month = defaultDate.getMonth();
+            const day = defaultDate.getDate();
+            const hour = defaultDate.getHours();
+            const minute = defaultDate.getMinutes();
+            const dateTime = `${year}-${month+1}-${day}T${
+                hour == 0 ? "00" : hour
+            }:${ minute == 0 ? "00" : minute}`;
+            setDateTime(dateTime);
+
         }
     }, []);
 
