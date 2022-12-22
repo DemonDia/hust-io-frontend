@@ -18,7 +18,7 @@ function Navbar({ userId }) {
     ];
 
     return (
-        <nav className="navbar" role="navigation" aria-label="main navigation">
+        <nav className="navbar card" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
                 <Link className="navbar-item navbarLogo" to="/">Hustl.io</Link>
                 <Link

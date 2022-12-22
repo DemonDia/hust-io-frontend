@@ -28,8 +28,8 @@ function TaskList({
         await DeleteContent(eventId);
     };
     return (
-        <div className="listComponent">
-            <div className="columns">
+        <div className="listComponent card">
+            <div className="columns contentFilter">
                 <div className="column is-half-tablet">
                     <label>Search:</label>
                     <div>
@@ -76,8 +76,9 @@ function TaskList({
                 <></>
             )}
 
+
             {Contents.length > 0 ? (
-                <>
+                <div className="taskList">
                     {Contents.filter((content) => {
                         return content.taskName
                             .toLowerCase()
@@ -105,7 +106,7 @@ function TaskList({
                                 />
                             );
                         })}
-                </>
+                </div>
             ) : (
                 <h2 className="title">Nothing here</h2>
             )}

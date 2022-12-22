@@ -11,8 +11,8 @@ function EventList({ Contents, DeleteContent }) {
         await DeleteContent(eventId);
     };
     return (
-        <div className="listComponent">
-            <div className="columns">
+        <div className="listComponent card">
+            <div className="columns contentFilter">
                 <div className="column is-half-tablet">
                     <label>Search:</label>
                     <div>

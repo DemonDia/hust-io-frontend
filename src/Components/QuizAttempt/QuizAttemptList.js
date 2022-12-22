@@ -48,8 +48,8 @@ function QuizAttemptList({ Contents, DeleteContent }) {
     }, []);
     return (
         <div>
-            <div className="listComponent">
-                <div className="columns">
+            <div className="listComponent card">
+                <div className="columns contentFilter">
                     <div className="column is-half-tablet">
                         <label>Search:</label>
                         <div>

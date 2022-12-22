@@ -55,7 +55,7 @@ function JournalForm({ proceedFunction, currentJournalEntry, heading }) {
         }
     }, []);
     return (
-        <div className="formContainer container">
+        <div className="formContainer container card">
             <h1 className="title is-2">{heading}</h1>
             <div className="container">
                 {currentJournalEntry ? (

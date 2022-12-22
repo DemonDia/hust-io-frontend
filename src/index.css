@@ -22,15 +22,15 @@ code {
 }
 
 /* navbar */
-.navbarLogo{
-  color:blue;
+.navbarLogo {
+  color: blue;
   text-decoration: underline;
   font-weight: bold;
   font-size: 25px;
 }
 
-#currUserName{
-  color:blue;
+#currUserName {
+  color: blue;
   text-decoration: underline;
 }
 
@@ -219,7 +219,9 @@ code {
 }
 
 /* form container */
-.formContainer {}
+.formContainer {
+  padding: 25px
+}
 
 /* cancel btn */
 .cancelBtn,
@@ -243,13 +245,16 @@ code {
 /* questions */
 .questionField,
 .questionRow {
-  background: #e4e2e2;
+  background: rgb(240, 240, 240);
   border-radius: 15px;
   padding: 15px;
-  margin: 10px;
+  margin-top: 10px;
+  box-shadow: 0 .5em 1em -.125em rgba(10, 10, 10, .2), 0 0 0 1px rgba(10, 10, 10, .1);
 }
 
 .questionRow {
+  margin-left: 5px;
+  margin-right: 5px;
   padding: 5px;
   display: flex;
 }
@@ -292,17 +297,35 @@ code {
 
 
 /* breadcrumbs */
-.breadCrumbContainer{
-  padding:10px;
-  background:rgb(255, 255, 255);
+.breadCrumbContainer {
+  padding: 10px;
+  background: rgb(255, 255, 255);
   border-radius: 10px;
 }
 
-.cancelBtn {
-  background:rgb(84, 83, 83);
+/* filter */
+.contentFilter {
+  padding: 10px
 }
 
-.addButton{
+/* calendar filter */
+.calendarFilter{
+  margin: 10px auto;
+}
+/* task list */
+.taskList {
+  padding-bottom: 10px;
+}
+
+.cancelBtn {
+  background: rgb(84, 83, 83);
+}
+
+/* home */
+.homeContainer{
+  padding:10px;
+}
+.addButton {
   background: rgb(36, 36, 139);
   color: white;
 }

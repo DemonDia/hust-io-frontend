@@ -47,13 +47,12 @@ function EventForm({ proceedFunction, currentEvent,header }) {
             const dateTime = `${year}-${month+1}-${day}T${
                 hour == 0 ? "00" : hour
             }:${ minute == 0 ? "00" : minute}`;
-            setDateTime(dateTime);
 
         }
     }, []);
 
     return (
-        <div className="formContainer container">
+        <div className="formContainer card container">
             <h1 className="title is-2">{header}</h1>
             <div className="container">
                 <div className="field">

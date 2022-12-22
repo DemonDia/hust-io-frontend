@@ -124,7 +124,7 @@ function UserProfile(props) {
                 <>Loading...</>
             ) : (
                 <>
-                    <div className="container">
+                    <div className="container card formContainer">
                         <h1 className="title is-2">User profile</h1>
                         <div className="field">
                             <p className="control">

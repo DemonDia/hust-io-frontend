@@ -113,7 +113,7 @@ function QuizForm({ proceedFunction, currentQuiz, heading }) {
         }
     })
     return (
-        <div className="formContainer container">
+        <div className="formContainer container card">
             <h1 className="title is-2">{heading}</h1>
             <div className="container">
                 <div className="field">
@@ -215,10 +215,10 @@ function QuizForm({ proceedFunction, currentQuiz, heading }) {
                     )}
                 </div>
                 {questions.map((currQuestion, index) => {
-                    const { question, correctAnswer, explanation } =
+                    const { question } =
                         currQuestion;
                     return (
-                        <div key={index} className="questionRow columns">
+                        <div key={index} className="questionRow columns card">
                             <div className="column">
                                 <h1 className="subtitle">{question}</h1>
                             </div>

@@ -125,7 +125,7 @@ function MainCalendar(props) {
                 <h2 className="title">
                     {monthArr[month]} {year}
                 </h2>
-                <div className="columns">
+                <div className="columns contentFilter calendarFilter card">
                     <div className="column is-half">
                         <label>Year:</label>
                         <div id="yearField">
@@ -186,7 +186,7 @@ function MainCalendar(props) {
                 {loading ? (
                     <>Loading ...</>
                 ) : (
-                    <>
+                    <div className="card">
                         {" "}
                         <table className="calendar">
                             <thead>
@@ -266,7 +266,7 @@ function MainCalendar(props) {
                                 })}
                             </tbody>
                         </table>
-                    </>
+                    </div>
                 )}
             </div>
         </div>
