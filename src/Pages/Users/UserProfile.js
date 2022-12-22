@@ -125,7 +125,7 @@ function UserProfile(props) {
             ) : (
                 <>
                     <div className="container">
-                        <h1 className="title">User profile</h1>
+                        <h1 className="title is-2">User profile</h1>
                         <div className="field">
                             <p className="control">
                                 <label className="label">Name:</label>

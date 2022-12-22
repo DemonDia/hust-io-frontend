@@ -117,7 +117,7 @@ function TaskListPage(props) {
                     },
                 ]}
             />
-            <h1 className="title">All Tasks</h1>
+            <h1 className="title is-2">All Tasks</h1>
             {loading ? (
                 <>Loading ...</>
             ) : (

@@ -30,7 +30,7 @@ function ForgotPasswordFormPage(props) {
     return (
         <div>
             <div className="container authForm">
-                <h1 className="title">Reset password</h1>
+                <h1 className="title is-2">Reset password</h1>
                 <div className="container authForm">
                     <label className="label">New Password:</label>
                     <input

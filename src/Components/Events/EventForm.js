@@ -41,7 +41,7 @@ function EventForm({ proceedFunction, currentEvent,header }) {
 
     return (
         <div className="formContainer container">
-            <h1 className="title">{header}</h1>
+            <h1 className="title is-2">{header}</h1>
             <div className="container">
                 <div className="field">
                     <p className="control">

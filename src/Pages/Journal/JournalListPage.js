@@ -74,7 +74,7 @@ function JournalListPage(props) {
                     },
                 ]}
             />
-            <h1 className="title">All Journal Entries</h1>
+            <h1 className="title is-2">All Journal Entries</h1>
             {loading ? (
                 <>Loading ...</>
             ) : (

@@ -21,13 +21,18 @@ code {
   padding: 25px;
 }
 
+/* navbar */
+.navbarLogo{
+  color:blue;
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 25px;
+}
 
 /* banner */
 .banner {
   background: white;
-  height: 60vh;
   padding: 35px;
-  /* max-width:60vh; */
 }
 
 .bannerTitle,
@@ -47,7 +52,7 @@ code {
 /* auth form */
 .authFormContainer {
   background: white;
-  height: 60vh;
+  /* height: 60vh; */
   padding: 25px;
 }
 

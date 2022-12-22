@@ -19,8 +19,9 @@ function Navbar({ userId }) {
 
     return (
         <nav className="navbar" role="navigation" aria-label="main navigation">
-            <Link
-                // href="#"
+            <div class="navbar-brand">
+                <Link className="navbar-item navbarLogo">Hustl.io</Link>
+                <Link
                 onClick={() => {
                     setOpened(!opened);
                 }}
@@ -34,6 +35,7 @@ function Navbar({ userId }) {
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
             </Link>
+            </div>
 
             <div
                 id="navbar"

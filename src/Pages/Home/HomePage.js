@@ -9,12 +9,14 @@ function HomePage(props) {
     const { setUserId } = useContext(mainContext);
     const [loading, setLoading] = useState(true);
     const [options, setOptions] = useState([]);
-    // const { setLoggedIn,loggedIn } = useContext(NavbarContext);
+    const [name, setName] = useState("");
     const navigate = useNavigate();
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then((result) => {
             if (result.data.success) {
-                setUserId(result.data.id);
+                const { id, name } = result.data;
+                setUserId(id);
+                setName(name)
                 const today = new Date();
                 const year = today.getFullYear();
                 const month = today.getMonth();
@@ -60,7 +62,7 @@ function HomePage(props) {
     return (
         <div>
             <Breadcrumbs links={[{ text: "Home" }]} />
-            <h1 className="title">Home Page</h1>
+            <h1 className="title is-2">Welcome, {name}</h1>
             {loading ? (
                 <h1>Loading...</h1>
             ) : (

@@ -123,7 +123,7 @@ function QuizListPage(props) {
                     },
                 ]}
             />
-            <h1 className="title">Quiz Management</h1>
+            <h1 className="title is-2">Quiz Management</h1>
             <div className="tabs">
                 <ul>
                     {tabs.map((tab, index) => {

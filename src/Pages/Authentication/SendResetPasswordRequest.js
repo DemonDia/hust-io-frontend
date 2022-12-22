@@ -19,7 +19,7 @@ function SendResetPasswordRequest(props) {
     return (
         <div>
             <div className="container authForm">
-                <h1 className="title">Reset password</h1>
+                <h1 className="title is-2">Reset password</h1>
                 <label className="label">Email:</label>
                 <input
                     className="input"

@@ -114,7 +114,7 @@ function QuizForm({ proceedFunction, currentQuiz, heading }) {
     })
     return (
         <div className="formContainer container">
-            <h1 className="title">{heading}</h1>
+            <h1 className="title is-2">{heading}</h1>
             <div className="container">
                 <div className="field">
                     <div className="control">

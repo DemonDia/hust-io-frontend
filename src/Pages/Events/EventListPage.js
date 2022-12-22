@@ -70,7 +70,7 @@ function EventListPage(props) {
                     },
                 ]}
             />
-            <h1 className="title">All Events</h1>
+            <h1 className="title is-2">All Events</h1>
             {loading ? (
                 <>Loading ...</>
             ) : (

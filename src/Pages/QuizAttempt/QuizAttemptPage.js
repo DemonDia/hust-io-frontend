@@ -114,8 +114,7 @@ function QuizAttemptPage(props) {
                     },
                 ]}
             />
-            <h1 className="title">Quiz Attempt</h1>
-            <Link to="/quizzes">Back</Link>
+            <h1 className="title is-2">Quiz Attempt</h1>
             {loading ? (
                 <>Loading ...</>
             ) : (
@@ -179,6 +178,12 @@ function QuizAttemptPage(props) {
                                 )}
                             </>
                         )}
+                        <Link
+                            className="button quizAttemptSubmitBtn"
+                            to="/quizzes"
+                        >
+                            Back
+                        </Link>
                     </div>
                 </>
             )}

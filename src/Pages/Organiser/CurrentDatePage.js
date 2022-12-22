@@ -275,7 +275,7 @@ function CurrentDatePage(props) {
                     { text: "Organiser", linkDest: "/organiser", isCurrent: false },
                 ]}
             />
-            <h1 className="title"> As of {day}-{month}-{year}:</h1>
+            <h1 className="title is-2"> As of {day}-{month}-{year}:</h1>
             <div className="tabs">
                 <ul>
                     {tabs.map((tab, index) => {
