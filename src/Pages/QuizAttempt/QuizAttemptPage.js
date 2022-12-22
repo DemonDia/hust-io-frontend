@@ -13,6 +13,7 @@ function QuizAttemptPage(props) {
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
     const [quizAttempt, setQuizAttempt] = useState(null);
+    const [displayDate, setDisplayDate] = useState("");
     const navigate = useNavigate();
 
     const statuses = ["", "In progress", "Marking in progress", "Completed"];
@@ -42,6 +43,21 @@ function QuizAttemptPage(props) {
             .then((res) => {
                 if (res.data.success) {
                     setQuizAttempt(res.data.data);
+                    const { isoDate } = res.data.data;
+                    const quizDate = new Date(isoDate);
+                    const year = quizDate.getFullYear();
+                    const month = quizDate.getMonth();
+                    const day = quizDate.getDate();
+                    const hour = quizDate.getHours();
+                    const minute = quizDate.getMinutes();
+                    const seconds = quizDate.getSeconds();
+
+                    const displayDate = `${day}-${month + 1}-${year}, ${
+                        hour == "0" ? "00" : hour
+                    }:${minute == "0" ? "00" : minute}:${
+                        seconds == "0" ? "00" : seconds
+                    }`;
+                    setDisplayDate(displayDate);
                 }
             })
             .catch((err) => {});
@@ -114,28 +130,29 @@ function QuizAttemptPage(props) {
                     },
                 ]}
             />
-            <h1 className="title is-2">Quiz Attempt</h1>
             {loading ? (
                 <>Loading ...</>
             ) : (
                 <>
                     <div>
-                        <h2 className="title is-4"> {quizAttempt.quizName}</h2>
-                        <h3 className="subtitle">
-                            Attempted at: {quizAttempt.isoDate}
-                        </h3>
-                        <h3 className="subtitle">
-                            Completion Status:{" "}
-                            {statuses[quizAttempt.attemptStatus]}
+                        <h2 className="title is-2"> {quizAttempt.quizName}</h2>
+                        <div>
+                            <h3 className="subtitle">
+                                Attempt Date: {displayDate}
+                            </h3>
+                            <h3 className="subtitle">
+                                Status: {statuses[quizAttempt.attemptStatus]}
+                            </h3>
+
                             {quizAttempt.attemptStatus == 3 ? (
-                                <>
-                                    (Score: {quizAttempt.quizScore}/
-                                    {quizAttempt.noOfQuestions})
-                                </>
+                                <h3 className="subtitle">
+                                    Score: {quizAttempt.quizScore}/
+                                    {quizAttempt.noOfQuestions}
+                                </h3>
                             ) : (
                                 <></>
                             )}
-                        </h3>
+                        </div>
                         {quizAttempt.questions.map((question, index) => {
                             return (
                                 <QuizAttemptQuestion

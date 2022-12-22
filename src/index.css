@@ -285,7 +285,7 @@ code {
 .quizAttemptQuestion {
   background: rgb(255, 255, 255, 0.85);
   padding: 15px;
-  margin: 15px;
+  margin-top: 15px;
   border-radius: 5px;
 
 }

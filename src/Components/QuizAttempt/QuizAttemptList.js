@@ -25,7 +25,7 @@ function QuizAttemptList({ Contents, DeleteContent }) {
             }
             return status;
         });
-        setStatusDict(updatedStatus)
+        setStatusDict(updatedStatus);
         updateTickFilter();
     };
 
@@ -147,7 +147,12 @@ function QuizAttemptList({ Contents, DeleteContent }) {
                                 const day = date.getDay();
                                 const hour = date.getHours();
                                 const minute = date.getMinutes();
-                                const dateString = `${day}-${month}-${year}, ${hour}:${minute}`;
+                                const seconds = date.getSeconds();
+                                const dateString = `${day}-${
+                                    month + 1
+                                }-${year}, ${hour == "0" ? "00" : hour}:${
+                                    minute == "0" ? "00" : minute
+                                }:${seconds == "0" ? "00" : seconds}`;
                                 return (
                                     <div key={_id} className="listItem">
                                         <div className="listItem-contents">
@@ -164,7 +169,7 @@ function QuizAttemptList({ Contents, DeleteContent }) {
                                                 )}
                                                 )
                                             </h5>
-                                            Attempted at: {dateString}
+                                            Attempt Date: {dateString}
                                         </div>
                                         <div className="listItem-buttons">
                                             <Link
