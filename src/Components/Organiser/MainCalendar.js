@@ -237,14 +237,14 @@ function MainCalendar(props) {
                                                                     {calendarDay in
                                                                     calendarEvents ? (
                                                                         <span className="tag is-danger">
-                                                                            (
+                                                                            Events:{" "}
+                                                                            {""}
                                                                             {
                                                                                 calendarEvents[
                                                                                     calendarDay
                                                                                 ]
                                                                                     .length
                                                                             }
-                                                                            ){" "}
                                                                         </span>
                                                                     ) : (
                                                                         <></>
