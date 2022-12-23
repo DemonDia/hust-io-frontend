@@ -58,7 +58,7 @@ function TaskRow({
                         value={taskName}
                         className="input"
                         type="text"
-                        placeholder="Change task name"
+                        placeholder="Change task name (max 20 characters)"
                         onChange={(e) => {
                             setTaskName(e.target.value);
                         }}

@@ -40,7 +40,11 @@ function TaskListPage() {
     };
 
     const editTaskName = async (taskName, taskId) => {
-        await axios
+        if(taskName.length > 20){
+            alert("Your task name cannot exceed 20 characters!")
+        }
+        else{
+            await axios
             .put(
                 process.env.REACT_APP_BACKEND_API + `/tasks/${taskId}`,
                 {
@@ -60,6 +64,7 @@ function TaskListPage() {
             .catch((err) => {
                 alert("Failed to update");
             });
+        }
     };
 
     const editTaskStatus = async (completed, taskId) => {

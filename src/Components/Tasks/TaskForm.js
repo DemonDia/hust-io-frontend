@@ -18,7 +18,7 @@ function TaskForm({ addTaskMethod }) {
             <input
                 className="input column is-three-quarters"
                 type="text"
-                placeholder="Add new task name"
+                placeholder="Add new task name (Max 20 characters)"
                 value={taskName}
                 onChange={(e) => {
                     setTaskName(e.target.value);
