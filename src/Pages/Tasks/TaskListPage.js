@@ -42,6 +42,7 @@ function TaskListPage() {
     const editTaskName = async (taskName, taskId) => {
         if(taskName.length > 20){
             alert("Your task name cannot exceed 20 characters!")
+            await loadUserTasks(currUserId);
         }
         else{
             await axios
