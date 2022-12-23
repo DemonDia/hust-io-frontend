@@ -210,12 +210,10 @@ function CurrentDatePage() {
                     await loadDayTasks(year, month, day, currUserId);
                     alert("Successfully updated");
                 } else {
-                    console.log(res.data.message)
                     alert("Failed to update");
                 }
             })
             .catch((err) => {
-                console.log(err)
                 alert("Failed to update");
             });
     };
