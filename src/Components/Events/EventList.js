@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import EmptyListBanner from "../General/EmptyListBanner";
+
 function EventList({ Contents, DeleteContent }) {
     // ============search as you type============
     const [search, setSearch] = useState("");
@@ -105,7 +107,8 @@ function EventList({ Contents, DeleteContent }) {
                     })}
                 </>
             ) : (
-                <h2 className="title">Nothing here</h2>
+                
+                <EmptyListBanner text={"No events found"}/>
             )}
         </div>
     );

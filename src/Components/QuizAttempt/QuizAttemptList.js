@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import StatusFilterCheckbox from "./StatusFilterCheckbox";
+import EmptyListBanner from "../General/EmptyListBanner";
+
 function QuizAttemptList({ Contents, DeleteContent }) {
     // ============search as you type============
     const [search, setSearch] = useState("");
@@ -211,7 +213,7 @@ function QuizAttemptList({ Contents, DeleteContent }) {
                             })}
                     </>
                 ) : (
-                    <h2 className="title">Nothing here</h2>
+                    <EmptyListBanner text={"No quiz attempts found"}/>
                 )}
             </div>
         </div>

@@ -327,7 +327,7 @@ code {
   padding: 20px;
 }
 
-.addButton {
+.addButton,.emptyBanner {
   background: rgb(36, 36, 139);
   color: white;
 }
@@ -335,4 +335,13 @@ code {
 /* loader container */
 .loaderContainer {
   padding: 20px;
+}
+
+/* empty banner */
+.emptyBanner{
+  padding:20px;
+  border-radius: 10px;
+}
+.emptyBanner h1{
+  color:white;
 }

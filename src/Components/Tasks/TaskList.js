@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import TaskRow from "./TaskRow";
 import TaskForm from "./TaskForm";
+import EmptyListBanner from "../General/EmptyListBanner";
 function TaskList({
     Contents,
     AddContent,
@@ -108,7 +108,7 @@ function TaskList({
                         })}
                 </div>
             ) : (
-                <h2 className="title">Nothing here</h2>
+                <EmptyListBanner text={"No tasks found"}/>
             )}
         </div>
     );

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import EmptyListBanner from "../General/EmptyListBanner";
 function JournalList({ Contents, DeleteContent }) {
     // ============search as you type============
     const [search, setSearch] = useState("");
@@ -107,7 +108,6 @@ function JournalList({ Contents, DeleteContent }) {
                                                 onClick={() => deleteJournal(_id)}
                                             >
                                                 Delete
-                                                {/* <DeleteIcon/> */}
                                             </Link>
                                         </div>
                                     </div>
@@ -115,7 +115,7 @@ function JournalList({ Contents, DeleteContent }) {
                             })}
                     </>
                 ) : (
-                    <h2 className="title">Nothing here</h2>
+                    <EmptyListBanner text = "No journal entries found"/>
                 )}
             </div>
         </div>
