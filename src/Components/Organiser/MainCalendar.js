@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Loader from "../General/Loader";
 function MainCalendar(props) {
     const currentToken = localStorage.getItem("loginToken");
     const [loading, setLoading] = useState(true);
@@ -184,7 +185,7 @@ function MainCalendar(props) {
                     </div>
                 </div>
                 {loading ? (
-                    <>Loading ...</>
+                    <Loader/>
                 ) : (
                     <div className="card">
                         {" "}

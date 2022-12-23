@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Loader from "../General/Loader";
 function RegistrationForm(props) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [loading, setLoading] = useState(false);
     const register = async () => {
-        await props.registerMethod(name, email, password, confirmPassword);
+        setLoading(true);
+        await props.registerMethod(name, email, password, confirmPassword)
+        setLoading(false)
     };
     return (
         <div className="container is-two-fifths-desktop column">
-            <div className="container authFormContainer">
-                <h2 className="title is-2">Sign Up</h2>
+            <div className="container authFormContainer card">
                 <div className="container authForm">
+                    <h2 className="title is-2">Sign Up</h2>
                     <div className="field">
                         <p className="control">
                             <label className="label">Name:</label>
@@ -71,6 +75,7 @@ function RegistrationForm(props) {
                     </p>
                 </div>
             </div>
+            {loading ? <Loader text={"Registering ..."} /> : <></>}
         </div>
     );
 }

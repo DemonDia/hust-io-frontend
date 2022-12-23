@@ -309,9 +309,10 @@ code {
 }
 
 /* calendar filter */
-.calendarFilter{
+.calendarFilter {
   margin: 10px auto;
 }
+
 /* task list */
 .taskList {
   padding-bottom: 10px;
@@ -322,10 +323,16 @@ code {
 }
 
 /* home */
-.homeContainer{
-  padding:20px;
+.homeContainer {
+  padding: 20px;
 }
+
 .addButton {
   background: rgb(36, 36, 139);
   color: white;
+}
+
+/* loader container */
+.loaderContainer {
+  padding: 20px;
 }

@@ -5,8 +5,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { mainContext } from "../../Contexts/mainContext";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
+import Loader from "../../Components/General/Loader";
 
-function EditQuizPage(props) {
+function EditQuizPage() {
     const { setUserId } = useContext(mainContext);
     const { quizId } = useParams();
     const currentToken = localStorage.getItem("loginToken");
@@ -77,7 +78,7 @@ function EditQuizPage(props) {
                 ]}
             />
             {loading ? (
-                <>Loading...</>
+                <Loader />
             ) : (
                 <>
                     <QuizForm

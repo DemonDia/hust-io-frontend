@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { defaultAuthCheck } from "../../AuthCheck";
 import axios from "axios";
 import QuizForm from "../../Components/Quiz/QuizForm";
 import { mainContext } from "../../Contexts/mainContext";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
+import Loader from "../../Components/General/Loader";
 
-function AddQuizPage(props) {
+function AddQuizPage() {
     const { setUserId } = useContext(mainContext);
     const currentToken = localStorage.getItem("loginToken");
     const [loading, setLoading] = useState(true);
@@ -62,7 +63,7 @@ function AddQuizPage(props) {
                 ]}
             />
             {loading ? (
-                <>Loading...</>
+               <Loader />
             ) : (
                 <>
                     <QuizForm

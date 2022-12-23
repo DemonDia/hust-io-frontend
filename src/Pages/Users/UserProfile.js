@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { mainContext } from "../../Contexts/mainContext";
 import axios from "axios";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
+import Loader from "../../Components/General/Loader";
+
 function UserProfile(props) {
     const token = localStorage.getItem("loginToken");
     const { setUserId, userId } = useContext(mainContext);
@@ -121,7 +123,7 @@ function UserProfile(props) {
             />
 
             {loading ? (
-                <>Loading...</>
+               <Loader />
             ) : (
                 <>
                     <div className="container card formContainer">

@@ -3,8 +3,9 @@ import { Link, useNavigate, useParams} from "react-router-dom";
 import { defaultAuthCheck } from "../../AuthCheck";
 import axios from "axios";
 import { mainContext } from "../../Contexts/mainContext";
+import Loader from "../../Components/General/Loader";
 
-function CreateQuizAttempt(props) {
+function CreateQuizAttempt() {
     const { setUserId } = useContext(mainContext);
     const { quizId } = useParams();
     const currentToken = localStorage.getItem("loginToken");
@@ -45,7 +46,7 @@ function CreateQuizAttempt(props) {
         }, []);
     return (
         <div>
-            <h1 className='title'>Generating quiz ...</h1>
+            <Loader text={"Generating Quiz"}/>
             
         </div>
     );

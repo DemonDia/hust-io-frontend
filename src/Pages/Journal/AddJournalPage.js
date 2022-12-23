@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import JournalForm from "../../Components/Journal/JournalForm";
 import { defaultAuthCheck } from "../../AuthCheck";
 import axios from "axios";
 import { mainContext } from "../../Contexts/mainContext";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
+import Loader from "../../Components/General/Loader";
 
-function AddJournalPage(props) {
+function AddJournalPage() {
     const { setUserId } = useContext(mainContext);
     const currentToken = localStorage.getItem("loginToken");
     const [loading, setLoading] = useState(true);
@@ -62,7 +63,7 @@ function AddJournalPage(props) {
                 ]}
             />
             {loading ? (
-                <>Loading...</>
+               <Loader />
             ) : (
                 <>
                     <JournalForm

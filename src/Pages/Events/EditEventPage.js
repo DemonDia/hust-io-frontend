@@ -5,8 +5,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { mainContext } from "../../Contexts/mainContext";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
+import Loader from "../../Components/General/Loader";
 
-function EditEventPage(props) {
+function EditEventPage() {
     const { setUserId } = useContext(mainContext);
     const { eventId } = useParams();
     const currentToken = localStorage.getItem("loginToken");
@@ -79,7 +80,7 @@ function EditEventPage(props) {
                 ]}
             />
             {loading ? (
-                <>Loading...</>
+               <Loader />
             ) : (
                 <>
                     <EventForm

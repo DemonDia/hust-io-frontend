@@ -5,8 +5,9 @@ import axios from "axios";
 import TaskList from "../../Components/Tasks/TaskList";
 import { mainContext } from "../../Contexts/mainContext";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
+import Loader from "../../Components/General/Loader";
 
-function TaskListPage(props) {
+function TaskListPage() {
     const currentToken = localStorage.getItem("loginToken");
     const { setUserId } = useContext(mainContext);
     const [loading, setLoading] = useState(true);
@@ -119,7 +120,7 @@ function TaskListPage(props) {
             />
             <h1 className="title is-2">All Tasks</h1>
             {loading ? (
-                <>Loading ...</>
+               <Loader />
             ) : (
                 <>
                     <TaskList

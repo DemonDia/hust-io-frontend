@@ -6,8 +6,9 @@ import QuizList from "../../Components/Quiz/QuizList";
 import QuizAttemptList from "../../Components/QuizAttempt/QuizAttemptList";
 import { mainContext } from "../../Contexts/mainContext";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
+import Loader from "../../Components/General/Loader";
 
-function QuizListPage(props) {
+function QuizListPage() {
     const navigate = useNavigate();
     const currentToken = localStorage.getItem("loginToken");
     const { setUserId } = useContext(mainContext);
@@ -146,7 +147,7 @@ function QuizListPage(props) {
             </div>
             <div className="tabContents">
                 {loading ? (
-                    <>Loading ...</>
+                   <Loader />
                 ) : (
                     <>
                         {tab == 0 ? (

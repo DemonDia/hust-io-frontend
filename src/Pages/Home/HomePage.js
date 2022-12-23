@@ -4,8 +4,9 @@ import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
 import { mainContext } from "../../Contexts/mainContext";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
+import Loader from "../../Components/General/Loader";
 
-function HomePage(props) {
+function HomePage() {
     const { setUserId } = useContext(mainContext);
     const [loading, setLoading] = useState(true);
     const [options, setOptions] = useState([]);
@@ -62,32 +63,34 @@ function HomePage(props) {
     return (
         <div>
             <Breadcrumbs links={[{ text: "Home" }]} />
-            <div className="card homeContainer">
-                {" "}
-                <h1 className="title is-2">
-                    Welcome, <em id="currUserName">{name}</em>.
-                </h1>
-                {loading ? (
-                    <h1>Loading...</h1>
-                ) : (
-                    <div className="">
-                        {options.map((optionList, index) => {
-                            return (
-                                <div className="columns" key={index}>
-                                    {optionList.map((option, index) => {
-                                        return (
-                                            <OptionBox
-                                                key={index}
-                                                option={option}
-                                            />
-                                        );
-                                    })}
-                                </div>
-                            );
-                        })}
+            {loading ? (
+                <Loader/>
+            ) : (
+                <>
+                    {" "}
+                    <div className="card homeContainer">
+                        <h1 className="title is-2">
+                            Welcome, <em id="currUserName">{name}</em>.
+                        </h1>
+                        <div className="">
+                            {options.map((optionList, index) => {
+                                return (
+                                    <div className="columns" key={index}>
+                                        {optionList.map((option, index) => {
+                                            return (
+                                                <OptionBox
+                                                    key={index}
+                                                    option={option}
+                                                />
+                                            );
+                                        })}
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
-                )}
-            </div>
+                </>
+            )}
         </div>
     );
 }

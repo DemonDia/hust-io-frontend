@@ -2,7 +2,8 @@ import React,{useEffect,useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { defaultAuthCheck } from '../../AuthCheck';
 import { mainContext } from '../../Contexts/mainContext';
-function LogoutPage(props) {
+import Loader from '../../Components/General/Loader';
+function LogoutPage() {
     const navigate = useNavigate();
     const { setUserId } = useContext(mainContext);
     const loadPage = async () => {
@@ -20,7 +21,7 @@ function LogoutPage(props) {
     }, []);
     return (
         <div>
-            <h1 className='title'>Logging out ...</h1>
+           <Loader text={"Logging Out ..."}/>
         </div>
     );
 }

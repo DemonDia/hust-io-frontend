@@ -1,7 +1,6 @@
 import React, { useEffect, useState,useContext } from "react";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate, useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import { mainContext } from "../../Contexts/mainContext";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
@@ -13,9 +12,10 @@ import JournalList from "../../Components/Journal/JournalList";
 
 // =============tasks=============
 import TaskList from "../../Components/Tasks/TaskList";
-import TaskForm from "../../Components/Tasks/TaskForm";
 
-function CurrentDatePage(props) {
+import Loader from "../../Components/General/Loader";
+
+function CurrentDatePage() {
     const currentToken = localStorage.getItem("loginToken");
     const { setUserId } = useContext(mainContext);
     const { currDate } = useParams();
@@ -76,30 +76,6 @@ function CurrentDatePage(props) {
         if (getEventResults.data.success) {
             setEvents(getEventResults.data.data);
         }
-    };
-    // ============delete events============
-    const deleteEvent = async (eventId) => {
-        await axios
-            .delete(process.env.REACT_APP_BACKEND_API + `/events/${eventId}`, {
-                headers: { Authorization: `Bearer ${currentToken}` },
-                data: {
-                    userId:currUserId,
-                },
-            })
-            .then(async (res) => {
-                if (res.data.success) {
-                    if (currDate) {
-                        const [year, month, day] = currDate.split("-");
-                        await loadDayEvents(year, month, day, currUserId);
-                        alert("Successfully deleted");
-                    }
-                } else {
-                    alert("Failed to delete");
-                }
-            })
-            .catch((err) => {
-                alert("Failed to delete");
-            });
     };
 
     // =====================journal entries=====================
@@ -298,7 +274,7 @@ function CurrentDatePage(props) {
             </div>
             <div className="tabContents">
                 {loading ? (
-                    <>Loading</>
+                   <Loader/>
                 ) : (
                     <>
                         {currTab == 0 ? (

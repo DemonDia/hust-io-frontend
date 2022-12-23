@@ -5,6 +5,7 @@ import { defaultAuthCheck } from "../../AuthCheck";
 import axios from "axios";
 import { mainContext } from "../../Contexts/mainContext";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
+import Loader from "../../Components/General/Loader";
 
 function AddEventPage(props) {
     const { setUserId } = useContext(mainContext);
@@ -63,7 +64,7 @@ function AddEventPage(props) {
                 ]}
             />
             {loading ? (
-                <>Loading...</>
+               <Loader />
             ) : (
                 <>
                     <EventForm

@@ -5,8 +5,9 @@ import axios from "axios";
 import { mainContext } from "../../Contexts/mainContext";
 import QuizAttemptQuestion from "../../Components/QuizAttempt/QuizAttemptQuestion";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
+import Loader from "../../Components/General/Loader";
 
-function QuizAttemptPage(props) {
+function QuizAttemptPage() {
     const { setUserId } = useContext(mainContext);
     const { quizAttemptId } = useParams();
     const currentToken = localStorage.getItem("loginToken");
@@ -140,7 +141,7 @@ function QuizAttemptPage(props) {
                 ]}
             />
             {loading ? (
-                <>Loading ...</>
+               <Loader />
             ) : (
                 <>
                     <div>

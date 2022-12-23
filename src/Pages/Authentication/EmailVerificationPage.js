@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Loader from "../../Components/General/Loader";
 function EmailVerificationPage(props) {
     const { userId, token } = useParams();
     const [verified, setVerified] = useState(false);
@@ -26,18 +27,24 @@ function EmailVerificationPage(props) {
             });
     }, []);
     return (
-        <div className="container">
+        <div className="container authContainer card">
             {!verified && !verificationFailed ? (
-                <h1>Verifying</h1>
+                <Loader text={"Verifying"} />
             ) : (
-                <>
-                    {verified && !verificationFailed ? (
-                        <h1 className="title">Verified!</h1>
-                    ) : (
-                        <h1 className="title">Failed to verify</h1>
-                    )}
-                    <Link to ="/login" className="button is-link">Back to login</Link>
-                </>
+                <div className="card authFormContainer">
+                    <h1 className="title is-2">
+                        {" "}
+                        {verified && !verificationFailed ? (
+                            <>Verified!</>
+                        ) : (
+                            <>Failed to verify</>
+                        )}
+                    </h1>
+
+                    <Link to="/login" className="button addButton">
+                        Back to login
+                    </Link>
+                </div>
             )}
         </div>
     );
