@@ -2,7 +2,7 @@ import React from 'react';
 
 function Loader({text}) {
     return (
-        <div className="container card loaderContainer">
+        <div className="card loaderContainer">
             <h1 className='title is-3'>
                 {text?<>{text}</>:<>Loading ...</>}
             </h1>
