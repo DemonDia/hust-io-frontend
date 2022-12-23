@@ -51,7 +51,6 @@ function TaskListPage() {
             )
             .then(async (res) => {
                 if (res.data.success) {
-                    console.log(res)
                     await loadUserTasks(currUserId);
                     alert("Successfully updated");
                 } else {
@@ -59,7 +58,6 @@ function TaskListPage() {
                 }
             })
             .catch((err) => {
-                console.log(err)
                 alert("Failed to update");
             });
     };
