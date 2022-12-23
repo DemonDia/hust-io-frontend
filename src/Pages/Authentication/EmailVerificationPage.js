@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Loader from "../../Components/General/Loader";
-function EmailVerificationPage(props) {
+function EmailVerificationPage() {
     const { userId, token } = useParams();
     const [verified, setVerified] = useState(false);
     const [verificationFailed, setVerificationFailed] = useState(false);

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Loader from "../General/Loader";
-function MainCalendar(props) {
+function MainCalendar({userId}) {
     const currentToken = localStorage.getItem("loginToken");
     const [loading, setLoading] = useState(true);
     // year and month in numbers
@@ -51,7 +51,7 @@ function MainCalendar(props) {
         setLoading(true);
         const calendarContent = await axios.get(
             process.env.REACT_APP_BACKEND_API +
-                `/events/${year}/${month - 1}/${props.userId}`,
+                `/events/${year}/${month - 1}/${userId}`,
             {
                 headers: { Authorization: `Bearer ${currentToken}` },
             }

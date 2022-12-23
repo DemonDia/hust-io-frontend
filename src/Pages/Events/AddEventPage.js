@@ -7,7 +7,7 @@ import { mainContext } from "../../Contexts/mainContext";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
 
-function AddEventPage(props) {
+function AddEventPage() {
     const { setUserId } = useContext(mainContext);
     const currentToken = localStorage.getItem("loginToken");
     const [loading, setLoading] = useState(true);

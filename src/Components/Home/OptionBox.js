@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-function OptionBox(props) {
+function OptionBox({option}) {
     return (
         <div className="contaner is-quarter-tablet column">
-            <Link to={props.option.link}>
+            <Link to={option.link}>
                 <div className="box optionBox">
-                    <h1 className="subtitle">{props.option.name}</h1>
+                    <h1 className="subtitle">{option.name}</h1>
                 </div>
             </Link>
         </div>

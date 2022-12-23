@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Loader from "../General/Loader";
-function RegistrationForm(props) {
+function RegistrationForm({registerMethod}) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -9,7 +9,7 @@ function RegistrationForm(props) {
     const [loading, setLoading] = useState(false);
     const register = async () => {
         setLoading(true);
-        await props.registerMethod(name, email, password, confirmPassword)
+        await registerMethod(name, email, password, confirmPassword)
         setLoading(false)
     };
     return (

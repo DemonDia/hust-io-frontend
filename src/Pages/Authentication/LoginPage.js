@@ -4,7 +4,7 @@ import LoginForm from '../../Components/Authentication/LoginForm';
 import {loginPageAuthCheck} from "../../AuthCheck"
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-function LoginPage(props) {
+function LoginPage() {
     const navigate = useNavigate();
     const login = async (email,password) => {
         await axios

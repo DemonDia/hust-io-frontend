@@ -1,6 +1,6 @@
 import React from "react";
 
-function Banner(props) {
+function Banner() {
     return (
         <div className="column is-three-fifths-desktop">
             <div className="container is-max-desktop banner card">

@@ -6,7 +6,7 @@ import axios from "axios";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
 
-function UserProfile(props) {
+function UserProfile() {
     const token = localStorage.getItem("loginToken");
     const { setUserId, userId } = useContext(mainContext);
     const [email, setEmail] = useState("");

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loader from "../../Components/General/Loader";
  
-function SendResetPasswordRequest(props) {
+function SendResetPasswordRequest() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState("");
