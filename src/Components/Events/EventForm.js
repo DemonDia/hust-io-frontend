@@ -35,7 +35,6 @@ function EventForm({ proceedFunction, currentEvent, header }) {
             }:${minute == 0 ? "00" : minute}`;
             setEventName(eventName);
             setTags(tags);
-            console.log(dateTime);
             setDateTime(dateTime);
         } else {
             const defaultDate = new Date();
@@ -53,7 +52,6 @@ function EventForm({ proceedFunction, currentEvent, header }) {
             const dateTime = `${year}-${month + 1}-${day}T${
                 hour == 0 ? "00" : hour
             }:${minute == 0 ? "00" : minute}`;
-            console.log(dateTime);
             setDateTime(dateTime);
         }
     }, []);

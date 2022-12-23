@@ -44,12 +44,10 @@ function UserProfile() {
                     if (res.data.success) {
                         alert("Name successfully saved");
                     } else {
-                        console.log(res.data);
                         alert("Failed to save");
                     }
                 })
                 .catch((err) => {
-                    console.log(err);
                     alert("Failed to save");
                 });
         }
@@ -97,12 +95,10 @@ function UserProfile() {
                         alert("Account successfully deleted");
                         navigate("/logout");
                     } else {
-                        console.log(res.data);
                         alert("Failed to delete");
                     }
                 })
                 .catch((err) => {
-                    console.log(err);
                     alert("Failed to delete");
                 });
         }
