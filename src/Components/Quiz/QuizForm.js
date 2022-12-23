@@ -183,7 +183,7 @@ function QuizForm({ proceedFunction, currentQuiz, heading }) {
                         <>
                             <div className="control">
                                 <button
-                                    className="button authBtn is-link"
+                                    className="button authBtn addButton"
                                     onClick={() => {
                                         updateQuestion();
                                     }}
@@ -193,7 +193,7 @@ function QuizForm({ proceedFunction, currentQuiz, heading }) {
                             </div>
                             <div className="control">
                                 <button
-                                    className="button authBtn is-danger"
+                                    className="button authBtn dangerButton"
                                     onClick={() => {
                                         deleteQuestion();
                                     }}
@@ -203,7 +203,7 @@ function QuizForm({ proceedFunction, currentQuiz, heading }) {
                             </div>
                             <div className="control">
                                 <button
-                                    className="button authBtn is-info"
+                                    className="button authBtn cancelBtn"
                                     onClick={() => {
                                         cancelSelectQuestion();
                                     }}
