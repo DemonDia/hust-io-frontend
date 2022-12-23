@@ -144,10 +144,21 @@ function QuizAttemptList({ Contents, DeleteContent }) {
                                 const date = new Date(isoDate);
                                 const year = date.getFullYear();
                                 const month = date.getMonth();
-                                const day = date.getDay();
-                                const hour = date.getHours();
-                                const minute = date.getMinutes();
-                                const seconds = date.getSeconds();
+                                const day = date.getDate();
+                                var hour = date.getHours();
+                                if(hour <= 9){
+                                    hour = "0"+hour;
+                                }
+                                var minute = date.getMinutes();
+                                if(minute <= 9){
+                                    minute = "0"+date;
+                                }
+                                var seconds = date.getSeconds();
+                                if(seconds <= 9){
+                                    seconds = "0"+seconds;
+                                }
+                                
+                                
                                 const dateString = `${day}-${
                                     month + 1
                                 }-${year}, ${hour == "0" ? "00" : hour}:${

@@ -48,9 +48,18 @@ function QuizAttemptPage(props) {
                     const year = quizDate.getFullYear();
                     const month = quizDate.getMonth();
                     const day = quizDate.getDate();
-                    const hour = quizDate.getHours();
-                    const minute = quizDate.getMinutes();
-                    const seconds = quizDate.getSeconds();
+                    var hour = quizDate.getHours();
+                    if(hour <= 9){
+                        hour = "0"+hour;
+                    }
+                    var minute = quizDate.getMinutes();
+                    if(minute <= 9){
+                        minute = "0"+minute;
+                    }
+                    var seconds = quizDate.getSeconds();
+                    if(seconds <= 9){
+                        seconds = "0"+seconds;
+                    }
 
                     const displayDate = `${day}-${month + 1}-${year}, ${
                         hour == "0" ? "00" : hour
@@ -135,8 +144,11 @@ function QuizAttemptPage(props) {
             ) : (
                 <>
                     <div>
-                        <h2 className="title is-2"> {quizAttempt.quizName}</h2>
-                        <div>
+                        <div className="container quizAttemptQuestion card">
+                            <h2 className="title is-2 is-spaced">
+                                {" "}
+                                {quizAttempt.quizName}
+                            </h2>
                             <h3 className="subtitle">
                                 Attempt Date: {displayDate}
                             </h3>

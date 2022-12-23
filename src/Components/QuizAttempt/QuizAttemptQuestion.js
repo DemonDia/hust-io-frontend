@@ -29,7 +29,7 @@ function QuizAttemptQuestion({
     }
 
     return (
-        <div className="container quizAttemptQuestion">
+        <div className="container quizAttemptQuestion card">
             <h3 className="title is-4">
                 {questionIndex + 1}) {attemptQuestion.question}
             </h3>
@@ -48,9 +48,8 @@ function QuizAttemptQuestion({
             {attemptStatus != 1 ? (
                 <>
                     <br></br>
-                    <h3 className="title is-5">Explanation:</h3>
-                    <p className="subtitle is-5">{attemptQuestion.explanation}</p>
-                    <br></br>
+                    <h3 className="title is-4">Explanation:</h3>
+                    <p className="subtitle is-6">{attemptQuestion.explanation}</p>
                 </>
             ) : (
                 <></>
