@@ -23,14 +23,14 @@ code {
 
 /* navbar */
 .navbarLogo {
-  color: blue;
+  color: #1a30f6;
   text-decoration: underline;
   font-weight: bold;
   font-size: 25px;
 }
 
 #currUserName {
-  color: blue;
+  color: #1a30f6;
   text-decoration: underline;
 }
 
@@ -46,7 +46,7 @@ code {
 }
 
 .bannerTitle {
-  color: #001AFF;
+  color: #1a30f6;
   text-decoration: underline;
 }
 
@@ -62,7 +62,7 @@ code {
 }
 
 .authBtn {
-  background: #0014C5;
+  background: rgb(36, 36, 139);
   color: white;
 }
 
@@ -78,13 +78,13 @@ code {
 .optionBox {
   height: 20vh;
   display: flex;
-  background: #0014C5;
+  background: #030f7e;
   align-items: center;
   transition: 0.4s;
 }
 
 .optionBox:hover {
-  background: #000c78;
+  background: #0618b9;
 }
 
 .optionBox h1 {
@@ -133,7 +133,7 @@ code {
 }
 
 .todayCalendarCell:hover {
-  background: #0e1ead;
+  background: #4050e3;
 }
 
 .calendarCell {
@@ -146,7 +146,8 @@ code {
 
 .todayCalendarCell,
 .calendarCell:hover {
-  background: #4050e3;
+  background:
+    #0e1ead;
   color: white;
 }
 
@@ -327,8 +328,15 @@ code {
   padding: 20px;
 }
 
-.addButton,.emptyBanner {
+.addButton,
+.emptyBanner {
   background: rgb(36, 36, 139);
+  color: white;
+}
+
+.dangerButton{
+  background:rgb(161, 1, 1);
+  transition: 0.5s;
   color: white;
 }
 
@@ -338,10 +346,11 @@ code {
 }
 
 /* empty banner */
-.emptyBanner{
-  padding:20px;
+.emptyBanner {
+  padding: 15px;
   border-radius: 10px;
 }
-.emptyBanner h1{
-  color:white;
+
+.emptyBanner h1 {
+  color: white;
 }

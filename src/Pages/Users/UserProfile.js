@@ -126,7 +126,7 @@ function UserProfile() {
                <Loader />
             ) : (
                 <>
-                    <div className="container card formContainer">
+                    <div className="card formContainer">
                         <h1 className="title is-2">User Profile</h1>
                         <hr />
                         <div className="field">
@@ -198,7 +198,7 @@ function UserProfile() {
                         </button>
                         <label className="label"></label>
                         <button
-                            className="button is-danger authBtn"
+                            className="button dangerButton authBtn"
                             onClick={() => {
                                 deleteAccount();
                             }}
