@@ -17,7 +17,6 @@ function HomePage() {
             if (result.status == 200) {
                 const { _id: id, existingUser } = result.data;
                 const { name } = existingUser;
-                console.log(name);
                 setName(name);
                 const today = new Date();
                 const year = today.getFullYear();

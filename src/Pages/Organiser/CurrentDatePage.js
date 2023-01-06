@@ -57,13 +57,11 @@ function CurrentDatePage() {
     const [events, setEvents] = useState([]);
     // ============load event============
     const loadDayEvents = async (year, month, day, userId) => {
-        console.log("userId", userId);
         const getEventResults = await axios.get(
             process.env.REACT_APP_BACKEND_API +
                 `/events/${year}/${month - 1}/${day}/${userId}`,
             { withCredentials: true }
         );
-        console.log("getEventResults", getEventResults);
         if (getEventResults.data.success) {
             setEvents(getEventResults.data.data);
         }
@@ -83,7 +81,6 @@ function CurrentDatePage() {
             )
             .then(async (res) => {
                 if (res.data.success) {
-                    console.log("currUserId", currUserId);
                     if (currDate) {
                         const [year, month, day] = currDate.split("-");
                         await loadDayEvents(year, month, day, currUserId);
@@ -126,7 +123,6 @@ function CurrentDatePage() {
                 )
                 .then(async (res) => {
                     if (res.data.success) {
-                        console.log("currUserId", currUserId);
                         if (currDate) {
                             const [year, month, day] = currDate.split("-");
                             await loadDayJournalEntries(year, month, day, currUserId);

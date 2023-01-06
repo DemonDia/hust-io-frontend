@@ -10,7 +10,6 @@ const checkAuthStatus = async (successRoute, failRoute, navigate) => {
                 navigate(failRoute);
             }
         });
-    // console.log(res.stauts)
     if (successRoute !== "" && res.status == 200) {
         navigate(successRoute);
     } else if (failRoute !== "" && res.status != 200) {
