@@ -67,7 +67,7 @@ function UserProfile() {
                     process.env.REACT_APP_BACKEND_API + "/users/changepass",
                     {
                         newPassword,
-                        userId:currUserId,
+                        serId:currUserId,
                     },
                     { withCredentials: true }
                 )

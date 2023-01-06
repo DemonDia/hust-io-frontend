@@ -1,6 +1,6 @@
 import axios from "axios";
 axios.defaults.withCredentials = true;
-const checkAuthStatus = async (successRoute, failRoute, navigate) => {
+const checkAuthStatus = async (successRoute, failRoute, navigate, axiosMgr) => {
     const res = await axios
         .get(process.env.REACT_APP_BACKEND_API + "/users/me", {
             withCredentials: true,
@@ -20,15 +20,15 @@ const checkAuthStatus = async (successRoute, failRoute, navigate) => {
 };
 
 const loginPageAuthCheck = async (navigate) => {
-    return await checkAuthStatus("/home", "", navigate);
+    return await checkAuthStatus("/home", "", navigate, axios);
 };
 
 const defaultAuthCheck = async (navigate) => {
-    return await checkAuthStatus("", "/login", navigate);
+    return await checkAuthStatus("", "/login", navigate, axios);
 };
 
 const redirectAuthCheck = async (navigate) => {
-    return await checkAuthStatus("/home", "/login", navigate);
+    return await checkAuthStatus("/home", "/login", navigate, axios);
 };
 
 export { loginPageAuthCheck, defaultAuthCheck, redirectAuthCheck };
