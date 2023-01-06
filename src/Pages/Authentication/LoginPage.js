@@ -25,6 +25,8 @@ function LoginPage() {
                     dispatch(authActions.login())
                     navigate("/home");
                 }
+            }).catch((err)=>{
+                alert("Login failed")
             });
     };
     useEffect(() => {
