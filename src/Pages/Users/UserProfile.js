@@ -1,14 +1,13 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
-import { mainContext } from "../../Contexts/mainContext";
 import axios from "axios";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
 
+axios.defaults.withCredentials = true;
 function UserProfile() {
-    const token = localStorage.getItem("loginToken");
-    const { setUserId, userId } = useContext(mainContext);
+    const [currUserId,setCurrUserId] = useState("")
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [newPassword, setNewPassword] = useState("");
@@ -17,9 +16,9 @@ function UserProfile() {
     const navigate = useNavigate();
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then((result) => {
-            if (result.data.success) {
-                const { id, name, email } = result.data;
-                setUserId(id);
+            if (result.status == 200) {
+                const { _id: id, name, email } = result.data.existingUser;
+                setCurrUserId(id);
                 setName(name);
                 setEmail(email);
                 setLoading(false);
@@ -36,11 +35,12 @@ function UserProfile() {
                     process.env.REACT_APP_BACKEND_API + "/users/changename",
                     {
                         name,
-                        userId,
+                        userId:currUserId,
                     },
-                    { headers: { Authorization: `Bearer ${token}` } }
+                    { withCredentials: true }
                 )
                 .then((res) => {
+                    console.error(res)
                     if (res.data.success) {
                         alert("Name successfully saved");
                     } else {
@@ -63,12 +63,16 @@ function UserProfile() {
             alert("Both passwords must match");
         } else {
             axios
-                .post(process.env.REACT_APP_BACKEND_API + "/users/changepass", {
-                    newPassword,
-                    userId,
-                    token,
-                })
+                .post(
+                    process.env.REACT_APP_BACKEND_API + "/users/changepass",
+                    {
+                        newPassword,
+                        userId:currUserId,
+                    },
+                    { withCredentials: true }
+                )
                 .then((res) => {
+                    console.error(res)
                     setNewPassword("");
                     setConfirmNewPassword("");
                     alert("Password reset sucessfully.");
@@ -85,9 +89,9 @@ function UserProfile() {
         if (confirmDelete == "yes") {
             await axios
                 .delete(
-                    process.env.REACT_APP_BACKEND_API + `/users/${userId}`,
+                    process.env.REACT_APP_BACKEND_API + `/users/${currUserId}`,
                     {
-                        headers: { Authorization: `Bearer ${token}` },
+                        withCredentials: true,
                     }
                 )
                 .then((res) => {
@@ -119,7 +123,7 @@ function UserProfile() {
             />
 
             {loading ? (
-               <Loader />
+                <Loader />
             ) : (
                 <>
                     <div className="card formContainer">

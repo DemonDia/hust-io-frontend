@@ -14,9 +14,9 @@ function HomePage() {
     const navigate = useNavigate();
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then((result) => {
-            if (result.data.success) {
-                const { id, name } = result.data;
-                setUserId(id);
+            if (result.status == 200) {
+                const { _id: id, existingUser } = result.data;
+                const { name } = existingUser;
                 setName(name);
                 const today = new Date();
                 const year = today.getFullYear();
@@ -64,7 +64,7 @@ function HomePage() {
         <div>
             <Breadcrumbs links={[{ text: "Home" }]} />
             {loading ? (
-                <Loader/>
+                <Loader />
             ) : (
                 <>
                     {" "}

@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 // ================================context================================
 import { mainContext } from "./Contexts/mainContext";
+
+// ================================redux================================
+import { useSelector, Provider } from "react-redux";
+import { store } from "./redux";
+
 // ================================navbar================================
 import Navbar from "./Components/General/Navbar";
 // ================================authentication================================
@@ -50,149 +56,118 @@ import LogoutPage from "./Pages/Redirects/LogoutPage";
 
 function App() {
     const [userId, setUserId] = useState(null);
+    const isLoggedIn = useSelector((state) => state.isLoggedIn);
     return (
-        <BrowserRouter>
-            <div className="App">
-                <mainContext.Provider value={{ userId, setUserId }}>
-                    <Navbar userId={userId}/>
-                    <div className="pageContainer">
-                        <Routes>
-                            {/* ================================authentication================================  */}
-                            <Route
-                                exact
-                                path="/login"
-                                element={<LoginPage />}
-                            />
-                            <Route
-                                exact
-                                path="/register"
-                                element={<RegistrationPage />}
-                            />
-                            <Route
-                                exact
-                                path="/login"
-                                element={<LoginPage />}
-                            />
-                            <Route
-                                exact
-                                path="/verify/:userId/:token"
-                                element={<EmailVerificationPage />}
-                            />
-                            <Route
-                                exact
-                                path="/forgotpass"
-                                element={<SendResetPasswordRequest />}
-                            />
-                            <Route
-                                exact
-                                path="/resetpass/:userId/:token"
-                                element={<ForgotPasswordFormPage />}
-                            />
+        <div className="App">
+            <Navbar userId={userId} />
+            <div className="pageContainer">
+                <Routes>
+                    {/* ================================authentication================================  */}
+                    <Route exact path="/login" element={<LoginPage />} />
+                    <Route
+                        exact
+                        path="/register"
+                        element={<RegistrationPage />}
+                    />
+                    <Route exact path="/login" element={<LoginPage />} />
+                    <Route
+                        exact
+                        path="/verify/:userId/:token"
+                        element={<EmailVerificationPage />}
+                    />
+                    <Route
+                        exact
+                        path="/forgotpass"
+                        element={<SendResetPasswordRequest />}
+                    />
+                    <Route
+                        exact
+                        path="/resetpass/:userId/:token"
+                        element={<ForgotPasswordFormPage />}
+                    />
 
-                            {/* ================================home================================  */}
-                            <Route exact path="/home" element={<HomePage />} />
+                    {/* ================================home================================  */}
+                    <Route exact path="/home" element={<HomePage />} />
 
-                            {/* ================================organiser================================  */}
-                            <Route
-                                exact
-                                path="/organiser"
-                                element={<OrganiserPage />}
-                            />
-                            <Route
-                                exact
-                                path="/organiser/:currDate"
-                                element={<CurrentDatePage />}
-                            />
+                    {/* ================================organiser================================  */}
+                    <Route
+                        exact
+                        path="/organiser"
+                        element={<OrganiserPage />}
+                    />
+                    <Route
+                        exact
+                        path="/organiser/:currDate"
+                        element={<CurrentDatePage />}
+                    />
 
-                            {/* ================================event================================  */}
-                            <Route
-                                exact
-                                path="/events"
-                                element={<EventListPage />}
-                            />
-                            <Route
-                                exact
-                                path="/events/add"
-                                element={<AddEventPage />}
-                            />
-                            <Route
-                                exact
-                                path="/events/:eventId"
-                                element={<EditEventPage />}
-                            />
-                            {/* ================================tasks================================  */}
-                            <Route
-                                exact
-                                path="/tasks"
-                                element={<TaskListPage />}
-                            />
+                    {/* ================================event================================  */}
+                    <Route exact path="/events" element={<EventListPage />} />
+                    <Route
+                        exact
+                        path="/events/add"
+                        element={<AddEventPage />}
+                    />
+                    <Route
+                        exact
+                        path="/events/:eventId"
+                        element={<EditEventPage />}
+                    />
+                    {/* ================================tasks================================  */}
+                    <Route exact path="/tasks" element={<TaskListPage />} />
 
-                            {/* ================================journal================================  */}
-                            <Route
-                                exact
-                                path="/journals"
-                                element={<JournalListPage />}
-                            />
-                            <Route
-                                exact
-                                path="/journals/add"
-                                element={<AddJournalPage />}
-                            />
-                            <Route
-                                exact
-                                path="/journals/:journalId"
-                                element={<ViewJournalEntryPage />}
-                            />
+                    {/* ================================journal================================  */}
+                    <Route
+                        exact
+                        path="/journals"
+                        element={<JournalListPage />}
+                    />
+                    <Route
+                        exact
+                        path="/journals/add"
+                        element={<AddJournalPage />}
+                    />
+                    <Route
+                        exact
+                        path="/journals/:journalId"
+                        element={<ViewJournalEntryPage />}
+                    />
 
-                            {/* ================================quiz================================  */}
-                            <Route
-                                exact
-                                path="/quizzes"
-                                element={<QuizListPage />}
-                            />
-                            <Route
-                                exact
-                                path="/quizzes/add"
-                                element={<AddQuizPage />}
-                            />
-                            <Route
-                                exact
-                                path="/quizzes/:quizId"
-                                element={<EditQuizPage />}
-                            />
+                    {/* ================================quiz================================  */}
+                    <Route exact path="/quizzes" element={<QuizListPage />} />
+                    <Route
+                        exact
+                        path="/quizzes/add"
+                        element={<AddQuizPage />}
+                    />
+                    <Route
+                        exact
+                        path="/quizzes/:quizId"
+                        element={<EditQuizPage />}
+                    />
 
-                            {/* ================================quiz attempt================================  */}
-                            <Route
-                                exact
-                                path="/quizzes/attempt/add/:quizId"
-                                element={<CreateQuizAttempt />}
-                            />
-                            <Route
-                                exact
-                                path="/quizzes/attempt/:quizAttemptId"
-                                element={<QuizAttemptPage />}
-                            />
+                    {/* ================================quiz attempt================================  */}
+                    <Route
+                        exact
+                        path="/quizzes/attempt/add/:quizId"
+                        element={<CreateQuizAttempt />}
+                    />
+                    <Route
+                        exact
+                        path="/quizzes/attempt/:quizAttemptId"
+                        element={<QuizAttemptPage />}
+                    />
 
-                            {/* ================================user profile================================  */}
-                            <Route
-                                exact
-                                path="/profile"
-                                element={<UserProfile />}
-                            />
+                    {/* ================================user profile================================  */}
+                    <Route exact path="/profile" element={<UserProfile />} />
 
-                            {/* ================================redirects================================  */}
-                            <Route exact path="/" element={<RedirectPage />} />
-                            <Route exact path="*" element={<ErrorPage />} />
-                            <Route
-                                exact
-                                path="/logout"
-                                element={<LogoutPage />}
-                            />
-                        </Routes>
-                    </div>
-                </mainContext.Provider>
+                    {/* ================================redirects================================  */}
+                    <Route exact path="/" element={<RedirectPage />} />
+                    <Route exact path="*" element={<ErrorPage />} />
+                    <Route exact path="/logout" element={<LogoutPage />} />
+                </Routes>
             </div>
-        </BrowserRouter>
+        </div>
     );
 }
 

@@ -1,26 +1,24 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import QuizList from "../../Components/Quiz/QuizList";
 import QuizAttemptList from "../../Components/QuizAttempt/QuizAttemptList";
-import { mainContext } from "../../Contexts/mainContext";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
 
+axios.defaults.withCredentials = true;
 function QuizListPage() {
     const navigate = useNavigate();
-    const currentToken = localStorage.getItem("loginToken");
-    const { setUserId } = useContext(mainContext);
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then(async (result) => {
-            if (result.data.success) {
-                setUserId(result.data.id);
-                setCurrUserId(result.data.id);
-                await loadUserQuizzes(result.data.id);
-                await loadUserQuizAttempts(result.data.id);
+            if (result.status == 200) {
+                const { _id: id } = result.data.existingUser;
+                setCurrUserId(id);
+                await loadUserQuizzes(id);
+                await loadUserQuizAttempts(id);
                 setLoading(false);
             }
         });
@@ -41,9 +39,7 @@ function QuizListPage() {
         const getQuizResults = await axios.get(
             process.env.REACT_APP_BACKEND_API + `/quizzes/${userId}`,
             {
-                headers: {
-                    Authorization: `Bearer ${currentToken}`,
-                },
+                withCredentials: true,
             }
         );
         if (getQuizResults.data.success) {
@@ -54,10 +50,10 @@ function QuizListPage() {
     const deleteQuiz = async (quizId) => {
         await axios
             .delete(process.env.REACT_APP_BACKEND_API + `/quizzes/${quizId}`, {
-                headers: { Authorization: `Bearer ${currentToken}` },
                 data: {
                     userId: currUserId,
                 },
+                withCredentials: true,
             })
             .then(async (res) => {
                 if (res.data.success) {
@@ -79,9 +75,7 @@ function QuizListPage() {
         const getQuizResults = await axios.get(
             process.env.REACT_APP_BACKEND_API + `/quizAttempts/${userId}`,
             {
-                headers: {
-                    Authorization: `Bearer ${currentToken}`,
-                },
+                withCredentials: true,
             }
         );
         if (getQuizResults.data.success) {
@@ -95,10 +89,10 @@ function QuizListPage() {
                 process.env.REACT_APP_BACKEND_API +
                     `/quizAttempts/${quizAttemptId}`,
                 {
-                    headers: { Authorization: `Bearer ${currentToken}` },
                     data: {
                         userId: currUserId,
                     },
+                    withCredentials: true,
                 }
             )
             .then(async (res) => {
@@ -147,7 +141,7 @@ function QuizListPage() {
             </div>
             <div className="tabContents">
                 {loading ? (
-                   <Loader />
+                    <Loader />
                 ) : (
                     <>
                         {tab == 0 ? (

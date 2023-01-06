@@ -1,16 +1,13 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { defaultAuthCheck } from "../../AuthCheck";
 import axios from "axios";
-import { mainContext } from "../../Contexts/mainContext";
 import QuizAttemptQuestion from "../../Components/QuizAttempt/QuizAttemptQuestion";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
 
 function QuizAttemptPage() {
-    const { setUserId } = useContext(mainContext);
     const { quizAttemptId } = useParams();
-    const currentToken = localStorage.getItem("loginToken");
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
     const [quizAttempt, setQuizAttempt] = useState(null);
@@ -21,9 +18,9 @@ function QuizAttemptPage() {
 
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then(async (result) => {
-            if (result.data.success) {
-                setUserId(result.data.id);
-                setCurrUserId(result.data.id);
+            if (result.status == 200) {
+                const { _id: id } = result.data.existingUser;
+                setCurrUserId(id);
                 await getCurrentAttempt();
                 setLoading(false);
             }
@@ -39,7 +36,7 @@ function QuizAttemptPage() {
             .get(
                 process.env.REACT_APP_BACKEND_API +
                     `/quizAttempts/id/${quizAttemptId}`,
-                { headers: { Authorization: `Bearer ${currentToken}` } }
+                { withCredentials: true }
             )
             .then((res) => {
                 if (res.data.success) {
@@ -50,16 +47,16 @@ function QuizAttemptPage() {
                     const month = quizDate.getMonth();
                     const day = quizDate.getDate();
                     var hour = quizDate.getHours();
-                    if(hour <= 9){
-                        hour = "0"+hour;
+                    if (hour <= 9) {
+                        hour = "0" + hour;
                     }
                     var minute = quizDate.getMinutes();
-                    if(minute <= 9){
-                        minute = "0"+minute;
+                    if (minute <= 9) {
+                        minute = "0" + minute;
                     }
                     var seconds = quizDate.getSeconds();
-                    if(seconds <= 9){
-                        seconds = "0"+seconds;
+                    if (seconds <= 9) {
+                        seconds = "0" + seconds;
                     }
 
                     const displayDate = `${day}-${month + 1}-${year}, ${
@@ -83,7 +80,7 @@ function QuizAttemptPage() {
                     ...quizAttempt,
                     userId: currUserId,
                 },
-                { headers: { Authorization: `Bearer ${currentToken}` } }
+                { withCredentials: true }
             )
             .then((res) => {
                 if (res.data.success) {
@@ -141,7 +138,7 @@ function QuizAttemptPage() {
                 ]}
             />
             {loading ? (
-               <Loader />
+                <Loader />
             ) : (
                 <>
                     <div>

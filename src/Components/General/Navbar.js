@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-function Navbar({ userId }) {
+import { authActions } from "../../redux";
+import { useSelector } from "react-redux";
+function Navbar() {
     const [opened, setOpened] = useState(false);
+    const isLoggedIn = useSelector((state) => state.isLoggedIn);
     const loggedInLinks = [
         { linkName: "Home", link: "/home" },
         { linkName: "Organiser", link: "/organiser" },
@@ -42,7 +45,7 @@ function Navbar({ userId }) {
                 className={opened ? "navbar-menu is-active" : "navbar-menu"}
             >
                 <div className="navbar-start">
-                    {userId ? (
+                    {isLoggedIn ? (
                         <>
                             {" "}
                             {loggedInLinks.map((currLink, index) => {

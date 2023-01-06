@@ -1,15 +1,13 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import EventList from "../../Components/Events/EventList";
-import { mainContext } from "../../Contexts/mainContext";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
 
+axios.defaults.withCredentials = true;
 function EventListPage() {
-    const currentToken = localStorage.getItem("loginToken");
-    const { setUserId } = useContext(mainContext);
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
     const [events, setEvents] = useState([]);
@@ -18,9 +16,7 @@ function EventListPage() {
         const getEventResults = await axios.get(
             process.env.REACT_APP_BACKEND_API + `/events/${currUserId}`,
             {
-                headers: {
-                    Authorization: `Bearer ${currentToken}`,
-                },
+                withCredentials: true,
             }
         );
         if (getEventResults.data.success) {
@@ -29,11 +25,10 @@ function EventListPage() {
     };
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then(async (result) => {
-            if (result.data.success) {
-                setUserId(result.data.id);
-                setCurrUserId(result.data.id);
-                // get events
-                await loadUserEvents(result.data.id);
+            if (result.status == 200) {
+                const { _id: id } = result.data.existingUser;
+                setCurrUserId(id);
+                await loadUserEvents(id);
                 setLoading(false);
             }
         });
@@ -41,10 +36,10 @@ function EventListPage() {
     const deleteEvent = async (eventId) => {
         await axios
             .delete(process.env.REACT_APP_BACKEND_API + `/events/${eventId}`, {
-                headers: { Authorization: `Bearer ${currentToken}` },
                 data: {
                     userId: currUserId,
                 },
+                withCredentials: true,
             })
             .then(async (res) => {
                 if (res.data.success) {
@@ -73,7 +68,7 @@ function EventListPage() {
             />
             <h1 className="title is-2">All Events</h1>
             {loading ? (
-                <Loader/>
+                <Loader />
             ) : (
                 <>
                     <EventList Contents={events} DeleteContent={deleteEvent} />

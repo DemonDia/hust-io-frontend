@@ -105,13 +105,13 @@ function QuizForm({ proceedFunction, currentQuiz, heading }) {
         setQuestions(updatedQuestions);
     };
 
-    useEffect(()=>{
-        if(currentQuiz){
-            const {quizName,questions} = currentQuiz
-            setQuizName(quizName)
-            setQuestions(questions)
+    useEffect(() => {
+        if (currentQuiz) {
+            const { quizName, questions } = currentQuiz;
+            setQuizName(quizName);
+            setQuestions(questions);
         }
-    })
+    }, []);
     return (
         <div className="formContainer container card">
             <h1 className="title is-2">{heading}</h1>
@@ -122,7 +122,7 @@ function QuizForm({ proceedFunction, currentQuiz, heading }) {
                         <input
                             className="input"
                             type="text"
-                            placeholder="Enter journal entry title"
+                            placeholder="Enter quiz title"
                             value={quizName}
                             onChange={(e) => {
                                 setQuizName(e.target.value);
@@ -130,6 +130,7 @@ function QuizForm({ proceedFunction, currentQuiz, heading }) {
                         />
                     </div>
                 </div>
+                {quizName}
                 <div className="field questionField">
                     <div className="control">
                         <label className="label">Question:*</label>
@@ -215,8 +216,7 @@ function QuizForm({ proceedFunction, currentQuiz, heading }) {
                     )}
                 </div>
                 {questions.map((currQuestion, index) => {
-                    const { question } =
-                        currQuestion;
+                    const { question } = currQuestion;
                     return (
                         <div key={index} className="questionRow columns card">
                             <div className="column">

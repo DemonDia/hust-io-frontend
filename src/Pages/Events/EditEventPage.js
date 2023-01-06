@@ -1,25 +1,23 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import EventForm from "../../Components/Events/EventForm";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { mainContext } from "../../Contexts/mainContext";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
 
+axios.defaults.withCredentials = true;
 function EditEventPage() {
-    const { setUserId } = useContext(mainContext);
     const { eventId } = useParams();
-    const currentToken = localStorage.getItem("loginToken");
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
     const [event, setEvent] = useState(null);
     const navigate = useNavigate();
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then(async (result) => {
-            if (result.data.success) {
-                setCurrUserId(result.data.id);
-                setUserId(result.data.id);
+            if (result.status == 200) {
+                const { _id: id } = result.data.existingUser;
+                setCurrUserId(id);
                 await getCurrentEvent();
                 setLoading(false);
             }
@@ -33,7 +31,7 @@ function EditEventPage() {
     const getCurrentEvent = async () => {
         await axios
             .get(process.env.REACT_APP_BACKEND_API + `/events/id/${eventId}`, {
-                headers: { Authorization: `Bearer ${currentToken}` },
+                withCredentials: true,
             })
             .then((res) => {
                 if (res.data.success) {
@@ -50,7 +48,7 @@ function EditEventPage() {
                     ...updatedEvent,
                     userId: currUserId,
                 },
-                { headers: { Authorization: `Bearer ${currentToken}` } }
+                { withCredentials: true }
             )
             .then((res) => {
                 if (res.data.success) {
@@ -80,7 +78,7 @@ function EditEventPage() {
                 ]}
             />
             {loading ? (
-               <Loader />
+                <Loader />
             ) : (
                 <>
                     <EventForm
