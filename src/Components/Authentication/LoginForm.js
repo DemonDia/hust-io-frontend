@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Loader from "../General/Loader";
 
-function LoginForm({loginMethod}) {
-    const [loading,setLoading] = useState(false)
+function LoginForm({ loginMethod }) {
+    const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const login = async () => {
-        setLoading(true)
-        await loginMethod(email, password);
-        setLoading(false)
+        setLoading(true);
+        await loginMethod(email, password)
+            .then(setLoading(false))
+            .catch(setLoading(false));
     };
     return (
         <div className="container is-two-fifths-desktop column">
@@ -50,7 +51,8 @@ function LoginForm({loginMethod}) {
                         Login
                     </button>
                     <p>
-                        Forgot your password? Click <Link to="/forgotpass">here</Link>.
+                        Forgot your password? Click{" "}
+                        <Link to="/forgotpass">here</Link>.
                     </p>
                     <p>
                         Haven't joined us? Register{" "}
