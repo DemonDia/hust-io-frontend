@@ -3,8 +3,13 @@ import Banner from "../../Components/Authentication/Banner"
 import LoginForm from '../../Components/Authentication/LoginForm';
 import {loginPageAuthCheck} from "../../AuthCheck"
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { authActions } from '../../redux';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
+
 function LoginPage() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const login = async (email,password) => {
         await axios
@@ -13,11 +18,11 @@ function LoginPage() {
                 password,
             })
             .then((res) => {
-                if (!res.data.success) {
-                    alert(res.data.message);
+                if (res.status != 200) {
+                    alert("Login failed");
                 } else {
-                    localStorage.setItem("loginToken", res.data.token);
                     alert("Logged in")
+                    dispatch(authActions.login())
                     navigate("/home");
                 }
             });

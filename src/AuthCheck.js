@@ -1,22 +1,22 @@
 import axios from "axios";
+axios.defaults.withCredentials = true;
 const checkAuthStatus = async (successRoute, failRoute, navigate, axiosMgr) => {
-    const currentToken = localStorage.getItem("loginToken");
-    const authStatus = await axiosMgr
+    const res = await axios
         .get(process.env.REACT_APP_BACKEND_API + "/users/me", {
-            headers: { Authorization: `Bearer ${currentToken}` },
+            withCredentials: true,
         })
-        .then()
         .catch((err) => {
             if (failRoute !== "") {
                 navigate(failRoute);
             }
         });
-    if (successRoute !== "" && authStatus.data.success) {
+    // console.log(res.stauts)
+    if (successRoute !== "" && res.status == 200) {
         navigate(successRoute);
-    } else if (failRoute !== "" && !authStatus.data.success) {
+    } else if (failRoute !== "" && res.status != 200) {
         navigate(failRoute);
     }
-    return authStatus;
+    return res;
 };
 
 const loginPageAuthCheck = async (navigate) => {
@@ -24,7 +24,7 @@ const loginPageAuthCheck = async (navigate) => {
 };
 
 const defaultAuthCheck = async (navigate) => {
-    return await checkAuthStatus("", "/login", navigate,axios);
+    return await checkAuthStatus("", "/login", navigate, axios);
 };
 
 const redirectAuthCheck = async (navigate) => {
