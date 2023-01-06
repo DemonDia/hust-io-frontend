@@ -23,10 +23,10 @@ function QuizAttemptQuestion({
         setNewUserAnswer(newAnswer);
         changeAnswer(newAnswer, index);
     };
-    const handleChangeIsCorrect = (isCorrectStatus,index)=>{
-        setIsCorrect(isCorrectStatus)
-        markAnswer(isCorrectStatus,index)
-    }
+    const handleChangeIsCorrect = (isCorrectStatus, index) => {
+        setIsCorrect(isCorrectStatus);
+        markAnswer(isCorrectStatus, index);
+    };
 
     return (
         <div className="container quizAttemptQuestion card">
@@ -46,10 +46,16 @@ function QuizAttemptQuestion({
             />
             {/* explanation */}
             {attemptStatus != 1 ? (
-                <>
+                        <>
+                    <h3 className="title is-4">Correct Answer:</h3>
+                    <p className="subtitle is-6">
+                        {attemptQuestion.correctAnswer}
+                    </p>
                     <br></br>
                     <h3 className="title is-4">Explanation:</h3>
-                    <p className="subtitle is-6">{attemptQuestion.explanation}</p>
+                    <p className="subtitle is-6">
+                        {attemptQuestion.explanation}
+                    </p>
                 </>
             ) : (
                 <></>
@@ -61,8 +67,13 @@ function QuizAttemptQuestion({
                         <input
                             type="checkbox"
                             checked={isCorrect}
-                            onChange={(e)=>{handleChangeIsCorrect(e.target.checked,questionIndex)}}
-                            disabled = {attemptStatus != 2}
+                            onChange={(e) => {
+                                handleChangeIsCorrect(
+                                    e.target.checked,
+                                    questionIndex
+                                );
+                            }}
+                            disabled={attemptStatus != 2}
                             onBlur={() => {
                                 autoSave();
                             }}
