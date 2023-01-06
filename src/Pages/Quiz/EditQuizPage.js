@@ -1,25 +1,22 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import QuizForm from "../../Components/Quiz/QuizForm";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { mainContext } from "../../Contexts/mainContext";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
 
 function EditQuizPage() {
-    const { setUserId } = useContext(mainContext);
     const { quizId } = useParams();
-    const currentToken = localStorage.getItem("loginToken");
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
     const [quiz, setQuiz] = useState(null);
     const navigate = useNavigate();
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then(async (result) => {
-            if (result.data.success) {
-                setCurrUserId(result.data.id);
-                setUserId(result.data.id);
+            if (result.status == 200) {
+                const { _id: id } = result.data.existingUser;
+                setCurrUserId(id);
                 await getCurrentQuiz();
                 setLoading(false);
             }
@@ -32,7 +29,7 @@ function EditQuizPage() {
     const getCurrentQuiz = async () => {
         await axios
             .get(process.env.REACT_APP_BACKEND_API + `/quizzes/id/${quizId}`, {
-                headers: { Authorization: `Bearer ${currentToken}` },
+                withCredentials: true,
             })
             .then((res) => {
                 if (res.data.success) {
@@ -49,7 +46,7 @@ function EditQuizPage() {
                     ...updatedQuiz,
                     userId: currUserId,
                 },
-                { headers: { Authorization: `Bearer ${currentToken}` } }
+                { withCredentials: true }
             )
             .then((res) => {
                 if (res.data.success) {
