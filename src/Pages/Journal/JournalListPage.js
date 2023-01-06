@@ -1,15 +1,13 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { defaultAuthCheck } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import JournalList from "../../Components/Journal/JournalList";
-import { mainContext } from "../../Contexts/mainContext";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
 
+axios.defaults.withCredentials = true;
 function JournalListPage() {
-    const currentToken = localStorage.getItem("loginToken");
-    const { setUserId } = useContext(mainContext);
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
     const [journals, setJournals] = useState([]);
@@ -18,9 +16,7 @@ function JournalListPage() {
         const getEventResults = await axios.get(
             process.env.REACT_APP_BACKEND_API + `/journals/${userId}`,
             {
-                headers: {
-                    Authorization: `Bearer ${currentToken}`,
-                },
+                withCredentials: true,
             }
         );
         if (getEventResults.data.success) {
@@ -29,12 +25,11 @@ function JournalListPage() {
     };
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then(async (result) => {
-            if (result.data.success) {
-                setUserId(result.data.id);
-                setCurrUserId(result.data.id);
-
+            if (result.status == 200) {
+                const { _id: id } = result.data.existingUser;
+                setCurrUserId(id);
                 // get journal entries
-                await loadUserJournals(result.data.id);
+                await loadUserJournals(id);
                 setLoading(false);
             }
         });
@@ -44,10 +39,12 @@ function JournalListPage() {
             .delete(
                 process.env.REACT_APP_BACKEND_API + `/journals/${journalId}`,
                 {
-                    headers: { Authorization: `Bearer ${currentToken}` },
                     data: {
                         userId: currUserId,
                     },
+                },
+                {
+                    withCredentials: true,
                 }
             )
             .then(async (res) => {

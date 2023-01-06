@@ -5,6 +5,7 @@ import axios from "axios";
 import EventList from "../../Components/Events/EventList";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
+
 axios.defaults.withCredentials = true;
 function EventListPage() {
     const [loading, setLoading] = useState(true);

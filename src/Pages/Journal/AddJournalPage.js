@@ -1,23 +1,21 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import JournalForm from "../../Components/Journal/JournalForm";
 import { defaultAuthCheck } from "../../AuthCheck";
 import axios from "axios";
-import { mainContext } from "../../Contexts/mainContext";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
 
+axios.defaults.withCredentials = true;
 function AddJournalPage() {
-    const { setUserId } = useContext(mainContext);
-    const currentToken = localStorage.getItem("loginToken");
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
     const navigate = useNavigate();
     const loadPage = async () => {
         await defaultAuthCheck(navigate).then((result) => {
-            if (result.data.success) {
-                setUserId(result.data.id);
-                setCurrUserId(result.data.id);
+            if (result.status == 200) {
+                const { _id: id } = result.data.existingUser;
+                setCurrUserId(id);
                 setLoading(false);
             }
         });
@@ -34,7 +32,9 @@ function AddJournalPage() {
                     ...newJournalEntry,
                     userId: currUserId,
                 },
-                { headers: { Authorization: `Bearer ${currentToken}` } }
+                {
+                    withCredentials: true,
+                }
             )
             .then((res) => {
                 if (res.data.success) {
@@ -63,7 +63,7 @@ function AddJournalPage() {
                 ]}
             />
             {loading ? (
-               <Loader />
+                <Loader />
             ) : (
                 <>
                     <JournalForm
