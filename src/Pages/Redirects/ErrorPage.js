@@ -1,23 +1,17 @@
-import React,{useContext,useEffect} from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { mainContext } from "../../Contexts/mainContext";
-import {defaultAuthCheck} from "../../AuthCheck"
+import { defaultAuthCheck } from "../../AuthCheck";
 
 function ErrorPage() {
-    const { setUserId } = useContext(mainContext);
 
-    const navigate = useNavigate()
-    const loadPage = async()=>{
-        await defaultAuthCheck(navigate).then((res)=>{
-            if(res.data.success){
-                setUserId(res.data.id)
-            }
-        })
-    }
-    useEffect(()=>{
-        loadPage()
-    })
+    const navigate = useNavigate();
+    const loadPage = async () => {
+        await defaultAuthCheck(navigate);
+    };
+    useEffect(() => {
+        loadPage();
+    });
     return (
         <div>
             <div className="authForm card container">
@@ -30,4 +24,4 @@ function ErrorPage() {
     );
 }
 
-export default ErrorPage
+export default ErrorPage;
