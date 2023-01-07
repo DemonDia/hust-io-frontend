@@ -18,6 +18,14 @@ const checkAuthStatus = async (successRoute, failRoute, navigate) => {
     return res;
 };
 
+const checkRefresh = async () => {
+    const res = await axios
+        .get(process.env.REACT_APP_BACKEND_API + "/users/refresh", {
+            withCredentials: true,
+        })
+    return res;
+};
+
 const loginPageAuthCheck = async (navigate) => {
     return await checkAuthStatus("/home", "", navigate);
 };
@@ -30,4 +38,4 @@ const redirectAuthCheck = async (navigate) => {
     return await checkAuthStatus("/home", "/login", navigate);
 };
 
-export { loginPageAuthCheck, defaultAuthCheck, redirectAuthCheck };
+export { loginPageAuthCheck, defaultAuthCheck, redirectAuthCheck ,checkRefresh};

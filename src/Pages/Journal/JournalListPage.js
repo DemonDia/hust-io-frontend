@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { defaultAuthCheck } from "../../AuthCheck";
+import { defaultAuthCheck, checkRefresh } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../redux";
 import axios from "axios";
 import JournalList from "../../Components/Journal/JournalList";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
@@ -8,10 +10,12 @@ import Loader from "../../Components/General/Loader";
 
 axios.defaults.withCredentials = true;
 function JournalListPage() {
+    const [firstLoad, setFirstLoad] = useState(true);
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
     const [journals, setJournals] = useState([]);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const loadUserJournals = async (userId) => {
         const getEventResults = await axios.get(
             process.env.REACT_APP_BACKEND_API + `/journals/${userId}`,
@@ -23,16 +27,20 @@ function JournalListPage() {
             setJournals(getEventResults.data.data);
         }
     };
-    const loadPage = async () => {
-        await defaultAuthCheck(navigate).then(async (result) => {
-            if (result.status == 200) {
-                const { _id: id } = result.data.existingUser;
-                setCurrUserId(id);
-                // get journal entries
-                await loadUserJournals(id);
-                setLoading(false);
-            }
+    const firstTimeLoad = async () => {
+        await defaultAuthCheck(navigate).then((result) => {
+            loadPage(result);
         });
+    };
+    const loadPage = async (result) => {
+        if (result.status == 200) {
+            dispatch(authActions.login());
+            const { _id: id } = result.data.existingUser;
+            setCurrUserId(id);
+            // get journal entries
+            await loadUserJournals(id);
+            setLoading(false);
+        }
     };
     const deleteJournal = async (journalId) => {
         await axios
@@ -60,7 +68,14 @@ function JournalListPage() {
             });
     };
     useEffect(() => {
-        loadPage();
+        if (firstLoad) {
+            setFirstLoad(false);
+            firstTimeLoad();
+        }
+        let interval = setInterval(() => {
+            checkRefresh().then((result) => loadPage(result));
+        }, 5000);
+        return () => clearInterval(interval);
     }, []);
     return (
         <div>

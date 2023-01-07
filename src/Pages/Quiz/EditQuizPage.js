@@ -1,30 +1,49 @@
 import React, { useState, useEffect } from "react";
 import QuizForm from "../../Components/Quiz/QuizForm";
-import { defaultAuthCheck } from "../../AuthCheck";
+import { defaultAuthCheck, checkRefresh } from "../../AuthCheck";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../redux";
 import axios from "axios";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
 
 function EditQuizPage() {
     const { quizId } = useParams();
+    const [firstLoad, setFirstLoad] = useState(true);
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
     const [quiz, setQuiz] = useState(null);
-    const navigate = useNavigate();
-    const loadPage = async () => {
-        await defaultAuthCheck(navigate).then(async (result) => {
-            if (result.status == 200) {
-                const { _id: id } = result.data.existingUser;
-                setCurrUserId(id);
-                await getCurrentQuiz();
-                setLoading(false);
-            }
+    const navigate = useNavigate()
+    const dispatch = useDispatch();
+
+    const firstTimeLoad = async () => {
+        await defaultAuthCheck(navigate).then((result) => {
+            loadPage(result);
         });
     };
+
+    const loadPage = async (result) => {
+        if (result.status == 200) {
+            dispatch(authActions.login());
+            const { _id: id } = result.data.existingUser;
+            setCurrUserId(id);
+            await getCurrentQuiz();
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        loadPage();
+        if (firstLoad) {
+            setFirstLoad(false);
+            firstTimeLoad();
+        }
+        let interval = setInterval(() => {
+            checkRefresh().then((result) => loadPage(result));
+        }, 5000);
+        return () => clearInterval(interval);
     }, []);
+
     // =================methods=================
     const getCurrentQuiz = async () => {
         await axios

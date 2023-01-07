@@ -1,12 +1,8 @@
-import React, { useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-
-// ================================context================================
-import { mainContext } from "./Contexts/mainContext";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
 
 // ================================redux================================
-import { useSelector, Provider } from "react-redux";
-import { store } from "./redux";
+import { useSelector } from "react-redux";
 
 // ================================navbar================================
 import Navbar from "./Components/General/Navbar";
@@ -55,11 +51,10 @@ import RedirectPage from "./Pages/Redirects/RedirectPage";
 import LogoutPage from "./Pages/Redirects/LogoutPage";
 
 function App() {
-    const [userId, setUserId] = useState(null);
     const isLoggedIn = useSelector((state) => state.isLoggedIn);
     return (
         <div className="App">
-            <Navbar userId={userId} />
+            <Navbar />
             <div className="pageContainer">
                 <Routes>
                     {/* ================================authentication================================  */}

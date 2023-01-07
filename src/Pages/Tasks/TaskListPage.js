@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { defaultAuthCheck } from "../../AuthCheck";
+import { defaultAuthCheck, checkRefresh } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../redux";
+
 import axios from "axios";
 import TaskList from "../../Components/Tasks/TaskList";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
@@ -8,10 +11,19 @@ import Loader from "../../Components/General/Loader";
 
 axios.defaults.withCredentials = true;
 function TaskListPage() {
+    const [firstLoad, setFirstLoad] = useState(true);
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
     const [tasks, setTasks] = useState([]);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const firstTimeLoad = async () => {
+        await defaultAuthCheck(navigate).then((result) => {
+            loadPage(result);
+        });
+    };
+
     const loadUserTasks = async (userId) => {
         const getEventResults = await axios.get(
             process.env.REACT_APP_BACKEND_API + `/tasks/${userId}`,
@@ -23,16 +35,15 @@ function TaskListPage() {
             setTasks(getEventResults.data.data);
         }
     };
-    const loadPage = async () => {
-        await defaultAuthCheck(navigate).then(async (result) => {
-            if (result.status == 200) {
-                const { _id: id } = result.data.existingUser;
-                setCurrUserId(id);
-                // get tasks
-                await loadUserTasks(id);
-                setLoading(false);
-            }
-        });
+    const loadPage = async (result) => {
+        if (result.status == 200) {
+            dispatch(authActions.login());
+            const { _id: id } = result.data.existingUser;
+            setCurrUserId(id);
+            // get tasks
+            await loadUserTasks(id);
+            setLoading(false);
+        }
     };
 
     const editTaskName = async (taskName, taskId) => {
@@ -111,7 +122,14 @@ function TaskListPage() {
             });
     };
     useEffect(() => {
-        loadPage();
+        if (firstLoad) {
+            setFirstLoad(false);
+            firstTimeLoad();
+        }
+        let interval = setInterval(() => {
+            checkRefresh().then((result) => loadPage(result));
+        }, 5000);
+        return () => clearInterval(interval);
     }, []);
     return (
         <div>

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { defaultAuthCheck } from "../../AuthCheck";
+import { defaultAuthCheck, checkRefresh } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../redux";
+
 import axios from "axios";
 import QuizList from "../../Components/Quiz/QuizList";
 import QuizAttemptList from "../../Components/QuizAttempt/QuizAttemptList";
@@ -10,22 +13,35 @@ import Loader from "../../Components/General/Loader";
 axios.defaults.withCredentials = true;
 function QuizListPage() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [firstLoad, setFirstLoad] = useState(true);
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
-    const loadPage = async () => {
-        await defaultAuthCheck(navigate).then(async (result) => {
-            if (result.status == 200) {
-                const { _id: id } = result.data.existingUser;
-                setCurrUserId(id);
-                await loadUserQuizzes(id);
-                await loadUserQuizAttempts(id);
-                setLoading(false);
-            }
+    const firstTimeLoad = async () => {
+        await defaultAuthCheck(navigate).then((result) => {
+            loadPage(result);
         });
+    };
+    const loadPage = async (result) => {
+        if (result.status == 200) {
+            dispatch(authActions.login());
+            const { _id: id } = result.data.existingUser;
+            setCurrUserId(id);
+            await loadUserQuizzes(id);
+            await loadUserQuizAttempts(id);
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
-        loadPage();
+        if (firstLoad) {
+            setFirstLoad(false);
+            firstTimeLoad();
+        }
+        let interval = setInterval(() => {
+            checkRefresh().then((result) => loadPage(result));
+        }, 5000);
+        return () => clearInterval(interval);
     }, []);
 
     // ================tabs to toggle================

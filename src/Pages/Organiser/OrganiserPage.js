@@ -1,25 +1,41 @@
 import React, { useEffect, useState } from "react";
 import MainCalendar from "../../Components/Organiser/MainCalendar";
-import { defaultAuthCheck } from "../../AuthCheck";
+import { defaultAuthCheck, checkRefresh } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../redux";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
 
 function OrganiserPage() {
+    const [firstLoad, setFirstLoad] = useState(true);
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
     const navigate = useNavigate();
-    const loadPage = async () => {
+    const dispatch = useDispatch()
+
+    const firstTimeLoad = async () => {
         await defaultAuthCheck(navigate).then((result) => {
-            if (result.status == 200) {
-                const { _id: id } = result.data.existingUser;
-                setCurrUserId(id);
-                setLoading(false);
-            }
+            loadPage(result);
         });
     };
+    const loadPage = async (result) => {
+        if (result.status == 200) {
+            dispatch(authActions.login());
+            const { _id: id } = result.data.existingUser;
+            setCurrUserId(id);
+            setLoading(false);
+        }
+    };
     useEffect(() => {
-        loadPage();
+        if (firstLoad) {
+            setFirstLoad(false);
+            firstTimeLoad();
+        }
+        let interval = setInterval(() => {
+            checkRefresh().then((result) => loadPage(result));
+        }, 5000);
+        return () => clearInterval(interval);
     }, []);
     return (
         <div>

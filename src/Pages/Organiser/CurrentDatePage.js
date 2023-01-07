@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { defaultAuthCheck } from "../../AuthCheck";
+import { defaultAuthCheck, checkRefresh } from "../../AuthCheck";
 import { useNavigate, useParams } from "react-router-dom";
-import axios, { AxiosHeaders } from "axios";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../redux";
+import axios from "axios";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 
 // =============events=============
@@ -17,6 +19,7 @@ import Loader from "../../Components/General/Loader";
 axios.defaults.withCredentials = true;
 function CurrentDatePage() {
     const { currDate } = useParams();
+    const [firstLoad, setFirstLoad] = useState(true);
     const [year, setYear] = useState(null);
     const [month, setMonth] = useState(null);
     const [day, setDay] = useState(null);
@@ -25,29 +28,44 @@ function CurrentDatePage() {
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const tabs = ["Events", "Journal", "Tasks"];
-    const loadPage = async () => {
-        // load events, jounal, tasks
-        await defaultAuthCheck(navigate).then(async (result) => {
-            if (result.status == 200) {
-                const { _id: id } = result.data.existingUser;
-                setCurrUserId(id);
-                // get events
-                if (currDate) {
-                    const [year, month, day] = currDate.split("-");
-                    setYear(year);
-                    setMonth(month);
-                    setDay(day);
-                    await loadDayEvents(year, month, day, id);
-                    await loadDayJournalEntries(year, month, day, id);
-                    await loadDayTasks(year, month, day, id);
-                }
-                setLoading(false);
-            }
+
+    const firstTimeLoad = async () => {
+        await defaultAuthCheck(navigate).then((result) => {
+            loadPage(result);
         });
     };
+
+    const loadPage = async (result) => {
+        // load events, jounal, tasks
+        if (result.status == 200) {
+            dispatch(authActions.login());
+            const { _id: id } = result.data.existingUser;
+            setCurrUserId(id);
+            // get events
+            if (currDate) {
+                const [year, month, day] = currDate.split("-");
+                setYear(year);
+                setMonth(month);
+                setDay(day);
+                await loadDayEvents(year, month, day, id);
+                await loadDayJournalEntries(year, month, day, id);
+                await loadDayTasks(year, month, day, id);
+            }
+            setLoading(false);
+        }
+    };
     useEffect(() => {
-        loadPage();
+        if (firstLoad) {
+            setFirstLoad(false);
+            firstTimeLoad();
+        }
+        let interval = setInterval(() => {
+            checkRefresh().then((result) => loadPage(result));
+        }, 5000);
+        return () => clearInterval(interval);
     }, []);
     // ===================================CRUD for events, journal, tasks===================================
     // =======================CRUD=======================
@@ -70,15 +88,12 @@ function CurrentDatePage() {
     // ============delete events============
     const deleteEvent = async (eventId) => {
         await axios
-            .delete(
-                process.env.REACT_APP_BACKEND_API + `/events/${eventId}`,
-                {
-                    data: {
-                        userId: currUserId,
-                    },
-                    withCredentials: true,
-                }
-            )
+            .delete(process.env.REACT_APP_BACKEND_API + `/events/${eventId}`, {
+                data: {
+                    userId: currUserId,
+                },
+                withCredentials: true,
+            })
             .then(async (res) => {
                 if (res.data.success) {
                     if (currDate) {
@@ -109,33 +124,38 @@ function CurrentDatePage() {
         }
     };
 
-        // ============delete journal entries============
-        const deleteJournalEntry = async (journalId) => {
-            await axios
-                .delete(
-                    process.env.REACT_APP_BACKEND_API + `/journals/${journalId}`,
-                    {
-                        data: {
-                            userId: currUserId,
-                        },
-                        withCredentials: true,
+    // ============delete journal entries============
+    const deleteJournalEntry = async (journalId) => {
+        await axios
+            .delete(
+                process.env.REACT_APP_BACKEND_API + `/journals/${journalId}`,
+                {
+                    data: {
+                        userId: currUserId,
+                    },
+                    withCredentials: true,
+                }
+            )
+            .then(async (res) => {
+                if (res.data.success) {
+                    if (currDate) {
+                        const [year, month, day] = currDate.split("-");
+                        await loadDayJournalEntries(
+                            year,
+                            month,
+                            day,
+                            currUserId
+                        );
+                        alert("Successfully deleted");
                     }
-                )
-                .then(async (res) => {
-                    if (res.data.success) {
-                        if (currDate) {
-                            const [year, month, day] = currDate.split("-");
-                            await loadDayJournalEntries(year, month, day, currUserId);
-                            alert("Successfully deleted");
-                        }
-                    } else {
-                        alert("Failed to delete");
-                    }
-                })
-                .catch((err) => {
+                } else {
                     alert("Failed to delete");
-                });
-        };
+                }
+            })
+            .catch((err) => {
+                alert("Failed to delete");
+            });
+    };
 
     // =====================tasks=====================
     const [tasks, setTasks] = useState([]);

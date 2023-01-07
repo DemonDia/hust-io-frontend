@@ -1,29 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { defaultAuthCheck } from "../../AuthCheck";
+import { defaultAuthCheck, checkRefresh } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../redux";
 import axios from "axios";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
 
 axios.defaults.withCredentials = true;
 function UserProfile() {
-    const [currUserId,setCurrUserId] = useState("")
+    const [firstLoad, setFirstLoad] = useState(true);
+    const [currUserId, setCurrUserId] = useState("");
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-    const loadPage = async () => {
+    const dispatch = useDispatch();
+
+    const firstTimeLoad = async () => {
         await defaultAuthCheck(navigate).then((result) => {
-            if (result.status == 200) {
-                const { _id: id, name, email } = result.data.existingUser;
-                setCurrUserId(id);
-                setName(name);
-                setEmail(email);
-                setLoading(false);
-            }
+            loadPage(result);
         });
+    };
+
+    const loadPage = async (result) => {
+        if (result.status == 200) {
+            dispatch(authActions.login());
+            const { _id: id, name, email } = result.data.existingUser;
+            setCurrUserId(id);
+            setName(name);
+            setEmail(email);
+            setLoading(false);
+        }
     };
 
     const saveUsername = async () => {
@@ -35,12 +45,12 @@ function UserProfile() {
                     process.env.REACT_APP_BACKEND_API + "/users/changename",
                     {
                         name,
-                        userId:currUserId,
+                        userId: currUserId,
                     },
                     { withCredentials: true }
                 )
                 .then((res) => {
-                    console.error(res)
+                    console.error(res);
                     if (res.data.success) {
                         alert("Name successfully saved");
                     } else {
@@ -67,12 +77,12 @@ function UserProfile() {
                     process.env.REACT_APP_BACKEND_API + "/users/changepass",
                     {
                         newPassword,
-                        userId:currUserId,
+                        userId: currUserId,
                     },
                     { withCredentials: true }
                 )
                 .then((res) => {
-                    console.error(res)
+                    console.error(res);
                     setNewPassword("");
                     setConfirmNewPassword("");
                     alert("Password reset sucessfully.");
@@ -109,7 +119,14 @@ function UserProfile() {
     };
 
     useEffect(() => {
-        loadPage();
+        if (firstLoad) {
+            setFirstLoad(false);
+            firstTimeLoad();
+        }
+        let interval = setInterval(() => {
+            checkRefresh().then((result) => loadPage(result));
+        }, 5000);
+        return () => clearInterval(interval);
     }, []);
     return (
         <div>

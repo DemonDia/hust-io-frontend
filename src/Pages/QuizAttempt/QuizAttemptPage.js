@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { defaultAuthCheck } from "../../AuthCheck";
+import { defaultAuthCheck, checkRefresh } from "../../AuthCheck";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../redux";
+
 import axios from "axios";
 import QuizAttemptQuestion from "../../Components/QuizAttempt/QuizAttemptQuestion";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
@@ -8,27 +11,41 @@ import Loader from "../../Components/General/Loader";
 
 function QuizAttemptPage() {
     const { quizAttemptId } = useParams();
+    const [firstLoad, setFirstLoad] = useState(true);
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
     const [quizAttempt, setQuizAttempt] = useState(null);
     const [displayDate, setDisplayDate] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const statuses = ["", "In progress", "Marking in progress", "Completed"];
 
-    const loadPage = async () => {
-        await defaultAuthCheck(navigate).then(async (result) => {
-            if (result.status == 200) {
-                const { _id: id } = result.data.existingUser;
-                setCurrUserId(id);
-                await getCurrentAttempt();
-                setLoading(false);
-            }
+    const firstTimeLoad = async () => {
+        await defaultAuthCheck(navigate).then((result) => {
+            loadPage(result);
         });
     };
 
+    const loadPage = async (result) => {
+        if (result.status == 200) {
+            dispatch(authActions.login());
+            const { _id: id } = result.data.existingUser;
+            setCurrUserId(id);
+            await getCurrentAttempt();
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        loadPage();
+        if (firstLoad) {
+            setFirstLoad(false);
+            firstTimeLoad();
+        }
+        let interval = setInterval(() => {
+            checkRefresh().then((result) => loadPage(result));
+        }, 5000);
+        return () => clearInterval(interval);
     }, []);
     // =================methods=================
     const getCurrentAttempt = async () => {
