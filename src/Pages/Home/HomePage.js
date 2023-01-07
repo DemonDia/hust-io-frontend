@@ -73,7 +73,7 @@ function HomePage() {
         }
         let interval = setInterval(() => {
             checkRefresh().then((result) => loadPage(result));
-        }, 5000);
+        }, 1000 * 29);
         return () => clearInterval(interval);
     }, []);
 
