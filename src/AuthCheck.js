@@ -4,7 +4,7 @@ const checkAuthStatus = async (successRoute, failRoute, navigate) => {
     const res = await axios
         .get(process.env.REACT_APP_BACKEND_API + "/users/me", {
             withCredentials: true,
-        })
+        }).then(()=>{console.log("User found")})
         .catch((err) => {
             if (failRoute !== "") {
                 navigate(failRoute);
@@ -22,7 +22,7 @@ const checkRefresh = async () => {
     const res = await axios
         .get(process.env.REACT_APP_BACKEND_API + "/users/refresh", {
             withCredentials: true,
-        })
+        }).then(()=>{console.log("refreshed")})
     return res;
 };
 
