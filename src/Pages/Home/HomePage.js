@@ -71,11 +71,10 @@ function HomePage() {
             setFirstLoad(false);
             firstTimeLoad();
         }
-        // let interval = 
-        setInterval(() => {
+        let interval = setInterval(() => {
             checkRefresh().then((result) => loadPage(result));
         }, 1000 * 29);
-        // return () => clearInterval(interval);
+        return () => clearInterval(interval);
     }, []);
 
     return (
