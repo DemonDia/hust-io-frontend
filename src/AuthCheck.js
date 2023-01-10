@@ -23,7 +23,6 @@ const checkRefresh = async () => {
         process.env.REACT_APP_BACKEND_API + "/users/refresh",
         {
             withCredentials: true,
-            credentials: 'include'
         }
     );
     return res;
