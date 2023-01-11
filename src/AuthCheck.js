@@ -5,6 +5,7 @@ const checkAuthStatus = async (successRoute, failRoute, navigate) => {
     const res = await axios
         .get(process.env.REACT_APP_BACKEND_API + "/users/me", {
             withCredentials: true,
+            credentials: "include",
         })
         .catch((err) => {
             if (failRoute !== "") {
