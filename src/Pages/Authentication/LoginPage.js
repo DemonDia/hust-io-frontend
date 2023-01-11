@@ -5,10 +5,12 @@ import { loginPageAuthCheck } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../redux";
+import Cookies from "universal-cookie";
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
 function LoginPage() {
+    const cookies = new Cookies();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const login = async (email, password) => {
@@ -25,6 +27,11 @@ function LoginPage() {
                 if (res.status != 200) {
                     alert("Login failed");
                 } else {
+                    const { user, token } = res.data;
+                    const { _id } = user;
+                    cookies.set(_id,token,{
+                        expires:new Date(Date.now() + 1000 * 30),
+                    });
                     alert("Logged in");
                     dispatch(authActions.login());
                     navigate("/home");

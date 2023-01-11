@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "universal-cookie";
 axios.defaults.withCredentials = true;
 const checkAuthStatus = async (successRoute, failRoute, navigate) => {
     const res = await axios
@@ -19,13 +20,20 @@ const checkAuthStatus = async (successRoute, failRoute, navigate) => {
 };
 
 const checkRefresh = async () => {
+    const cookies = new Cookies();
     const res = await axios.get(
         process.env.REACT_APP_BACKEND_API + "/users/refresh",
         {
             withCredentials: true,
-            credentials: 'include'
+            credentials: "include",
         }
     );
+    const { token } = res;
+    const { existingUser } = res.data;
+    const { _id } = existingUser;
+    cookies.set(_id, token, {
+        expires: new Date(Date.now() + 1000 * 30),
+    });
     return res;
 };
 
