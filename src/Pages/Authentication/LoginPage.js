@@ -19,7 +19,7 @@ function LoginPage() {
                     email,
                     password,
                 },
-                { withCredentials: true}
+                { withCredentials: true, credentials: "include" }
             )
             .then((res) => {
                 if (res.status != 200) {
