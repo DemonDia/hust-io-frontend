@@ -31,7 +31,7 @@ function AddJournalPage() {
         }
         let interval = setInterval(() => {
             checkRefresh().then((result) => loadPage(result));
-        }, 1000 * 29);
+        }, 1000 * 10);
         return () => clearInterval(interval);
     }, []);
     // =================methods=================

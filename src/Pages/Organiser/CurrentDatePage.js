@@ -64,7 +64,7 @@ function CurrentDatePage() {
         }
         let interval = setInterval(() => {
             checkRefresh().then((result) => loadPage(result));
-        }, 1000 * 29);
+        }, 1000 * 10);
         return () => clearInterval(interval);
     }, []);
     // ===================================CRUD for events, journal, tasks===================================
