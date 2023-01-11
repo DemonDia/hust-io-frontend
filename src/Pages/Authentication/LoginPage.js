@@ -28,8 +28,7 @@ function LoginPage() {
                     alert("Login failed");
                 } else {
                     const { user, token } = res.data;
-                    const { _id } = user;
-                    cookies.set(_id,token,{
+                    cookies.set("currentUser",token,{
                         expires:new Date(Date.now() + 1000 * 30),
                     });
                     alert("Logged in");
