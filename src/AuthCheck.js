@@ -33,9 +33,11 @@ const checkRefresh = async () => {
         {
             headers: {cookie: currCookie},
             withCredentials: true,
+            // credentials: "include",
         }
     );
-    const { token } = res;
+    const { token } = res.data;
+    console.log("refreshed new token",token)
     cookies.set("currentUser", token, {
         expires: new Date(Date.now() + 1000 * 30),
     });
