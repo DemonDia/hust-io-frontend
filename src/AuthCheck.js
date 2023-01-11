@@ -6,8 +6,10 @@ const checkAuthStatus = async (successRoute, failRoute, navigate) => {
     const cookies = new Cookies();
     const currCookie = cookies.get("currentUser")
     const res = await axios
-        .get(process.env.REACT_APP_BACKEND_API + "/users/me", {
-            headers: {cookie: currCookie},
+        .get(process.env.REACT_APP_BACKEND_API + "/users/me", 
+        {
+            headers: { Authorization: `Bearer ${currCookie}` },
+            // headers: {cookie: currCookie},
             withCredentials: true,
         })
         .catch((err) => {
@@ -31,13 +33,14 @@ const checkRefresh = async () => {
         process.env.REACT_APP_BACKEND_API + "/users/refresh",
         
         {
-            headers: {cookie: currCookie},
+            // headers: {cookie: currCookie},
+            headers: { Authorization: `Bearer ${currCookie}` },
             withCredentials: true,
             // credentials: "include",
         }
     );
     const { token } = res.data;
-    console.log("refreshed new token",token)
+    // console.log("refreshed new token",token)
     cookies.set("currentUser", token, {
         expires: new Date(Date.now() + 1000 * 30),
     });
