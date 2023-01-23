@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { authActions } from "../../redux";
 import axios from "axios";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
+import Cookies from "universal-cookie";
 
 // =============events=============
 import EventList from "../../Components/Events/EventList";
@@ -18,6 +19,9 @@ import Loader from "../../Components/General/Loader";
 
 axios.defaults.withCredentials = true;
 function CurrentDatePage() {
+    const cookies = new Cookies();
+    const currentToken = cookies.get("currentUser");
+
     const { currDate } = useParams();
     const [firstLoad, setFirstLoad] = useState(true);
     const [year, setYear] = useState(null);
@@ -78,7 +82,9 @@ function CurrentDatePage() {
         const getEventResults = await axios.get(
             process.env.REACT_APP_BACKEND_API +
                 `/events/${year}/${month - 1}/${day}/${userId}`,
-            { withCredentials: true }
+            {
+                headers: { Authorization: `Bearer ${currentToken}` },
+            }
         );
         if (getEventResults.data.success) {
             setEvents(getEventResults.data.data);
@@ -92,7 +98,7 @@ function CurrentDatePage() {
                 data: {
                     userId: currUserId,
                 },
-                withCredentials: true,
+                headers: { Authorization: `Bearer ${currentToken}` },
             })
             .then(async (res) => {
                 if (res.data.success) {
@@ -117,7 +123,9 @@ function CurrentDatePage() {
         const getJournalEntryResults = await axios.get(
             process.env.REACT_APP_BACKEND_API +
                 `/journals/${year}/${month - 1}/${day}/${userId}`,
-            { withCredentials: true }
+            {
+                headers: { Authorization: `Bearer ${currentToken}` },
+            }
         );
         if (getJournalEntryResults.data.success) {
             setJournalEntries(getJournalEntryResults.data.data);
@@ -133,7 +141,7 @@ function CurrentDatePage() {
                     data: {
                         userId: currUserId,
                     },
-                    withCredentials: true,
+                    headers: { Authorization: `Bearer ${currentToken}` },
                 }
             )
             .then(async (res) => {
@@ -164,7 +172,9 @@ function CurrentDatePage() {
         const getEventResults = await axios.get(
             process.env.REACT_APP_BACKEND_API +
                 `/tasks/${year}/${month - 1}/${day}/${userId}`,
-            { withCredentials: true }
+            {
+                headers: { Authorization: `Bearer ${currentToken}` },
+            }
         );
         if (getEventResults.data.success) {
             setTasks(getEventResults.data.data);
@@ -187,7 +197,9 @@ function CurrentDatePage() {
                     },
                     userId: currUserId,
                 },
-                { withCredentials: true }
+                {
+                    headers: { Authorization: `Bearer ${currentToken}` },
+                }
             )
             .then(async (res) => {
                 if (res.data.success) {
@@ -210,7 +222,9 @@ function CurrentDatePage() {
                     taskName,
                     userId: currUserId,
                 },
-                { withCredentials: true }
+                {
+                    headers: { Authorization: `Bearer ${currentToken}` },
+                }
             )
             .then(async (res) => {
                 if (res.data.success) {
@@ -235,7 +249,9 @@ function CurrentDatePage() {
                     completed,
                     userId: currUserId,
                 },
-                { withCredentials: true }
+                {
+                    headers: { Authorization: `Bearer ${currentToken}` },
+                }
             )
             .then(async (res) => {
                 if (res.data.success) {
@@ -258,7 +274,8 @@ function CurrentDatePage() {
                 data: {
                     userId: currUserId,
                 },
-                withCredentials: true,
+
+                headers: { Authorization: `Bearer ${currentToken}` },
             })
             .then(async (res) => {
                 if (res.data.success) {

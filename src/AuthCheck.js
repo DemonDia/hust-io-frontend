@@ -5,6 +5,7 @@ axios.defaults.withCredentials = true;
 const checkAuthStatus = async (successRoute, failRoute, navigate) => {
     const cookies = new Cookies();
     const currCookie = cookies.get("currentUser")
+    // console.log("currCookie",currCookie)
     const res = await axios
         .get(process.env.REACT_APP_BACKEND_API + "/users/me", 
         {

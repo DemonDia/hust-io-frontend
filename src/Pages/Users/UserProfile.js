@@ -4,11 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../redux";
 import axios from "axios";
+import Cookies from "universal-cookie";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
 
 axios.defaults.withCredentials = true;
 function UserProfile() {
+    const cookies = new Cookies();
+    const currentToken = cookies.get("currentUser");
     const [firstLoad, setFirstLoad] = useState(true);
     const [currUserId, setCurrUserId] = useState("");
     const [email, setEmail] = useState("");
@@ -47,7 +50,9 @@ function UserProfile() {
                         name,
                         userId: currUserId,
                     },
-                    { withCredentials: true }
+                    {
+                        headers: { Authorization: `Bearer ${currentToken}` },
+                    }
                 )
                 .then((res) => {
                     console.error(res);
@@ -79,7 +84,9 @@ function UserProfile() {
                         newPassword,
                         userId: currUserId,
                     },
-                    { withCredentials: true }
+                    {
+                        headers: { Authorization: `Bearer ${currentToken}` },
+                    }
                 )
                 .then((res) => {
                     console.error(res);
@@ -101,7 +108,7 @@ function UserProfile() {
                 .delete(
                     process.env.REACT_APP_BACKEND_API + `/users/${currUserId}`,
                     {
-                        withCredentials: true,
+                        headers: { Authorization: `Bearer ${currentToken}` },
                     }
                 )
                 .then((res) => {

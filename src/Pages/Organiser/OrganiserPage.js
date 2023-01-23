@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { authActions } from "../../redux";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
+import Cookies from "universal-cookie";
+
 
 function OrganiserPage() {
     const [firstLoad, setFirstLoad] = useState(true);
@@ -13,6 +15,7 @@ function OrganiserPage() {
     const [currUserId, setCurrUserId] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch()
+    const cookies = new Cookies();
 
     const firstTimeLoad = async () => {
         await defaultAuthCheck(navigate).then((result) => {

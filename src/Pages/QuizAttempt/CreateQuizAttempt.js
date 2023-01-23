@@ -5,12 +5,16 @@ import { useDispatch } from "react-redux";
 import { authActions } from "../../redux";
 import axios from "axios";
 import Loader from "../../Components/General/Loader";
+import Cookies from "universal-cookie";
 
 axios.defaults.withCredentials = true;
 function CreateQuizAttempt() {
+    const cookies = new Cookies();
+    const currentToken = cookies.get("currentUser");
+
     const { quizId } = useParams();
     const navigate = useNavigate();
-    const dispatch = useDispatch
+    const dispatch = useDispatch();
     const [firstLoad, setFirstLoad] = useState(true);
     const [currUserId, setCurrUserId] = useState("");
 
@@ -19,11 +23,14 @@ function CreateQuizAttempt() {
             loadPage(result);
         });
     };
-    
+
     const loadPage = async (result) => {
+        console.log(result.status)
+        console.log(result.status == 200)
         if (result.status == 200) {
             dispatch(authActions.login());
             const { _id: id } = result.data.existingUser;
+            console.log(id)
             setCurrUserId(id);
             addNewQuizAttempt(id);
         }
@@ -37,7 +44,9 @@ function CreateQuizAttempt() {
                     quizId,
                     userId,
                 },
-                { withCredentials: true }
+                {
+                    headers: { Authorization: `Bearer ${currentToken}` },
+                }
             )
             .then((res) => {
                 if (res.data.success) {

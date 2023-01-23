@@ -7,14 +7,18 @@ import { authActions } from "../../redux";
 import axios from "axios";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
+import Cookies from "universal-cookie";
 
 function EditQuizPage() {
+    const cookies = new Cookies();
+    const currentToken = cookies.get("currentUser");
+
     const { quizId } = useParams();
     const [firstLoad, setFirstLoad] = useState(true);
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
     const [quiz, setQuiz] = useState(null);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const firstTimeLoad = async () => {
@@ -48,7 +52,7 @@ function EditQuizPage() {
     const getCurrentQuiz = async () => {
         await axios
             .get(process.env.REACT_APP_BACKEND_API + `/quizzes/id/${quizId}`, {
-                withCredentials: true,
+                headers: { Authorization: `Bearer ${currentToken}` },
             })
             .then((res) => {
                 if (res.data.success) {
@@ -65,7 +69,9 @@ function EditQuizPage() {
                     ...updatedQuiz,
                     userId: currUserId,
                 },
-                { withCredentials: true }
+                {
+                    headers: { Authorization: `Bearer ${currentToken}` },
+                }
             )
             .then((res) => {
                 if (res.data.success) {

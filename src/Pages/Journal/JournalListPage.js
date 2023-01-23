@@ -7,20 +7,24 @@ import axios from "axios";
 import JournalList from "../../Components/Journal/JournalList";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
+import Cookies from "universal-cookie";
 
 axios.defaults.withCredentials = true;
 function JournalListPage() {
+    const cookies = new Cookies();
+    const currentToken = cookies.get("currentUser");
     const [firstLoad, setFirstLoad] = useState(true);
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
     const [journals, setJournals] = useState([]);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
     const loadUserJournals = async (userId) => {
         const getEventResults = await axios.get(
             process.env.REACT_APP_BACKEND_API + `/journals/${userId}`,
             {
-                withCredentials: true,
+                headers: { Authorization: `Bearer ${currentToken}` },
             }
         );
         if (getEventResults.data.success) {
@@ -52,7 +56,7 @@ function JournalListPage() {
                     },
                 },
                 {
-                    withCredentials: true,
+                    headers: { Authorization: `Bearer ${currentToken}` },
                 }
             )
             .then(async (res) => {

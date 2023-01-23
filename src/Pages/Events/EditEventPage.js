@@ -7,9 +7,12 @@ import { authActions } from "../../redux";
 import axios from "axios";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
+import Cookies from "universal-cookie";
 
 axios.defaults.withCredentials = true;
 function EditEventPage() {
+    const cookies = new Cookies();
+    const currentToken = cookies.get("currentUser");
     const [firstLoad, setFirstLoad] = useState(true);
     const { eventId } = useParams();
     const [loading, setLoading] = useState(true);
@@ -49,7 +52,7 @@ function EditEventPage() {
     const getCurrentEvent = async () => {
         await axios
             .get(process.env.REACT_APP_BACKEND_API + `/events/id/${eventId}`, {
-                withCredentials: true,
+                headers: { Authorization: `Bearer ${currentToken}` },
             })
             .then((res) => {
                 if (res.data.success) {
@@ -66,7 +69,9 @@ function EditEventPage() {
                     ...updatedEvent,
                     userId: currUserId,
                 },
-                { withCredentials: true }
+                {
+                    headers: { Authorization: `Bearer ${currentToken}` },
+                }
             )
             .then((res) => {
                 if (res.data.success) {

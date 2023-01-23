@@ -7,13 +7,17 @@ import axios from "axios";
 import QuizForm from "../../Components/Quiz/QuizForm";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
+import Cookies from "universal-cookie";
 
 function AddQuizPage() {
+    const cookies = new Cookies();
+    const currentToken = cookies.get("currentUser");
+
     const [firstLoad, setFirstLoad] = useState(true);
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
     const navigate = useNavigate();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const firstTimeLoad = async () => {
         await defaultAuthCheck(navigate).then((result) => {
@@ -37,7 +41,9 @@ function AddQuizPage() {
                     ...newQuiz,
                     userId: currUserId,
                 },
-                { withCredentials: true }
+                {
+                    headers: { Authorization: `Bearer ${currentToken}` },
+                }
             )
             .then((res) => {
                 if (res.data.success) {

@@ -3,6 +3,7 @@ import { defaultAuthCheck, checkRefresh } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../redux";
+import Cookies from "universal-cookie";
 
 import axios from "axios";
 import TaskList from "../../Components/Tasks/TaskList";
@@ -11,6 +12,8 @@ import Loader from "../../Components/General/Loader";
 
 axios.defaults.withCredentials = true;
 function TaskListPage() {
+    const cookies = new Cookies();
+    const currentToken = cookies.get("currentUser");
     const [firstLoad, setFirstLoad] = useState(true);
     const [loading, setLoading] = useState(true);
     const [currUserId, setCurrUserId] = useState(null);
@@ -28,7 +31,7 @@ function TaskListPage() {
         const getEventResults = await axios.get(
             process.env.REACT_APP_BACKEND_API + `/tasks/${userId}`,
             {
-                withCredentials: true,
+                headers: { Authorization: `Bearer ${currentToken}` },
             }
         );
         if (getEventResults.data.success) {
@@ -59,7 +62,7 @@ function TaskListPage() {
                         userId: currUserId,
                     },
                     {
-                        withCredentials: true,
+                        headers: { Authorization: `Bearer ${currentToken}` },
                     }
                 )
                 .then(async (res) => {
@@ -86,7 +89,7 @@ function TaskListPage() {
                     userId: currUserId,
                 },
                 {
-                    withCredentials: true,
+                    headers: { Authorization: `Bearer ${currentToken}` },
                 }
             )
             .then(async (res) => {
@@ -107,7 +110,7 @@ function TaskListPage() {
                 data: {
                     userId: currUserId,
                 },
-                withCredentials: true,
+                headers: { Authorization: `Bearer ${currentToken}` },
             })
             .then(async (res) => {
                 if (res.data.success) {

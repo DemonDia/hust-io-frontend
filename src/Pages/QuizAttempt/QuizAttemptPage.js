@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { defaultAuthCheck, checkRefresh } from "../../AuthCheck";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../redux";
+import Cookies from "universal-cookie";
 
 import axios from "axios";
 import QuizAttemptQuestion from "../../Components/QuizAttempt/QuizAttemptQuestion";
@@ -10,6 +11,9 @@ import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
 
 function QuizAttemptPage() {
+    const cookies = new Cookies();
+    const currentToken = cookies.get("currentUser");
+
     const { quizAttemptId } = useParams();
     const [firstLoad, setFirstLoad] = useState(true);
     const [loading, setLoading] = useState(true);
@@ -53,7 +57,9 @@ function QuizAttemptPage() {
             .get(
                 process.env.REACT_APP_BACKEND_API +
                     `/quizAttempts/id/${quizAttemptId}`,
-                { withCredentials: true }
+                {
+                    headers: { Authorization: `Bearer ${currentToken}` },
+                }
             )
             .then((res) => {
                 if (res.data.success) {
@@ -97,7 +103,9 @@ function QuizAttemptPage() {
                     ...quizAttempt,
                     userId: currUserId,
                 },
-                { withCredentials: true }
+                {
+                    headers: { Authorization: `Bearer ${currentToken}` },
+                }
             )
             .then((res) => {
                 if (res.data.success) {

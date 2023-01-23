@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Loader from "../General/Loader";
-function MainCalendar({userId}) {
-    const currentToken = localStorage.getItem("loginToken");
+import Cookies from "universal-cookie";
+
+function MainCalendar({ userId }) {
+    const cookies = new Cookies();
+    const currentToken = cookies.get("currentUser");
     const [loading, setLoading] = useState(true);
     // year and month in numbers
     const [year, setYear] = useState(null);
@@ -185,7 +188,7 @@ function MainCalendar({userId}) {
                     </div>
                 </div>
                 {loading ? (
-                    <Loader/>
+                    <Loader />
                 ) : (
                     <div className="card">
                         {" "}

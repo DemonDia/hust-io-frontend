@@ -7,6 +7,7 @@ import axios from "axios";
 import EventList from "../../Components/Events/EventList";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
+import Cookies from "universal-cookie";
 
 axios.defaults.withCredentials = true;
 function EventListPage() {
@@ -16,11 +17,14 @@ function EventListPage() {
     const [events, setEvents] = useState([]);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const cookies = new Cookies();
+    const currentToken = cookies.get("currentUser");
+
     const loadUserEvents = async (currUserId) => {
         const getEventResults = await axios.get(
             process.env.REACT_APP_BACKEND_API + `/events/${currUserId}`,
             {
-                withCredentials: true,
+                headers: { Authorization: `Bearer ${currentToken}` },
             }
         );
         if (getEventResults.data.success) {
@@ -33,7 +37,7 @@ function EventListPage() {
                 data: {
                     userId: currUserId,
                 },
-                withCredentials: true,
+                headers: { Authorization: `Bearer ${currentToken}` },
             })
             .then(async (res) => {
                 if (res.data.success) {

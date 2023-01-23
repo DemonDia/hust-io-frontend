@@ -3,6 +3,7 @@ import { defaultAuthCheck, checkRefresh } from "../../AuthCheck";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../redux";
+import Cookies from "universal-cookie";
 
 import axios from "axios";
 import QuizList from "../../Components/Quiz/QuizList";
@@ -12,6 +13,9 @@ import Loader from "../../Components/General/Loader";
 
 axios.defaults.withCredentials = true;
 function QuizListPage() {
+    const cookies = new Cookies()
+    const currentToken = cookies.get("currentUser");
+    
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [firstLoad, setFirstLoad] = useState(true);
@@ -55,7 +59,7 @@ function QuizListPage() {
         const getQuizResults = await axios.get(
             process.env.REACT_APP_BACKEND_API + `/quizzes/${userId}`,
             {
-                withCredentials: true,
+                headers: { Authorization: `Bearer ${currentToken}` },
             }
         );
         if (getQuizResults.data.success) {
@@ -69,7 +73,9 @@ function QuizListPage() {
                 data: {
                     userId: currUserId,
                 },
-                withCredentials: true,
+                
+                    headers: { Authorization: `Bearer ${currentToken}` },
+                
             })
             .then(async (res) => {
                 if (res.data.success) {
@@ -91,7 +97,7 @@ function QuizListPage() {
         const getQuizResults = await axios.get(
             process.env.REACT_APP_BACKEND_API + `/quizAttempts/${userId}`,
             {
-                withCredentials: true,
+                headers: { Authorization: `Bearer ${currentToken}` },
             }
         );
         if (getQuizResults.data.success) {
@@ -108,7 +114,9 @@ function QuizListPage() {
                     data: {
                         userId: currUserId,
                     },
-                    withCredentials: true,
+
+                        headers: { Authorization: `Bearer ${currentToken}` },
+                    
                 }
             )
             .then(async (res) => {

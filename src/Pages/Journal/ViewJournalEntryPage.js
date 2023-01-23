@@ -4,12 +4,16 @@ import { defaultAuthCheck, checkRefresh } from "../../AuthCheck";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../redux";
-
+import Cookies from "universal-cookie";
 import axios from "axios";
 import Breadcrumbs from "../../Components/General/Breadcrumbs";
 import Loader from "../../Components/General/Loader";
 axios.defaults.withCredentials = true;
+
 function ViewJournalEntryPage() {
+    const cookies = new Cookies();
+    const currentToken = cookies.get("currentUser");
+
     const { journalId } = useParams();
     const [firstLoad, setFirstLoad] = useState(true);
     const [loading, setLoading] = useState(true);
@@ -46,7 +50,9 @@ function ViewJournalEntryPage() {
         await axios
             .get(
                 process.env.REACT_APP_BACKEND_API + `/journals/id/${journalId}`,
-                { withCredentials: true }
+                {
+                    headers: { Authorization: `Bearer ${currentToken}` },
+                }
             )
             .then((res) => {
                 if (res.data.success) {
